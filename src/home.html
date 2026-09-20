@@ -44,7 +44,13 @@
   nav.links{display:flex;gap:22px;align-items:center}
   nav.links a{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
   nav.links a:hover{color:var(--text);text-decoration:none}
-  @media(max-width:760px){nav.links{display:none}}
+  .navtoggle{display:none;background:transparent;border:1px solid var(--border-2);color:var(--text);border-radius:8px;font-size:1.25rem;line-height:1;padding:.25em .5em;cursor:pointer;font-family:var(--mono)}
+  @media(max-width:760px){
+    .navtoggle{display:inline-flex}
+    nav.links{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;gap:18px;background:var(--bg-2);border-bottom:1px solid var(--border);padding:18px 22px;display:none}
+    nav.links.open{display:flex}
+    nav.links a{font-size:.95rem}
+  }
 
   /* HERO */
   .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;
@@ -111,6 +117,8 @@
 
   /* playground */
   .play{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .play>*{min-width:0}
+  .code{max-width:100%}
   .panel{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
   .panel .hd{padding:11px 14px;background:var(--surface);border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.76rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
   .panel .hd .fn{color:var(--prompt)}
@@ -233,7 +241,7 @@
 <header class="nav">
   <div class="wrap row">
     <div class="brand">~/kushal-pathak <b>$</b> <span class="cur">▋</span></div>
-    <nav class="links">
+    <nav class="links" id="navLinks">
       <a href="#about">about</a>
       <a href="#frameworks">frameworks</a>
       <a href="#work">work</a>
@@ -241,6 +249,7 @@
       <a href="#playground">lab</a>
       <a href="#contact">contact</a>
     </nav>
+    <button class="navtoggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#8801;</button>
   </div>
 </header>
 
@@ -1110,5 +1119,12 @@ en-au | https://example.com.au/</textarea></div>
       document.getElementById('scInsOut').textContent=out;
     }).catch(function(){scIns.disabled=false;note.textContent='Fetch is blocked in this preview — works on the live site.';});
   });
+
+  // ---- mobile nav toggle ----
+  var nt=document.getElementById('navToggle'), nl=document.getElementById('navLinks');
+  if(nt&&nl){
+    nt.addEventListener('click',function(){var o=nl.classList.toggle('open');nt.setAttribute('aria-expanded',o?'true':'false');});
+    nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');nt.setAttribute('aria-expanded','false');});});
+  }
 })();
 </script>
