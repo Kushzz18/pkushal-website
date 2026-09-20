@@ -35,7 +35,21 @@ jsonld = ('{"@context":"https://schema.org","@graph":['
 '{"@type":"WebSite","@id":"https://pkushal.com.np/#website","url":"https://pkushal.com.np/","name":"Kushal Pathak","publisher":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"},'
 '{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak — Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
 
+GTM_HEAD = (
+"<!-- Google Tag Manager -->\n"
+"<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n"
+"new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n"
+"j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n"
+"'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n"
+"})(window,document,'script','dataLayer','GTM-TDRG93B8');</script>\n"
+"<!-- End Google Tag Manager -->\n")
+GTM_NOSCRIPT = (
+'<!-- Google Tag Manager (noscript) -->\n'
+'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDRG93B8"\n'
+'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n'
+'<!-- End Google Tag Manager (noscript) -->\n')
 HEAD_EXTRA = (
+GTM_HEAD +
 '<meta name="google-site-verification" content="CIKjY7k4ZzqAcKmJATjz5bCmdoRyQMdc8zQQJv7j5cg">\n'
 '<meta name="description" content="Kushal Pathak — technical SEO strategist in Kathmandu. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.">\n'
 '<link rel="canonical" href="https://pkushal.com.np/">\n'
@@ -57,7 +71,7 @@ HEAD_EXTRA = (
 
 doc = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-+ HEAD_EXTRA + head_part + '</head>\n<body>\n' + body_part + '\n</body>\n</html>\n')
++ HEAD_EXTRA + head_part + '</head>\n<body>\n' + GTM_NOSCRIPT + body_part + '\n</body>\n</html>\n')
 open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(doc)
 
 shutil.copy(PHOTO, os.path.join(OUT, "assets", "kushal.webp"))

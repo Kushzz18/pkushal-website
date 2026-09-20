@@ -550,9 +550,13 @@ en-au | https://example.com.au/</textarea></div>
 
     <div class="tabpane" id="tab-og" hidden>
       <p class="labnote">Open Graph + Twitter Card tags with a live link-card preview. (The preview image may not load inside this sandbox — the tags themselves are correct.)</p>
-      <div class="panel" style="margin-bottom:14px"><div class="hd"><span class="fn">auto-fill</span><span>paste a page's &lt;head&gt; HTML</span></div>
-        <div class="ctrl"><div><textarea id="ogPaste" style="min-height:64px" spellcheck="false" placeholder="Paste a page's HTML (or just its <head>) here to auto-extract title, description, OG image, canonical…"></textarea></div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn primary" id="ogExtract" type="button">extract &amp; fill ↧</button><span class="hintline" style="margin:0">On the live site this becomes “enter URL → auto-fetch” via a small server endpoint.</span></div></div>
+      <div class="panel" style="margin-bottom:14px"><div class="hd"><span class="fn">auto-fill</span><span>enter a URL, or paste HTML</span></div>
+        <div class="ctrl">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end"><div style="flex:1;min-width:220px"><label for="ogUrlIn">page url</label><input id="ogUrlIn" placeholder="https://example.com/page"></div><button class="btn primary" id="ogFetch" type="button">fetch ↧</button></div>
+          <div class="hintline" id="ogFetchNote" style="margin:0">Server-side fetch via <code>/api/fetch.php</code> (SSRF-hardened) — works on the live site. Or paste HTML below.</div>
+          <div><label for="ogPaste">…or paste HTML</label><textarea id="ogPaste" style="min-height:56px" spellcheck="false" placeholder="Paste a page's HTML (or its &lt;head&gt;) to auto-extract…"></textarea></div>
+          <div><button class="btn" id="ogExtract" type="button">extract from pasted HTML ↧</button></div>
+        </div>
       </div>
       <div class="play">
         <div class="panel"><div class="hd"><span class="fn">inputs</span><span>editable</span></div>
@@ -1026,6 +1030,20 @@ en-au | https://example.com.au/</textarea></div>
     ogRender();
   }
   var ogEx=document.getElementById('ogExtract'); if(ogEx)ogEx.addEventListener('click',function(){ogParse(document.getElementById('ogPaste').value||'');});
+  var ogFe=document.getElementById('ogFetch');
+  if(ogFe)ogFe.addEventListener('click',function(){
+    var u=(document.getElementById('ogUrlIn').value||'').trim(), note=document.getElementById('ogFetchNote');
+    if(!u){note.textContent='Enter a URL first.';return;}
+    note.textContent='Fetching '+u+' …'; ogFe.disabled=true;
+    fetch('/api/fetch.php?url='+encodeURIComponent(u)).then(function(r){return r.json();}).then(function(d){
+      ogFe.disabled=false;
+      if(!d||!d.ok){note.textContent='Could not fetch'+(d&&d.error?' ('+d.error+')':'')+'. Try pasting the HTML instead.';return;}
+      ogSet('ogTitle',d.title); ogSet('ogDesc',d.description); ogSet('ogUrl',d.canonical||d.final_url||u); ogSet('ogImage',d.image); ogSet('ogSite',d.site_name);
+      if(d.type&&['website','article','profile'].indexOf(d.type)>=0)document.getElementById('ogType').value=d.type;
+      if(d.twitter_card&&['summary_large_image','summary'].indexOf(d.twitter_card)>=0)document.getElementById('twCard').value=d.twitter_card;
+      ogSet('twSite',d.twitter_site); note.textContent='Fetched ✔ (HTTP '+(d.status||'?')+')'; ogRender();
+    }).catch(function(){ogFe.disabled=false;note.textContent='Fetch is blocked in this preview — it works on the live site (pkushal.com.np). Paste HTML instead.';});
+  });
   if(document.getElementById('ogTitle')){ogRender();bindCopy('ogCopy','ogOut');}
 
   // ---- index-coverage decision tree ----
