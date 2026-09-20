@@ -1,7 +1,8 @@
 <?php
-// pkushal.com.np — OG/meta fetch proxy for the lab's "enter a URL -> auto-fill" tool.
+// pkushal.com.np — lab fetch proxy. Modes: og (default) | robots | schema.
 // SSRF-hardened: http/https only, private/reserved IPs blocked, DNS pinned,
-// size- and time-limited, returns parsed metadata only (never the raw body).
+// size- and time-limited, returns parsed data only (never the raw body wholesale
+// except robots.txt, which is public plain text by design).
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
@@ -12,17 +13,19 @@ function fail($m, $code = 400) {
     exit;
 }
 
-$url = isset($_GET['url']) ? trim($_GET['url']) : '';
-if ($url === '')            fail('Missing url parameter');
-if (strlen($url) > 2048)    fail('URL too long');
+$url  = isset($_GET['url'])  ? trim($_GET['url'])  : '';
+$mode = isset($_GET['mode']) ? strtolower(trim($_GET['mode'])) : 'og';
+if (!in_array($mode, ['og', 'robots', 'schema'], true)) $mode = 'og';
+if ($url === '')         fail('Missing url parameter');
+if (strlen($url) > 2048) fail('URL too long');
 
 $p = parse_url($url);
 if (!$p || empty($p['scheme']) || empty($p['host'])) fail('Invalid URL');
 $scheme = strtolower($p['scheme']);
-if ($scheme !== 'http' && $scheme !== 'https')       fail('Only http/https is allowed');
+if ($scheme !== 'http' && $scheme !== 'https') fail('Only http/https is allowed');
 $host = $p['host'];
+$port = isset($p['port']) ? (int)$p['port'] : ($scheme === 'https' ? 443 : 80);
 
-// Reject IP-literal hosts that are private/reserved, and resolve hostnames.
 $ips = filter_var($host, FILTER_VALIDATE_IP) ? [$host] : @gethostbynamel($host);
 if (!$ips) fail('Host does not resolve', 502);
 foreach ($ips as $ip) {
@@ -32,35 +35,74 @@ foreach ($ips as $ip) {
 }
 $pin = $ips[0];
 
-$buf = '';
-$max = 512 * 1024; // 512 KB cap
-$ch = curl_init($url);
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER  => true,
-    CURLOPT_FOLLOWLOCATION  => true,
-    CURLOPT_MAXREDIRS       => 3,
-    CURLOPT_TIMEOUT         => 8,
-    CURLOPT_CONNECTTIMEOUT  => 5,
-    CURLOPT_USERAGENT       => 'pkushal.com.np OG-preview bot (+https://pkushal.com.np)',
-    CURLOPT_SSL_VERIFYPEER  => true,
-    CURLOPT_PROTOCOLS       => CURLPROTO_HTTP | CURLPROTO_HTTPS,
-    CURLOPT_REDIR_PROTOCOLS => CURLPROTO_HTTP | CURLPROTO_HTTPS,
-    CURLOPT_RESOLVE         => ["$host:80:$pin", "$host:443:$pin"],
-    CURLOPT_WRITEFUNCTION   => function ($c, $data) use (&$buf, $max) {
-        $buf .= $data;
-        if (strlen($buf) > $max) return -1; // abort once over the cap
-        return strlen($data);
-    },
-]);
-curl_exec($ch);
-$err   = curl_error($ch);
-$code  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$final = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-curl_close($ch);
+if ($mode === 'robots') {
+    $portpart = ($port && $port != 80 && $port != 443) ? ':' . $port : '';
+    $target = $scheme . '://' . $host . $portpart . '/robots.txt';
+} else {
+    $target = $url;
+}
+
+function do_fetch($target, $host, $pin, $max = 524288) {
+    $buf = '';
+    $ch = curl_init($target);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER  => true,
+        CURLOPT_FOLLOWLOCATION  => true,
+        CURLOPT_MAXREDIRS       => 3,
+        CURLOPT_TIMEOUT         => 8,
+        CURLOPT_CONNECTTIMEOUT  => 5,
+        CURLOPT_USERAGENT       => 'pkushal.com.np lab bot (+https://pkushal.com.np)',
+        CURLOPT_SSL_VERIFYPEER  => true,
+        CURLOPT_PROTOCOLS       => CURLPROTO_HTTP | CURLPROTO_HTTPS,
+        CURLOPT_REDIR_PROTOCOLS => CURLPROTO_HTTP | CURLPROTO_HTTPS,
+        CURLOPT_RESOLVE         => ["$host:80:$pin", "$host:443:$pin"],
+        CURLOPT_WRITEFUNCTION   => function ($c, $data) use (&$buf, $max) {
+            $buf .= $data;
+            if (strlen($buf) > $max) return -1;
+            return strlen($data);
+        },
+    ]);
+    curl_exec($ch);
+    $err   = curl_error($ch);
+    $code  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $final = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+    curl_close($ch);
+    return [$buf, $code, $final, $err];
+}
+
+list($buf, $code, $final, $err) = do_fetch($target, $host, $pin);
+
+if ($mode === 'robots') {
+    echo json_encode([
+        'ok' => true, 'mode' => 'robots', 'status' => $code, 'final_url' => $final,
+        'robots' => substr($buf, 0, 524288),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 if ($buf === '') fail('Fetch failed' . ($err ? ': ' . $err : ''), 502);
-$html = substr($buf, 0, $max);
+$html = substr($buf, 0, 524288);
 
+if ($mode === 'schema') {
+    $blocks = [];
+    $types  = [];
+    if (preg_match_all('/<script[^>]+type=["\']application\/ld\+json["\'][^>]*>(.*?)<\/script>/is', $html, $mm)) {
+        foreach ($mm[1] as $b) {
+            $b = trim(html_entity_decode($b, ENT_QUOTES | ENT_HTML5));
+            if ($b !== '') $blocks[] = $b;
+        }
+    }
+    if (preg_match_all('/"@type"\s*:\s*"([^"]+)"/', $html, $tm)) {
+        $types = array_values(array_unique($tm[1]));
+    }
+    echo json_encode([
+        'ok' => true, 'mode' => 'schema', 'status' => $code, 'final_url' => $final,
+        'count' => count($blocks), 'types' => $types, 'blocks' => $blocks,
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+// mode = og (default)
 function meta($html, $prop) {
     $q = preg_quote($prop, '/');
     if (preg_match('/<meta[^>]+(?:property|name)=["\']' . $q . '["\'][^>]+content=["\']([^"\']*)["\']/i', $html, $m))
@@ -75,9 +117,7 @@ $canon = '';
 if (preg_match('/<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']*)["\']/i', $html, $m)) $canon = $m[1];
 
 echo json_encode([
-    'ok'           => true,
-    'status'       => $code,
-    'final_url'    => $final,
+    'ok' => true, 'mode' => 'og', 'status' => $code, 'final_url' => $final,
     'title'        => meta($html, 'og:title') ?: $title,
     'description'  => meta($html, 'og:description') ?: meta($html, 'description'),
     'canonical'    => meta($html, 'og:url') ?: $canon,

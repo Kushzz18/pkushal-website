@@ -429,6 +429,8 @@
     </div>
     <div class="tabpane" id="tab-robots">
     <p class="labnote">Google's real matching logic — group selection, longest-match wins, <b>Allow</b> beats <b>Disallow</b> on ties, with <code>*</code> and <code>$</code> wildcards.</p>
+    <div class="ctrl" style="margin-bottom:6px"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end"><div style="flex:1;min-width:220px"><label for="rbFetchUrl">load a live site's robots.txt</label><input id="rbFetchUrl" placeholder="https://example.com"></div><button class="btn primary" id="rbFetchBtn" type="button">fetch ↧</button></div></div>
+    <div class="hintline" id="rbFetchNote" style="margin:0 0 12px">Pulls the real robots.txt via <code>/api/fetch.php</code>, then test paths against it (works on the live site).</div>
     <div class="play">
       <div class="panel">
         <div class="hd"><span class="fn">robots.txt</span><span>editable</span></div>
@@ -479,6 +481,13 @@ Sitemap: https://example.com/sitemap.xml</textarea>
 
     <div class="tabpane" id="tab-schema" hidden>
       <p class="labnote">Entity-grade JSON-LD — <code>@graph</code> wiring by <code>@id</code>, <b>sameAs</b> entity-linking (Wikipedia + Wikidata), <b>areaServed</b> with geo, <b>additionalType</b> (productontology), FAQ <code>hasPart</code>. The structured data an AI can't fake. Fields with <code>|</code> take one item per line.</p>
+      <div class="panel" style="margin-bottom:14px"><div class="hd"><span class="fn">inspect</span><span>audit a live page's JSON-LD</span></div>
+        <div class="ctrl"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end"><div style="flex:1;min-width:220px"><label for="scInsUrl">page url</label><input id="scInsUrl" placeholder="https://example.com/page"></div><button class="btn primary" id="scInsBtn" type="button">inspect ↧</button></div>
+          <div class="hintline" id="scInsNote" style="margin:0">Fetches the page and extracts its existing structured data (works on the live site).</div>
+          <div id="scInsTypes" class="hintline" style="margin:0;color:var(--accent)"></div>
+          <pre id="scInsOut" class="code" style="max-height:220px"></pre>
+        </div>
+      </div>
       <div class="play">
         <div class="panel"><div class="hd"><span class="fn">fields</span><span>editable</span></div>
           <div class="ctrl" style="align-content:start">
@@ -1069,5 +1078,37 @@ en-au | https://example.com.au/</textarea></div>
     document.getElementById('itReset').addEventListener('click',function(){itPath=[];itNode=IT.start;itDraw();});
   }
   if(document.getElementById('itBox'))itDraw();
+
+  // ---- live robots.txt fetch (robots tab) ----
+  var rbBtn=document.getElementById('rbFetchBtn');
+  if(rbBtn)rbBtn.addEventListener('click',function(){
+    var u=(document.getElementById('rbFetchUrl').value||'').trim(), note=document.getElementById('rbFetchNote');
+    if(!u){note.textContent='Enter a URL first.';return;}
+    note.textContent='Fetching robots.txt …'; rbBtn.disabled=true;
+    fetch('/api/fetch.php?mode=robots&url='+encodeURIComponent(u)).then(function(r){return r.json();}).then(function(d){
+      rbBtn.disabled=false;
+      if(!d||!d.ok){note.textContent='Could not fetch'+(d&&d.error?' ('+d.error+')':'')+'.';return;}
+      var el=document.getElementById('robots');
+      if(d.status>=400||!d.robots){el.value='# '+d.final_url+' -> HTTP '+d.status+' (no robots.txt)\n# By default, everything is allowed.';note.textContent='No robots.txt (HTTP '+d.status+') — everything allowed by default.';}
+      else{el.value=d.robots;note.textContent='Loaded from '+d.final_url+' (HTTP '+d.status+'). Now test a path below.';}
+      el.dispatchEvent(new Event('input'));
+    }).catch(function(){rbBtn.disabled=false;note.textContent='Fetch is blocked in this preview — works on the live site.';});
+  });
+
+  // ---- live JSON-LD inspector (schema tab) ----
+  var scIns=document.getElementById('scInsBtn');
+  if(scIns)scIns.addEventListener('click',function(){
+    var u=(document.getElementById('scInsUrl').value||'').trim(), note=document.getElementById('scInsNote');
+    if(!u){note.textContent='Enter a URL first.';return;}
+    note.textContent='Fetching …'; scIns.disabled=true;
+    fetch('/api/fetch.php?mode=schema&url='+encodeURIComponent(u)).then(function(r){return r.json();}).then(function(d){
+      scIns.disabled=false;
+      if(!d||!d.ok){note.textContent='Could not fetch'+(d&&d.error?' ('+d.error+')':'')+'.';return;}
+      note.textContent='HTTP '+d.status+' - '+d.count+' JSON-LD block'+(d.count===1?'':'s')+' found.';
+      document.getElementById('scInsTypes').textContent=(d.types&&d.types.length)?('@types: '+d.types.join(', ')):'';
+      var out=(d.blocks&&d.blocks.length)?d.blocks.map(function(b){try{return JSON.stringify(JSON.parse(b),null,2);}catch(e){return b;}}).join('\n\n/* ---- next block ---- */\n\n'):'(no JSON-LD found on this page)';
+      document.getElementById('scInsOut').textContent=out;
+    }).catch(function(){scIns.disabled=false;note.textContent='Fetch is blocked in this preview — works on the live site.';});
+  });
 })();
 </script>
