@@ -13,6 +13,19 @@ function fail($m, $code = 400) {
     exit;
 }
 
+function collect_types($node, &$types) {
+    if (is_array($node)) {
+        foreach ($node as $k => $v) {
+            if ($k === '@type') {
+                if (is_array($v)) { foreach ($v as $t) if (is_string($t)) $types[] = $t; }
+                elseif (is_string($v)) $types[] = $v;
+            } else {
+                collect_types($v, $types);
+            }
+        }
+    }
+}
+
 $url  = isset($_GET['url'])  ? trim($_GET['url'])  : '';
 $mode = isset($_GET['mode']) ? strtolower(trim($_GET['mode'])) : 'og';
 if (!in_array($mode, ['og', 'robots', 'schema'], true)) $mode = 'og';
@@ -86,15 +99,20 @@ $html = substr($buf, 0, 524288);
 if ($mode === 'schema') {
     $blocks = [];
     $types  = [];
+    // Extract candidate <script type="application/ld+json"> blocks, then KEEP ONLY
+    // ones that parse as valid JSON (so we ignore @type strings that live inside
+    // ordinary page JavaScript). Types are derived from the parsed data, not the raw HTML.
     if (preg_match_all('/<script[^>]+type=["\']application\/ld\+json["\'][^>]*>(.*?)<\/script>/is', $html, $mm)) {
-        foreach ($mm[1] as $b) {
-            $b = trim(html_entity_decode($b, ENT_QUOTES | ENT_HTML5));
-            if ($b !== '') $blocks[] = $b;
+        foreach ($mm[1] as $raw) {
+            $raw = trim(html_entity_decode($raw, ENT_QUOTES | ENT_HTML5));
+            if ($raw === '') continue;
+            $data = json_decode($raw, true);
+            if ($data === null) continue; // not valid JSON-LD -> skip
+            $blocks[] = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+            collect_types($data, $types);
         }
     }
-    if (preg_match_all('/"@type"\s*:\s*"([^"]+)"/', $html, $tm)) {
-        $types = array_values(array_unique($tm[1]));
-    }
+    $types = array_values(array_unique($types));
     echo json_encode([
         'ok' => true, 'mode' => 'schema', 'status' => $code, 'final_url' => $final,
         'count' => count($blocks), 'types' => $types, 'blocks' => $blocks,
