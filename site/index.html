@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="google-site-verification" content="CIKjY7k4ZzqAcKmJATjz5bCmdoRyQMdc8zQQJv7j5cg">
+<meta name="description" content="Kushal Pathak — technical SEO strategist in Kathmandu. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.">
+<link rel="canonical" href="https://pkushal.com.np/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0a0f14">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kushal Pathak">
+<meta property="og:title" content="Kushal Pathak — Technical SEO Strategist">
+<meta property="og:description" content="Rankings are an engineering problem. I do the engineering — rendering, crawlability, schema and indexation.">
+<meta property="og:url" content="https://pkushal.com.np/">
+<meta property="og:image" content="https://pkushal.com.np/assets/kushal.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kushal Pathak — Technical SEO Strategist">
+<meta name="twitter:description" content="Rankings are an engineering problem. I do the engineering.">
+<meta name="twitter:image" content="https://pkushal.com.np/assets/kushal.webp">
+<style>[hidden]{display:none!important}img{max-width:100%;height:auto}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://pkushal.com.np/#kushal","name":"Kushal Pathak","url":"https://pkushal.com.np/","jobTitle":"Technical SEO Strategist","image":"https://pkushal.com.np/assets/kushal.webp","worksFor":{"@type":"Organization","name":"RankMeTop","url":"https://rankmetop.net/"},"alumniOf":"Bachelor of Information Technology (BIT)","knowsAbout":["Technical SEO","JavaScript Rendering","Structured Data","Indexation Strategy","Core Web Vitals","Analytics and Measurement"],"address":{"@type":"PostalAddress","addressLocality":"Kathmandu","addressCountry":"NP"},"sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},{"@type":"WebSite","@id":"https://pkushal.com.np/#website","url":"https://pkushal.com.np/","name":"Kushal Pathak","publisher":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"},{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak — Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}</script>
+<title>Kushal Pathak — Technical SEO Strategist in Kathmandu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#0a0f14; --bg-2:#0d131a; --surface:#121a23; --surface-2:#17212c;
+    --border:#22303d; --border-2:#2d3f4f;
+    --text:#e6edf3; --muted:#8b98a5; --dim:#5f6d7a;
+    --accent:#5cc8ff; --accent-dim:#2a6f96;
+    --ok:#3fb950; --bad:#f85149; --warn:#d29922; --prompt:#7ee787;
+    --maxw:1120px; --gutter:22px;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--sans);font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(60rem 40rem at 78% -8%, rgba(92,200,255,.07), transparent 60%),
+      linear-gradient(var(--bg),var(--bg));
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline;text-underline-offset:3px}
+  ::selection{background:rgba(92,200,255,.25);color:#fff}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:.6em;margin:0 0 1.1rem}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent-dim)}
+  h1,h2,h3{text-wrap:balance;line-height:1.12;margin:0}
+  section{padding-block:clamp(56px,8vw,96px);border-top:1px solid var(--border)}
+
+  /* NAV */
+  header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+    background:rgba(10,15,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav .row{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+  .brand{font-family:var(--mono);font-size:.9rem;color:var(--text);white-space:nowrap}
+  .brand b{color:var(--accent);font-weight:600}
+  .brand .cur{color:var(--prompt);animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  nav.links{display:flex;gap:22px;align-items:center}
+  nav.links a{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+  nav.links a:hover{color:var(--text);text-decoration:none}
+  @media(max-width:760px){nav.links{display:none}}
+
+  /* HERO */
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;
+    padding-block:clamp(52px,9vw,104px);border-top:none}
+  .hero h1{font-family:var(--mono);font-weight:600;font-size:clamp(2rem,4.6vw,3.35rem);letter-spacing:-.01em}
+  .hero h1 .hl{color:var(--accent)}
+  .hero h1 .cur{color:var(--prompt);animation:blink 1.1s steps(1) infinite;font-weight:400}
+  .lede{color:var(--muted);font-size:1.075rem;max-width:52ch;margin:1.4rem 0 0}
+  .lede b{color:var(--text);font-weight:500}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:2rem}
+  .btn{font-family:var(--mono);font-size:.86rem;padding:.72em 1.15em;border-radius:8px;border:1px solid var(--border-2);
+    color:var(--text);background:var(--surface);display:inline-flex;gap:.5em;align-items:center;transition:.15s}
+  .btn:hover{border-color:var(--accent);color:#fff;text-decoration:none;transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(180deg,#123246,#0e2635);border-color:var(--accent-dim);color:#dff3ff}
+  .btn.primary:hover{border-color:var(--accent)}
+
+  /* terminal card */
+  .term{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 24px 60px -30px rgba(0,0,0,.8)}
+  .term .bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+  .dot{width:11px;height:11px;border-radius:50%;background:#33404c}
+  .dot.r{background:#e05a51}.dot.y{background:#d6a441}.dot.g{background:#54a95c}
+  .term .bar span{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
+  .term .body{padding:16px 16px 20px;font-family:var(--mono);font-size:.82rem;line-height:1.85;overflow-x:auto}
+  .term .body .c{color:var(--prompt)}.term .body .k{color:var(--accent)}
+  .term .body .p{color:var(--muted)}.term .body .s{color:var(--text)}
+  .term .body .cur{color:var(--prompt);animation:blink 1.1s steps(1) infinite}
+
+  /* STATS */
+  .stats{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
+  .stats .cell{flex:1 1 190px;padding:22px 24px;border-right:1px solid var(--border)}
+  .stats .cell:last-child{border-right:none}
+  .stats .n{font-family:var(--mono);font-size:1.7rem;font-weight:600;color:var(--text);font-variant-numeric:tabular-nums}
+  .stats .n .u{color:var(--accent);font-size:1.1rem}
+  .stats .l{color:var(--muted);font-size:.82rem;margin-top:2px}
+
+  .grid{display:grid;gap:16px}
+  h2.big{font-family:var(--mono);font-weight:600;font-size:clamp(1.5rem,3vw,2.05rem)}
+  .sub{color:var(--muted);max-width:60ch;margin:.9rem 0 2.4rem}
+
+  /* frameworks */
+  .fw{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .fw .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;transition:.15s}
+  .fw .card:hover{border-color:var(--border-2);background:var(--surface-2)}
+  .fw .id{font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.1em}
+  .fw h3{font-family:var(--mono);font-size:1.02rem;margin:.55rem 0 .5rem;color:var(--text)}
+  .fw p{color:var(--muted);font-size:.92rem;margin:0}
+
+  /* services */
+  .svc{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .svc .it{background:var(--bg-2);padding:18px 20px}
+  .svc .it h4{font-family:var(--mono);font-size:.9rem;margin:0 0 .35rem;color:var(--text);display:flex;gap:.55em;align-items:baseline}
+  .svc .it h4 i{color:var(--accent);font-style:normal;font-size:.78rem}
+  .svc .it p{color:var(--muted);font-size:.82rem;margin:0}
+
+  /* skills */
+  .skill{display:grid;grid-template-columns:1fr;gap:13px;max-width:760px}
+  .skill .row{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center}
+  .skill .nm{font-size:.92rem}
+  .skill .pct{font-family:var(--mono);font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+  .skill .track{grid-column:1/-1;height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+  .skill .fill{height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent))}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .tag{font-family:var(--mono);font-size:.76rem;color:var(--muted);border:1px solid var(--border);border-radius:20px;padding:.35em .85em}
+
+  /* playground */
+  .play{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .panel{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .panel .hd{padding:11px 14px;background:var(--surface);border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.76rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+  .panel .hd .fn{color:var(--prompt)}
+  textarea#robots{width:100%;min-height:280px;resize:vertical;border:none;background:transparent;color:var(--text);
+    font-family:var(--mono);font-size:.82rem;line-height:1.7;padding:14px;outline:none}
+  .ctrl{padding:14px;display:grid;gap:12px}
+  .ctrl label{font-family:var(--mono);font-size:.74rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:6px}
+  .ctrl input,.ctrl select,.ctrl textarea{width:100%;background:var(--surface);border:1px solid var(--border-2);border-radius:8px;color:var(--text);
+    font-family:var(--mono);font-size:.86rem;padding:.65em .8em;outline:none;resize:vertical;line-height:1.6}
+  .ctrl input:focus,.ctrl select:focus,.ctrl textarea:focus{border-color:var(--accent)}
+  .verdict{margin-top:4px;border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--surface)}
+  .verdict .badge{font-family:var(--mono);font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:.5em;padding:.35em .8em;border-radius:7px}
+  .badge.ok{color:#0a0f14;background:var(--ok)}
+  .badge.bad{color:#fff;background:var(--bad)}
+  .verdict .exp{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-top:12px;line-height:1.7}
+  .verdict .exp b{color:var(--text)}
+  .verdict .exp .mm{color:var(--accent)}
+  .hintline{font-family:var(--mono);font-size:.74rem;color:var(--dim);margin-top:10px}
+
+  /* brands */
+  .brands{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .brands .b{background:var(--bg-2);padding:22px 20px}
+  .brands .b .t{font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.08em}
+  .brands .b .d{color:var(--text);margin-top:6px;font-size:.95rem}
+  .brands .b .m{color:var(--dim);font-size:.78rem;margin-top:4px}
+
+  /* about */
+  .about{display:grid;grid-template-columns:1.3fr .9fr;gap:40px}
+  .about p{color:var(--muted)}
+  .about p b{color:var(--text);font-weight:500}
+  .timeline{font-family:var(--mono);font-size:.84rem;display:grid;gap:14px}
+  .timeline .t{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+  .timeline .yr{color:var(--accent);white-space:nowrap}
+  .timeline .rl{color:var(--text)}
+  .timeline .t .rl small{display:block;color:var(--dim)}
+
+  /* contact */
+  .contact .box{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:26px;font-family:var(--mono);font-size:.9rem}
+  .contact .line{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--border);flex-wrap:wrap}
+  .contact .line:last-child{border-bottom:none}
+  .contact .k{color:var(--dim);min-width:120px}
+  .contact .v a{color:var(--text)}.contact .v a:hover{color:var(--accent)}
+
+  footer{border-top:1px solid var(--border);padding-block:34px;color:var(--dim);font-family:var(--mono);font-size:.78rem}
+  footer .cmt{color:var(--dim);white-space:pre-wrap;line-height:1.7}
+  footer .cmt .g{color:#3a4a56}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;gap:34px}
+    .play{grid-template-columns:1fr}
+    .about{grid-template-columns:1fr;gap:26px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+  .photoband{position:relative;border:1px solid var(--border);border-radius:14px;overflow:hidden;aspect-ratio:16/6.5}
+  .photoband img{width:100%;height:100%;object-fit:cover;object-position:62% 42%;filter:saturate(.92) contrast(1.03) brightness(.8);display:block}
+  .photoband::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,15,20,.62),rgba(10,15,20,.08) 42%,rgba(10,15,20,.5))}
+  .pcap{position:absolute;left:16px;bottom:14px;z-index:2;font-size:.76rem;color:#d6ecf7;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+  .build{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-top:4px}
+  .build .id{font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.1em}
+  .build h4{font-family:var(--mono);font-size:1rem;margin:.4rem 0 .3rem;color:var(--text)}
+  .build p{color:var(--muted);font-size:.88rem;margin:0;max-width:60ch}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .tab{font-family:var(--mono);font-size:.82rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.55em 1em;cursor:pointer;transition:.15s}
+  .tab:hover{color:var(--text);border-color:var(--border-2)}
+  .tab.is-on{color:#dff3ff;border-color:var(--accent);background:linear-gradient(180deg,#123246,#0e2635)}
+  .labnote{color:var(--muted);font-size:.9rem;margin:0 0 16px;max-width:70ch}
+  .code{margin:0;padding:14px;font-family:var(--mono);font-size:.78rem;line-height:1.65;color:var(--text);white-space:pre;overflow:auto;max-height:360px}
+  .copy{font-family:var(--mono);font-size:.72rem;color:var(--muted);background:transparent;border:1px solid var(--border-2);border-radius:6px;padding:.25em .7em;cursor:pointer}
+  .copy:hover{color:var(--text);border-color:var(--accent)}
+  .serp{padding:16px}
+  .serp .s-url{font-family:var(--sans);font-size:.8rem;color:#9fb2c0}
+  .serp .s-title{font-family:var(--sans);font-size:1.25rem;color:#8ab4f8;margin:4px 0 3px;line-height:1.3}
+  .serp .s-desc{font-family:var(--sans);font-size:.88rem;color:#c7d0d9;line-height:1.5}
+  .meter{margin-top:12px;display:grid;gap:9px;font-family:var(--mono);font-size:.76rem}
+  .meter .m{display:grid;grid-template-columns:92px 1fr auto;gap:10px;align-items:center}
+  .meter .bar{height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+  .meter .bf{height:100%;background:var(--ok)}
+  .meter .bf.warn{background:var(--warn)}.meter .bf.bad{background:var(--bad)}
+  .meter .lab{color:var(--muted)}
+  .quiz .q{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+  .quiz .qn{font-size:.95rem;margin:0 0 10px}
+  .quiz .qn b{font-family:var(--mono);color:var(--accent);margin-right:.5em}
+  .quiz .opt{display:block;width:100%;text-align:left;font-family:var(--sans);font-size:.88rem;color:var(--text);background:var(--bg-2);border:1px solid var(--border);border-radius:8px;padding:.6em .8em;margin:6px 0;cursor:pointer;transition:.12s}
+  .quiz .opt:hover{border-color:var(--border-2)}
+  .quiz .opt.correct{border-color:var(--ok);background:rgba(63,185,80,.12)}
+  .quiz .opt.wrong{border-color:var(--bad);background:rgba(248,81,73,.12)}
+  .quiz .opt:disabled{cursor:default}
+  .quiz .score{font-family:var(--mono);text-align:center;padding:24px;background:var(--surface);border:1px solid var(--accent-dim);border-radius:12px}
+  .quiz .score .big{font-size:2rem;color:var(--accent)}
+  .quiz .tier{font-family:var(--mono);font-size:.8rem;color:var(--accent);letter-spacing:.05em;margin:20px 0 10px;padding-top:8px;border-top:1px solid var(--border)}
+  .quiz .tier:first-child{border-top:none;margin-top:0;padding-top:0}
+  .itbox{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;max-width:720px}
+  .itq{font-size:1.05rem;margin-bottom:16px;line-height:1.4}
+  .itbtns{display:flex;gap:10px;flex-wrap:wrap}
+  .itresult{font-size:.96rem;color:var(--text);line-height:1.6;background:var(--bg-2);border:1px solid var(--border-2);border-radius:10px;padding:16px;margin-bottom:16px}
+  .ogcard{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-2);max-width:520px}
+  .ogimg{aspect-ratio:1.91/1;background:#0e1620 center/cover no-repeat;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border)}
+  .ogimg span{font-family:var(--mono);font-size:.7rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+  .ogmeta{padding:12px 14px}
+  .oghost{font-family:var(--mono);font-size:.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+  .ogtitle{font-size:1rem;color:var(--text);margin:4px 0 3px;line-height:1.3}
+  .ogdesc{font-size:.85rem;color:var(--muted);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .qtab{font-family:var(--mono);font-size:.82rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.55em 1.1em;cursor:pointer;transition:.15s}
+  .qtab:hover{color:var(--text);border-color:var(--border-2)}
+  .qtab.is-on{color:#dff3ff;border-color:var(--accent);background:linear-gradient(180deg,#123246,#0e2635)}
+  .qscore:empty{display:none}
+  .ittree{display:flex;flex-direction:column}
+  .itnode{position:relative;padding:14px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+  .itnode+.itnode{margin-top:24px}
+  .itnode+.itnode::before{content:"";position:absolute;left:26px;top:-24px;height:24px;width:2px;background:var(--border-2)}
+  .itnode.current{border-color:var(--accent-dim)}
+  .itnode.leaf{border:none;padding:0;background:transparent}
+  .itnode.done{opacity:.92}
+  .itq2{font-size:.96rem;margin-bottom:10px;line-height:1.4}
+  .itchip{font-family:var(--mono);font-size:.72rem;padding:.22em .75em;border-radius:6px;display:inline-block}
+  .itchip.y{background:var(--ok);color:#0a0f14}
+  .itchip.n{background:var(--surface-2);color:var(--muted);border:1px solid var(--border-2)}
+</style>
+
+</head>
+<body>
+<header class="nav">
+  <div class="wrap row">
+    <div class="brand">~/kushal-pathak <b>$</b> <span class="cur">▋</span></div>
+    <nav class="links">
+      <a href="#about">about</a>
+      <a href="#frameworks">frameworks</a>
+      <a href="#work">work</a>
+      <a href="#skills">skills</a>
+      <a href="#playground">lab</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none">
+    <div>
+      <p class="eyebrow" style="margin-bottom:1.4rem">Technical SEO Strategist · Kathmandu</p>
+      <h1>Rankings are an <span class="hl">engineering</span> problem.<br>I do the engineering.<span class="cur">▋</span></h1>
+      <p class="lede">I'm <b>Kushal Pathak</b>. I fix the code that blocks rankings — and untangle sites that are <b>indexed but not winning</b>: rendering, crawlability, structured data, indexation, and forensic Search Console diagnosis.</p>
+      <div class="cta">
+        <a class="btn primary" href="#playground">▶ open the technical seo lab</a>
+        <a class="btn" href="#frameworks">./frameworks --list</a>
+      </div>
+    </div>
+    <div class="term" aria-hidden="true">
+      <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>kushal@seo — zsh</span></div>
+      <div class="body">
+<span class="c">$</span> <span class="s">whoami</span><br>
+<span class="k">kushal pathak</span> <span class="p">· technical seo strategist</span><br>
+<span class="c">$</span> <span class="s">cat ./profile.json</span><br>
+<span class="p">{</span><br>
+&nbsp;&nbsp;<span class="k">"experience"</span>: <span class="s">"2.5 yrs"</span>,<br>
+&nbsp;&nbsp;<span class="k">"brands"</span>: <span class="s">"50+"</span>,<br>
+&nbsp;&nbsp;<span class="k">"countries"</span>: <span class="s">10</span>,<br>
+&nbsp;&nbsp;<span class="k">"focus"</span>: <span class="s">"crawl · render · schema · data"</span><br>
+<span class="p">}</span><br>
+<span class="c">$</span> <span class="s">./diagnose --site indexed-not-winning</span><br>
+<span class="p">→ running Graduation Engine…</span> <span class="cur">▋</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section style="border-top:none;padding-top:0">
+    <div class="stats">
+      <div class="cell"><div class="n">2.5<span class="u">+ yrs</span></div><div class="l">since Jan 2024</div></div>
+      <div class="cell"><div class="n">50<span class="u">+</span></div><div class="l">brands engineered</div></div>
+      <div class="cell"><div class="n">10</div><div class="l">countries</div></div>
+      <div class="cell"><div class="n">20<span class="u">+</span></div><div class="l">industries</div></div>
+      <div class="cell"><div class="n">CPG · SaaS</div><div class="l">national brands &amp; funded platforms</div></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="eyebrow">// 01 — about</p>
+    <div class="about">
+      <div>
+        <h2 class="big">The parts of SEO most people avoid.</h2>
+        <p style="margin-top:1.2rem">Since 2024 I've worked on <b>50+ websites</b> across <b>10 countries</b> and 20+ industries — home services, ecommerce, SaaS, health, real estate, manufacturing. My lane is the technical layer: <b>JavaScript rendering, crawl architecture, structured data, indexation strategy,</b> and forensic Google Search Console diagnosis.</p>
+        <p>I don't stop at recommendations. I build the automation that ships the fix at scale — Apps Script, Python, WordPress plugins, and my own <b>self-built SEO automation assistant</b>. My method is evidence-first: <b>check the data, prove the cause, then fix it.</b></p>
+        <p class="mono" style="font-size:.82rem;color:var(--dim);margin-top:1.1rem"># education: BIT — Bachelor of Information Technology</p>
+      </div>
+      <div class="timeline" aria-label="Career timeline">
+        <div class="t"><span class="yr">2026 →</span><span class="rl">Technical SEO Team Lead / Strategist<small>RankMeTop</small></span></div>
+        <div class="t"><span class="yr">2025</span><span class="rl">Technical SEO Executive<small>RankMeTop</small></span></div>
+        <div class="t"><span class="yr">2024 Jun</span><span class="rl">SEO Trainee</span></div>
+        <div class="t"><span class="yr">2024 Jan</span><span class="rl">SEO Intern</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BAND -->
+  <section aria-label="Kushal Pathak in the field" style="padding-top:0;border-top:none">
+    <div class="photoband">
+      <img src="/assets/kushal.webp" alt="Kushal Pathak sitting by an alpine lake in the Nepal Himalaya" width="1440" height="1440">
+      <div class="pcap mono">// off the clock — Gosaikunda, Nepal</div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORKS -->
+  <section id="frameworks">
+    <p class="eyebrow">// 02 — frameworks</p>
+    <h2 class="big">Named systems, not vibes.</h2>
+    <p class="sub">Repeatable methodologies I run on every engagement — each one built from hundreds of real diagnoses.</p>
+    <div class="fw">
+      <div class="card"><div class="id">FW-01</div><h3>The Render-Gap Protocol</h3><p>Reconcile the pre-render HTML payload against the hydrated DOM to expose exactly what crawlers and LLM agents resolve — then close the delta.</p></div>
+      <div class="card"><div class="id">FW-02</div><h3>The Graduation Engine</h3><p>Classify <i>why</i> an indexed site stays suppressed — impressions without conversions — into discrete failure modes, and compute a data-derived exit path from Search Console.</p></div>
+      <div class="card"><div class="id">FW-03</div><h3>Entity-First Architecture</h3><p>Build a machine-legible entity ontology and gate every URL through “does this query deserve a page?”, so topical authority compounds instead of diluting.</p></div>
+      <div class="card"><div class="id">FW-04</div><h3>Evidence-Bound Forensics</h3><p>Interrogate first-party data — Search Console and response headers — before asserting cause. Every finding ships as Issue → Evidence → Solution → Execution.</p></div>
+      <div class="card"><div class="id">FW-05</div><h3>The Machine-Readable Layer</h3><p>Structured data, semantic HTML, and AI-crawler access engineered so a site is legible to classic search and generative retrieval alike.</p></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="work">
+    <p class="eyebrow">// 03 — what i do</p>
+    <h2 class="big">Full-stack technical SEO &amp; measurement.</h2>
+    <p class="sub">From crawl to conversion tracking — the whole pipeline that turns a page into a ranked, measured, revenue-attributed asset.</p>
+    <div class="svc">
+      <div class="it"><h4><i>01</i> Technical Audits &amp; Forensics</h4><p>Page-level, evidence-bound audits with prioritized fixes.</p></div>
+      <div class="it"><h4><i>02</i> Rendering &amp; Crawl Architecture</h4><p>JS rendering, robots/llms.txt, log &amp; crawl-budget analysis.</p></div>
+      <div class="it"><h4><i>03</i> Schema / Structured Data</h4><p>Hand-built JSON-LD, entity markup, rich-result engineering.</p></div>
+      <div class="it"><h4><i>04</i> Entity &amp; Topical Architecture</h4><p>Ontologies, topical maps, query-deserves-a-page planning.</p></div>
+      <div class="it"><h4><i>05</i> Migrations &amp; Indexation</h4><p>Canonical strategy, product vs. collection indexation, redirects.</p></div>
+      <div class="it"><h4><i>06</i> Core Web Vitals</h4><p>Field-data-driven performance and rendering optimization.</p></div>
+      <div class="it"><h4><i>07</i> GSC Diagnostics &amp; Recovery</h4><p>Drops, core &amp; spam updates, the sandbox/graduation problem.</p></div>
+      <div class="it"><h4><i>08</i> Analytics &amp; Measurement</h4><p>GA4, Google Tag Manager, data-layer &amp; conversion tracking, Looker Studio, BigQuery.</p></div>
+      <div class="it"><h4><i>09</i> Paid-Media Tracking &amp; Feeds</h4><p>Google &amp; Meta Ads tracking, Google Merchant Center product feeds.</p></div>
+      <div class="it"><h4><i>10</i> SEO Automation &amp; Tooling</h4><p>Apps Script, Python, WordPress plugins, and a self-built SEO automation assistant.</p></div>
+      <div class="it"><h4><i>11</i> Hosting, DNS &amp; Migrations</h4><p>Cloudflare, SSL, CDN/caching, and server moves across cPanel, managed WordPress &amp; cloud hosts.</p></div>
+    </div>
+  </section>
+
+  <!-- PLATFORMS -->
+  <section style="padding-top:0;border-top:none">
+    <div class="build" style="justify-content:flex-start">
+      <div>
+        <div class="id">PLATFORM- &amp; HOST-AGNOSTIC</div>
+        <h4>WordPress · Shopify · BigCommerce · Squarespace · Wix · Webflow · headless &amp; custom CMS</h4>
+        <p>Any platform, any stack — whatever technical issue it surfaces, or whatever the requirement demands, it gets solved. No exceptions.</p>
+        <h4 style="margin-top:16px">Cloudflare · Cloudways · SiteGround · Kinsta · WP Engine · AWS · Hostinger · Bluehost · HostGator</h4>
+        <p>Hosting &amp; infrastructure too — DNS, CDN, SSL, caching and server migrations across managed and cloud hosts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED BUILD -->
+  <section style="padding-top:0;border-top:none">
+    <div class="build">
+      <div>
+        <div class="id">SELECTED BUILD · TypeScript</div>
+        <h4>SEO Automation Assistant</h4>
+        <p>A self-built bot that automates repetitive technical-SEO and daily ops tasks — the tooling side of how I ship fixes at scale.</p>
+      </div>
+      <div><a class="btn" href="https://github.com/Kushzz18/SEO-Automation-Assistant" target="_blank" rel="noopener">view on github ↗</a></div>
+    </div>
+  </section>
+
+  <!-- BRANDS -->
+  <section id="brands">
+    <p class="eyebrow">// 04 — brands</p>
+    <h2 class="big">Work you'd recognize — under NDA.</h2>
+    <p class="sub">Client names stay private, but the scale doesn't have to. A sample of the categories I've engineered for.</p>
+    <div class="stats" style="margin-bottom:28px">
+      <div class="cell"><div class="n">1.5<span class="u">B+</span></div><div class="l">annual search impressions across managed properties</div></div>
+      <div class="cell"><div class="n">21<span class="u">M+</span></div><div class="l">annual organic clicks</div></div>
+      <div class="cell"><div class="n">YMYL</div><div class="l">health, CPG &amp; SaaS at national scale</div></div>
+    </div>
+    <div class="brands">
+      <div class="b"><div class="t">CPG · FOOD</div><div class="d">National seafood &amp; BBQ brands</div><div class="m">shelf brands · high-volume organic</div></div>
+      <div class="b"><div class="t">HEALTH</div><div class="d">A top health-authority site</div><div class="m">YMYL · six-figure monthly sessions</div></div>
+      <div class="b"><div class="t">SAAS</div><div class="d">Funded software platforms</div><div class="m">IT, CMMS, real-estate tech</div></div>
+      <div class="b"><div class="t">ECOM · SERVICES</div><div class="d">DTC &amp; multi-geo home services</div><div class="m">US · UK · AU · CA · IE</div></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="eyebrow">// 05 — skills</p>
+    <h2 class="big">Proficiency, self-assessed.</h2>
+    <p class="sub">Honest levels — deep where it counts, competent across the measurement stack.</p>
+    <div class="skill" id="skillList">
+      <div class="row" data-p="95"><span class="nm">Technical SEO &amp; Crawl Architecture</span><span class="pct">95</span><div class="track"><div class="fill"></div></div></div>
+      <div class="row" data-p="92"><span class="nm">Structured Data / Schema Engineering</span><span class="pct">92</span><div class="track"><div class="fill"></div></div></div>
+      <div class="row" data-p="90"><span class="nm">JS Rendering &amp; Render-Gap Analysis</span><span class="pct">90</span><div class="track"><div class="fill"></div></div></div>
+      <div class="row" data-p="90"><span class="nm">GSC Diagnostics &amp; Data Analysis</span><span class="pct">90</span><div class="track"><div class="fill"></div></div></div>
+      <div class="row" data-p="88"><span class="nm">Entity &amp; Topical Architecture</span><span class="pct">88</span><div class="track"><div class="fill"></div></div></div>
+      <div class="row" data-p="85"><span class="nm">Analytics &amp; Measurement (GA4 · GTM)</span><span class="pct">85</span><div class="track"><div class="fill"></div></div></div>
+      <div class="row" data-p="84"><span class="nm">SEO Automation &amp; Tooling (self-built)</span><span class="pct">84</span><div class="track"><div class="fill"></div></div></div>
+      <div class="row" data-p="72"><span class="nm">Paid-Media Tracking &amp; Feeds</span><span class="pct">72</span><div class="track"><div class="fill"></div></div></div>
+    </div>
+    <div class="tags">
+      <span class="tag">Screaming Frog</span><span class="tag">Search Console</span><span class="tag">GA4</span><span class="tag">GTM</span>
+      <span class="tag">Looker Studio</span><span class="tag">BigQuery</span><span class="tag">Cloudflare</span><span class="tag">Ahrefs</span><span class="tag">DataForSEO</span><span class="tag">Apps Script</span>
+      <span class="tag">Python</span><span class="tag">WordPress / Rank Math</span><span class="tag">Merchant Center</span><span class="tag">Microsoft Clarity</span>
+    </div>
+  </section>
+
+  <!-- PLAYGROUND -->
+  <section id="playground">
+    <p class="eyebrow">// 06 — the lab</p>
+    <h2 class="big">The technical SEO lab.</h2>
+    <p class="sub">Four working tools, not screenshots — each running the actual algorithm I use every day, live in your browser.</p>
+    <div class="tabs" role="tablist">
+      <button class="tab is-on" data-tab="robots" type="button">robots.txt</button>
+      <button class="tab" data-tab="schema" type="button">schema generator</button>
+      <button class="tab" data-tab="serp" type="button">serp preview</button>
+      <button class="tab" data-tab="render" type="button">render-gap</button>
+      <button class="tab" data-tab="hreflang" type="button">hreflang</button>
+      <button class="tab" data-tab="og" type="button">open graph</button>
+      <button class="tab" data-tab="index" type="button">index tree</button>
+      <button class="tab" data-tab="quiz" type="button">quiz</button>
+    </div>
+    <div class="tabpane" id="tab-robots">
+    <p class="labnote">Google's real matching logic — group selection, longest-match wins, <b>Allow</b> beats <b>Disallow</b> on ties, with <code>*</code> and <code>$</code> wildcards.</p>
+    <div class="play">
+      <div class="panel">
+        <div class="hd"><span class="fn">robots.txt</span><span>editable</span></div>
+        <textarea id="robots" spellcheck="false" aria-label="robots.txt content"># edit me — this is parsed live
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /cart/
+Disallow: /*?s=
+Disallow: /*.pdf$
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Googlebot
+Allow: /
+Disallow: /private/
+
+Sitemap: https://example.com/sitemap.xml</textarea>
+      </div>
+      <div>
+        <div class="panel">
+          <div class="hd"><span class="fn">test</span><span>live</span></div>
+          <div class="ctrl">
+            <div>
+              <label for="ua">user-agent</label>
+              <select id="ua">
+                <option>Googlebot</option>
+                <option>Googlebot-Image</option>
+                <option>Bingbot</option>
+                <option>GPTBot</option>
+                <option>ClaudeBot</option>
+                <option>CCBot</option>
+                <option value="*">* (any other crawler)</option>
+              </select>
+            </div>
+            <div>
+              <label for="path">url path</label>
+              <input id="path" value="/wp-admin/admin-ajax.php" spellcheck="false">
+            </div>
+          </div>
+        </div>
+        <div class="verdict" id="verdict" aria-live="polite"></div>
+        <div class="hintline">try: <code>/private/report.pdf</code> as Googlebot vs *, or any path as GPTBot.</div>
+      </div>
+    </div>
+    </div><!-- /tab-robots -->
+
+    <div class="tabpane" id="tab-schema" hidden>
+      <p class="labnote">Entity-grade JSON-LD — <code>@graph</code> wiring by <code>@id</code>, <b>sameAs</b> entity-linking (Wikipedia + Wikidata), <b>areaServed</b> with geo, <b>additionalType</b> (productontology), FAQ <code>hasPart</code>. The structured data an AI can't fake. Fields with <code>|</code> take one item per line.</p>
+      <div class="play">
+        <div class="panel"><div class="hd"><span class="fn">fields</span><span>editable</span></div>
+          <div class="ctrl" style="align-content:start">
+            <div>
+              <label for="scType">schema type</label>
+              <select id="scType">
+                <option>LocalBusiness (full @graph)</option>
+                <option>Service (entity-rich)</option>
+                <option>Article / BlogPosting</option>
+                <option>Product</option>
+                <option>FAQPage</option>
+                <option>Person / ProfilePage</option>
+                <option>BreadcrumbList</option>
+                <option>Organization</option>
+              </select>
+            </div>
+            <div id="scFields" style="display:grid;gap:12px"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="hd"><span class="fn">json-ld</span><button class="copy" id="scCopy" type="button">copy</button></div>
+          <pre id="scOut" class="code"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabpane" id="tab-serp" hidden>
+      <p class="labnote">Google truncates by <b>pixel width</b>, not character count (~600px title, ~920px description on desktop). Measured live with canvas.</p>
+      <div class="play">
+        <div class="panel"><div class="hd"><span class="fn">inputs</span><span>editable</span></div>
+          <div class="ctrl" style="align-content:start">
+            <div><label for="spTitle">title tag</label><input id="spTitle" value="Technical SEO Services in Kathmandu | Kushal Pathak"></div>
+            <div><label for="spUrl">url</label><input id="spUrl" value="https://pkushal.com.np/services"></div>
+            <div><label for="spDesc">meta description</label><textarea id="spDesc" style="min-height:96px">Forensic technical SEO — rendering, crawlability, schema and indexation for sites that are indexed but not winning.</textarea></div>
+          </div>
+        </div>
+        <div>
+          <div class="panel"><div class="hd"><span class="fn">google preview</span><span>desktop</span></div>
+            <div class="serp"><div class="s-url" id="sUrl"></div><div class="s-title" id="sTitle"></div><div class="s-desc" id="sDesc"></div></div>
+          </div>
+          <div class="meter" id="sMeter"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabpane" id="tab-render" hidden>
+      <p class="labnote">The Render-Gap Protocol, visualized. Toggle between what a crawler <b>fetches</b> (raw HTML) and what a browser <b>renders</b> after JavaScript. If content only appears after JS, first-wave crawlers can miss it entirely.</p>
+      <div class="ctrl" style="max-width:340px;margin-bottom:14px"><label for="rgSel">example page</label><select id="rgSel"><option>Client-side React (CSR)</option><option>Server-rendered (SSR/SSG)</option></select></div>
+      <div class="tabs" style="margin-bottom:12px"><button class="tab rgtoggle is-on" data-v="raw" type="button">raw HTML (crawler)</button><button class="tab rgtoggle" data-v="dom" type="button">rendered DOM (after JS)</button></div>
+      <div class="panel"><div class="hd"><span class="fn">view</span><span>read-only</span></div><pre id="rgCode" class="code"></pre></div>
+      <div class="verdict" id="rgNote" style="margin-top:12px"></div>
+    </div>
+
+    <div class="tabpane" id="tab-hreflang" hidden>
+      <p class="labnote">Build a reciprocal hreflang cluster for a multi-geo brand (UK / IE / AU). Every alternate page must emit this <b>same full set</b> — or Google ignores it.</p>
+      <div class="play">
+        <div class="panel"><div class="hd"><span class="fn">locales</span><span>hreflang | URL — one per line</span></div>
+          <div class="ctrl"><div><textarea id="hlPairs" style="min-height:150px" spellcheck="false">en-us | https://example.com/
+en-gb | https://example.co.uk/
+en-au | https://example.com.au/</textarea></div>
+          <div><label for="hlXdefault">x-default URL</label><input id="hlXdefault" value="https://example.com/"></div></div>
+        </div>
+        <div>
+          <div class="panel"><div class="hd"><span class="fn">output</span><button class="copy" id="hlCopy" type="button">copy</button></div><pre id="hlOut" class="code"></pre></div>
+          <div class="verdict" id="hlWarn" style="margin-top:12px;font-family:var(--mono);font-size:.78rem;color:var(--muted);line-height:1.7"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabpane" id="tab-og" hidden>
+      <p class="labnote">Open Graph + Twitter Card tags with a live link-card preview. (The preview image may not load inside this sandbox — the tags themselves are correct.)</p>
+      <div class="panel" style="margin-bottom:14px"><div class="hd"><span class="fn">auto-fill</span><span>paste a page's &lt;head&gt; HTML</span></div>
+        <div class="ctrl"><div><textarea id="ogPaste" style="min-height:64px" spellcheck="false" placeholder="Paste a page's HTML (or just its <head>) here to auto-extract title, description, OG image, canonical…"></textarea></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn primary" id="ogExtract" type="button">extract &amp; fill ↧</button><span class="hintline" style="margin:0">On the live site this becomes “enter URL → auto-fetch” via a small server endpoint.</span></div></div>
+      </div>
+      <div class="play">
+        <div class="panel"><div class="hd"><span class="fn">inputs</span><span>editable</span></div>
+          <div class="ctrl" style="align-content:start">
+            <div><label for="ogTitle">title</label><input id="ogTitle" value="Rankings are an engineering problem — Kushal Pathak"></div>
+            <div><label for="ogDesc">description</label><textarea id="ogDesc" style="min-height:70px">Technical SEO strategist — rendering, crawlability, schema and indexation.</textarea></div>
+            <div><label for="ogUrl">url</label><input id="ogUrl" value="https://pkushal.com.np/"></div>
+            <div><label for="ogImage">image url</label><input id="ogImage" value="https://pkushal.com.np/og.jpg"></div>
+            <div><label for="ogSite">site name</label><input id="ogSite" value="Kushal Pathak"></div>
+            <div><label for="ogType">og:type</label><select id="ogType"><option>website</option><option>article</option><option>profile</option></select></div>
+            <div><label for="twCard">twitter:card</label><select id="twCard"><option>summary_large_image</option><option>summary</option></select></div>
+            <div><label for="twSite">twitter:site (optional)</label><input id="twSite" value=""></div>
+          </div>
+        </div>
+        <div>
+          <div class="ogcard"><div class="ogimg" id="ogCardImg"><span>image</span></div><div class="ogmeta"><div class="oghost" id="ogCardHost"></div><div class="ogtitle" id="ogCardTitle"></div><div class="ogdesc" id="ogCardDesc"></div></div></div>
+          <div class="panel" style="margin-top:12px"><div class="hd"><span class="fn">meta tags</span><button class="copy" id="ogCopy" type="button">copy</button></div><pre id="ogOut" class="code"></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabpane" id="tab-index" hidden>
+      <p class="labnote">"Why isn't my page indexed?" — the exact decision path I walk, from status code down to the Graduation (quality) problem.</p>
+      <div class="itbox" id="itBox"></div>
+    </div>
+
+    <div class="tabpane" id="tab-quiz" hidden>
+      <p class="labnote">Three tiers — pick your level. <b>Easy</b> = fundamentals every SEO should know cold · <b>Medium</b> = day-to-day technical judgment · <b>Hard</b> = the stuff that separates operators. 10 questions each.</p>
+      <div class="tabs" style="margin-bottom:16px">
+        <button class="qtab is-on" data-diff="easy" type="button">Easy</button>
+        <button class="qtab" data-diff="medium" type="button">Medium</button>
+        <button class="qtab" data-diff="hard" type="button">Hard</button>
+      </div>
+      <div class="quiz" id="quiz-easy"></div>
+      <div class="quiz" id="quiz-medium" hidden></div>
+      <div class="quiz" id="quiz-hard" hidden></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <p class="eyebrow">// 07 — contact</p>
+    <h2 class="big">Have a site that's indexed but not winning?</h2>
+    <p class="sub">Send the domain and the symptom. I'll tell you what the data says.</p>
+    <div class="box">
+      <div class="line"><span class="k">$ email</span><span class="v"><a href="mailto:kushalpathak18@gmail.com">kushalpathak18@gmail.com</a></span></div>
+      <div class="line"><span class="k">$ phone</span><span class="v"><a href="tel:+9779840271850">+977 9840271850</a></span></div>
+      <div class="line"><span class="k">$ linkedin</span><span class="v"><a href="https://www.linkedin.com/in/kushal-pathak-485838196/" target="_blank" rel="noopener">/in/kushal-pathak</a></span></div>
+      <div class="line"><span class="k">$ github</span><span class="v"><a href="https://github.com/Kushzz18" target="_blank" rel="noopener">/Kushzz18</a></span></div>
+      <div class="line"><span class="k">$ location</span><span class="v">Kathmandu, Nepal · GMT+5:45</span></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cmt"><span class="g"># pkushal.com.np — hand-built, statically rendered.</span>
+<span class="g"># User-agent: *  →  Allow: /   (nothing to hide here.)</span>
+<span class="g"># if you're reading the source: hello, fellow technical.</span></div>
+    <div style="margin-top:14px">© 2026 Kushal Pathak · Technical SEO Strategist</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // reveal skill bars from a visible resting state
+  document.querySelectorAll('#skillList .row').forEach(function(r){
+    var f=r.querySelector('.fill'); f.style.width='6%';
+    requestAnimationFrame(function(){ setTimeout(function(){ f.style.transition='width .9s cubic-bezier(.2,.7,.2,1)'; f.style.width=r.dataset.p+'%'; },60); });
+  });
+
+  // ---- robots.txt matcher (Google-style) ----
+  function parse(text){
+    var groups=[], cur=null, expectingAgent=false;
+    text.split(/\r?\n/).forEach(function(raw){
+      var line=raw.replace(/#.*/,'').trim(); if(!line) return;
+      var i=line.indexOf(':'); if(i<0) return;
+      var field=line.slice(0,i).trim().toLowerCase();
+      var val=line.slice(i+1).trim();
+      if(field==='user-agent'){
+        if(!cur || !expectingAgent){ cur={agents:[],rules:[]}; groups.push(cur); }
+        cur.agents.push(val.toLowerCase()); expectingAgent=true;
+      } else if(field==='allow'||field==='disallow'){
+        if(!cur){ cur={agents:['*'],rules:[]}; groups.push(cur); }
+        expectingAgent=false;
+        cur.rules.push({allow:field==='allow',path:val});
+      }
+    });
+    return groups;
+  }
+  function toRe(pattern){
+    var anchorEnd=false, p=pattern;
+    if(p.endsWith('$')){ anchorEnd=true; p=p.slice(0,-1); }
+    var re=p.replace(/[.+?^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*');
+    return new RegExp('^'+re+(anchorEnd?'$':''));
+  }
+  function evaluate(text,ua,path){
+    var groups=parse(text); ua=ua.toLowerCase();
+    // pick most specific matching group; fall back to '*'
+    var specific=null, star=null, specLen=-1;
+    groups.forEach(function(g){
+      g.agents.forEach(function(a){
+        if(a==='*'){ star=star||g; }
+        else if(ua.indexOf(a)!==-1 && a.length>specLen){ specific=g; specLen=a.length; }
+      });
+    });
+    var g=specific||star;
+    if(!g) return {allowed:true,reason:'No matching group — default allow.',group:'(none)'};
+    var best=null;
+    g.rules.forEach(function(r){
+      if(r.path==='') { if(!r.allow) return; } // empty Disallow = allow-all, no-op
+      var re=toRe(r.path||'/');
+      if(re.test(path)){
+        var len=(r.path||'/').length;
+        if(!best || len>best.len || (len===best.len && r.allow && !best.allow)){
+          best={allow:r.allow,path:r.path,len:len};
+        }
+      }
+    });
+    var agentLabel=(specific?specificAgent(specific,ua):'*');
+    if(!best) return {allowed:true,reason:'No directive matches this path.',group:agentLabel};
+    return {allowed:best.allow,rule:(best.allow?'Allow':'Disallow')+': '+best.path,group:agentLabel,len:best.len};
+  }
+  function specificAgent(g,ua){ var f='*'; g.agents.forEach(function(a){ if(a!=='*'&&ua.indexOf(a)!==-1)f=a; }); return f; }
+
+  var elR=document.getElementById('robots'), elU=document.getElementById('ua'),
+      elP=document.getElementById('path'), elV=document.getElementById('verdict');
+  function render(){
+    var ua=elU.value==='*'?'somerandombot':elU.value; // '*' option => match only the * group
+    var res=evaluate(elR.value, elU.value==='*'?'zzz-unlisted-bot':elU.value, elP.value.trim()||'/');
+    var ok=res.allowed;
+    var html='<span class="badge '+(ok?'ok':'bad')+'">'+(ok?'✔ ALLOWED':'✖ BLOCKED')+'</span>';
+    html+='<div class="exp">crawler <b>'+escapeHtml(elU.value)+'</b> requesting <b>'+escapeHtml(elP.value.trim()||'/')+'</b><br>';
+    html+='matched group: <span class="mm">User-agent: '+escapeHtml(res.group)+'</span><br>';
+    if(res.rule){ html+='winning rule: <span class="mm">'+escapeHtml(res.rule)+'</span> <b>('+res.len+' chars — longest match)</b>'; }
+    else { html+=escapeHtml(res.reason); }
+    html+='</div>';
+    elV.innerHTML=html;
+  }
+  function escapeHtml(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  [elR,elU,elP].forEach(function(el){ el.addEventListener('input',render); el.addEventListener('change',render); });
+  render();
+})();
+</script>
+
+<script>
+(function(){
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  // ---- tabs (only the top-level lab tabs carry data-tab) ----
+  var mainTabs=document.querySelectorAll('.tab[data-tab]');
+  mainTabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      mainTabs.forEach(function(x){x.classList.remove('is-on');});
+      t.classList.add('is-on');
+      document.querySelectorAll('.tabpane').forEach(function(p){p.hidden=true;});
+      var pane=document.getElementById('tab-'+t.dataset.tab); if(pane) pane.hidden=false;
+    });
+  });
+
+  // ---- schema generator (entity-grade) ----
+  function lines(v){return (v||'').split(/\r?\n/).map(function(s){return s.trim();}).filter(Boolean);}
+  function pipe(v){return lines(v).map(function(l){return l.split('|').map(function(s){return s.trim();});});}
+  function prune(o){
+    if(Array.isArray(o)){var a=o.map(prune).filter(function(x){return x!==undefined;});return a.length?a:undefined;}
+    if(o&&typeof o==='object'){var r={};Object.keys(o).forEach(function(k){var v=prune(o[k]);if(v!==undefined&&v!=='')r[k]=v;});return Object.keys(r).length?r:undefined;}
+    return (o===''||o==null)?undefined:o;
+  }
+  var SF={
+    'LocalBusiness (full @graph)':[
+      ['name','Business name','text','Your Business Name'],['url','Site URL','url','https://example.com/'],
+      ['logo','Logo URL','url','https://example.com/logo.png'],['image','Primary image URL','url','https://example.com/photo.jpg'],
+      ['telephone','Telephone','text','+1-555-0100'],['email','Email','text','hello@example.com'],['priceRange','Price range','text','$$'],
+      ['street','Street address','text','123 Main Street'],['locality','City','text','Your City'],['region','Region/State','text','State'],
+      ['postal','Postal code','text','00000'],['country','Country code','text','US'],['lat','Latitude','text','40.7128'],['lng','Longitude','text','-74.0060'],
+      ['hours','Opening hours — one per line (Mo-Fr 09:00-18:00)','area','Mo-Fr 09:00-18:00\nSa 10:00-14:00'],
+      ['areas','Areas served — one city per line','area','City A\nCity B\nCity C'],
+      ['sameAs','sameAs — one profile URL per line','area','https://www.linkedin.com/company/your-brand\nhttps://www.facebook.com/your-brand'],
+      ['ratingVal','Aggregate rating value','text','4.9'],['ratingCount','Review count','text','120'],
+      ['search','Sitelinks search URL template','url','https://example.com/?s={search_term_string}']
+    ],
+    'Service (entity-rich)':[
+      ['name','Service name','text','Air Conditioning Repair in Your City'],
+      ['description','Description','area','One or two sentences describing the service.'],
+      ['image','Image URL','url','https://example.com/service.jpg'],['serviceType','serviceType','text','HVAC Repair'],
+      ['pName','Provider (business) name','text','Provider Business Name'],['pUrl','Provider URL','url','https://example.com/'],['pPhone','Provider phone','text','+1-555-0100'],
+      ['about','about entities — Name | wikipediaURL | wikidataURL','area','Air Conditioning | https://en.wikipedia.org/wiki/Air_conditioning | https://www.wikidata.org/wiki/Q173725'],
+      ['addl','additionalType — one URL per line','area','http://www.productontology.org/doc/Air_conditioning'],
+      ['areas','areaServed — City | lat | lng','area','City A | 40.2646 | -76.8834\nCity B | 40.2783 | -76.6511'],
+      ['crumbs','Breadcrumb — Name | URL','area','Home | https://example.com/\nServices | https://example.com/services/\nAC Repair | https://example.com/services/ac-repair/'],
+      ['faq','FAQ — Question | Answer','area','Do you offer emergency service? | Yes, 24/7.']
+    ],
+    'Article / BlogPosting':[
+      ['headline','Headline','text','Your Article Headline'],
+      ['description','Description','area','One-sentence summary of the article.'],
+      ['image','Image URL','url','https://example.com/cover.jpg'],['url','Canonical URL','url','https://example.com/blog/post-slug'],
+      ['authorName','Author name','text','Author Name'],['authorUrl','Author URL','url','https://example.com/about'],
+      ['authorSameAs','Author sameAs — one URL per line','area','https://www.linkedin.com/in/username/'],
+      ['pubName','Publisher name','text','Publisher Name'],['pubLogo','Publisher logo URL','url','https://example.com/logo.png'],
+      ['published','Date published','text','2026-01-01'],['modified','Date modified','text','2026-01-01'],['section','Article section','text','Category']
+    ],
+    'Product':[
+      ['name','Product name','text','Product Name'],['image','Image URL','url','https://example.com/product.jpg'],
+      ['description','Description','area','Short product description.'],['brand','Brand','text','Brand Name'],
+      ['sku','SKU','text','SKU-123'],['gtin','GTIN','text','GTIN (optional)'],['price','Price','text','99.00'],['currency','Currency','text','USD'],
+      ['availability','Availability','select','InStock|OutOfStock|PreOrder|BackOrder'],['priceValid','Price valid until','text','2026-12-31'],
+      ['url','URL','url','https://example.com/product'],['ratingVal','Aggregate rating value','text','4.8'],['ratingCount','Review count','text','60']
+    ],
+    'FAQPage':[
+      ['faq','FAQ — Question | Answer (one per line)','area','Question one? | Answer one.\nQuestion two? | Answer two.']
+    ],
+    'Person / ProfilePage':[
+      ['name','Name','text','Full Name'],['jobTitle','Job title','text','Job Title'],['url','URL','url','https://example.com'],
+      ['image','Image URL','url','https://example.com/photo.jpg'],['worksFor','Works for','text','Company Name'],['worksForUrl','Works-for URL','url','https://example.com'],
+      ['alumniOf','Alumni of','text','University / Degree'],
+      ['knowsAbout','knowsAbout — one topic per line','area','Topic A\nTopic B\nTopic C'],
+      ['sameAs','sameAs — one URL per line','area','https://www.linkedin.com/in/username/\nhttps://github.com/username']
+    ],
+    'BreadcrumbList':[
+      ['crumbs','Breadcrumb — Name | URL (one per line)','area','Home | https://example.com/\nBlog | https://example.com/blog/\nThis Post | https://example.com/blog/post-slug']
+    ],
+    'Organization':[
+      ['name','Name','text','Organization Name'],['url','URL','url','https://example.com/'],['logo','Logo URL','url','https://example.com/logo.png'],
+      ['telephone','Telephone','text','+1-555-0100'],['email','Email','text','hello@example.com'],['founded','Founding date','text','2020'],['founder','Founder','text','Founder Name (optional)'],
+      ['sameAs','sameAs — one URL per line','area','https://www.linkedin.com/company/your-brand']
+    ]
+  };
+  var scSel=document.getElementById('scType');
+  function scv(k){var e=document.getElementById('sc_'+k);return e?e.value.trim():'';}
+  function scField(f){
+    var key=f[0],label=f[1],type=f[2],ex=f[3];
+    if(type==='area')return '<div><label for="sc_'+key+'">'+esc(label)+'</label><textarea id="sc_'+key+'" style="min-height:64px" spellcheck="false" placeholder="'+esc(ex)+'"></textarea></div>';
+    if(type==='select'){var opts=ex.split('|').map(function(o){return '<option>'+esc(o)+'</option>';}).join('');return '<div><label for="sc_'+key+'">'+esc(label)+'</label><select id="sc_'+key+'">'+opts+'</select></div>';}
+    return '<div><label for="sc_'+key+'">'+esc(label)+'</label><input id="sc_'+key+'" placeholder="'+esc(ex)+'"></div>';
+  }
+  function scRender(){
+    var t=scSel.value, host=document.getElementById('scFields');
+    host.innerHTML=SF[t].map(scField).join('');
+    host.querySelectorAll('input,textarea,select').forEach(function(i){i.addEventListener('input',scBuild);i.addEventListener('change',scBuild);});
+    scBuild();
+  }
+  function faqNode(v){var f=pipe(v).filter(function(r){return r[0]&&r[1];}).map(function(r){return {"@type":"Question","name":r[0],"acceptedAnswer":{"@type":"Answer","text":r[1]}};});return f.length?{"@type":"FAQPage","mainEntity":f}:undefined;}
+  function crumbItems(v){return pipe(v).filter(function(r){return r[0]&&r[1];}).map(function(r,i){return {"@type":"ListItem","position":i+1,"name":r[0],"item":r[1]};});}
+  function dayMap(d){var M={Mo:"Monday",Tu:"Tuesday",We:"Wednesday",Th:"Thursday",Fr:"Friday",Sa:"Saturday",Su:"Sunday"};return M[d]||d;}
+  function dayRange(a,b){var o=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],i=o.indexOf(a),j=o.indexOf(b);return (i<0||j<0)?[a,b]:o.slice(i,j+1);}
+  function hoursSpec(v){return lines(v).map(function(l){var m=l.match(/^([A-Za-z\-]+)\s+(\d{2}:\d{2})-(\d{2}:\d{2})$/);if(!m)return undefined;var d=m[1].split('-').map(dayMap);return {"@type":"OpeningHoursSpecification","dayOfWeek":d.length===2?dayRange(d[0],d[1]):d,"opens":m[2],"closes":m[3]};}).filter(Boolean);}
+  function scBuild(){
+    var t=scSel.value,o;
+    if(t==='LocalBusiness (full @graph)'){
+      var url=scv('url'),org=url+'#organization',web=url+'#website',lb=url+'#localbusiness',search=scv('search');
+      o={"@context":"https://schema.org","@graph":[
+        {"@type":"Organization","@id":org,"name":scv('name'),"url":url,"logo":scv('logo')?{"@type":"ImageObject","url":scv('logo')}:undefined,"sameAs":lines(scv('sameAs'))},
+        {"@type":"WebSite","@id":web,"url":url,"name":scv('name'),"publisher":{"@id":org},"potentialAction":search?{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":search},"query-input":"required name=search_term_string"}:undefined},
+        {"@type":"LocalBusiness","@id":lb,"name":scv('name'),"url":url,"image":scv('image'),"logo":scv('logo'),"telephone":scv('telephone'),"email":scv('email'),"priceRange":scv('priceRange'),"parentOrganization":{"@id":org},
+          "address":{"@type":"PostalAddress","streetAddress":scv('street'),"addressLocality":scv('locality'),"addressRegion":scv('region'),"postalCode":scv('postal'),"addressCountry":scv('country')},
+          "geo":(scv('lat')&&scv('lng'))?{"@type":"GeoCoordinates","latitude":scv('lat'),"longitude":scv('lng')}:undefined,
+          "openingHoursSpecification":hoursSpec(scv('hours')),
+          "areaServed":lines(scv('areas')).map(function(c){return {"@type":"City","name":c};}),
+          "sameAs":lines(scv('sameAs')),
+          "aggregateRating":(scv('ratingVal')&&scv('ratingCount'))?{"@type":"AggregateRating","ratingValue":scv('ratingVal'),"reviewCount":scv('ratingCount')}:undefined}
+      ]};
+    } else if(t==='Service (entity-rich)'){
+      var about=pipe(scv('about')).filter(function(r){return r[0];}).map(function(r){var s=[r[1],r[2]].filter(Boolean);return {"@type":"Thing","name":r[0],"sameAs":s.length?s:undefined};});
+      var areas=pipe(scv('areas')).filter(function(r){return r[0];}).map(function(r){var c={"@type":"City","name":r[0]};if(r[1]&&r[2])c.geo={"@type":"GeoCoordinates","latitude":r[1],"longitude":r[2]};return c;});
+      var page={"@type":"WebPage","name":scv('name'),"breadcrumb":{"@type":"BreadcrumbList","itemListElement":crumbItems(scv('crumbs'))},"isPartOf":{"@type":"WebSite","name":scv('pName'),"url":scv('pUrl')},"additionalType":lines(scv('addl')),"about":about};
+      var fq=faqNode(scv('faq')); if(fq)page.hasPart=[fq];
+      o={"@context":"https://schema.org","@type":"Service","name":scv('name'),"description":scv('description'),"image":scv('image'),"serviceType":scv('serviceType'),
+        "provider":{"@type":"LocalBusiness","@id":scv('pUrl')+'#localbusiness',"name":scv('pName'),"url":scv('pUrl'),"telephone":scv('pPhone'),"areaServed":areas},
+        "areaServed":areas,"mainEntityOfPage":page};
+    } else if(t==='Article / BlogPosting'){
+      o={"@context":"https://schema.org","@type":"BlogPosting","headline":scv('headline'),"description":scv('description'),"image":scv('image'),"mainEntityOfPage":{"@type":"WebPage","@id":scv('url')},"url":scv('url'),
+        "author":{"@type":"Person","name":scv('authorName'),"url":scv('authorUrl'),"sameAs":lines(scv('authorSameAs'))},
+        "publisher":{"@type":"Organization","name":scv('pubName'),"logo":scv('pubLogo')?{"@type":"ImageObject","url":scv('pubLogo')}:undefined},
+        "datePublished":scv('published'),"dateModified":scv('modified')||scv('published'),"articleSection":scv('section')};
+    } else if(t==='Product'){
+      o={"@context":"https://schema.org","@type":"Product","name":scv('name'),"image":scv('image'),"description":scv('description'),"sku":scv('sku'),"gtin":scv('gtin'),
+        "brand":scv('brand')?{"@type":"Brand","name":scv('brand')}:undefined,
+        "offers":{"@type":"Offer","price":scv('price'),"priceCurrency":scv('currency'),"availability":"https://schema.org/"+scv('availability'),"priceValidUntil":scv('priceValid'),"url":scv('url')},
+        "aggregateRating":(scv('ratingVal')&&scv('ratingCount'))?{"@type":"AggregateRating","ratingValue":scv('ratingVal'),"reviewCount":scv('ratingCount')}:undefined};
+    } else if(t==='FAQPage'){
+      o={"@context":"https://schema.org"}; var f=faqNode(scv('faq'))||{"@type":"FAQPage","mainEntity":[]}; o["@type"]="FAQPage"; o.mainEntity=f.mainEntity;
+    } else if(t==='Person / ProfilePage'){
+      o={"@context":"https://schema.org","@type":"Person","name":scv('name'),"jobTitle":scv('jobTitle'),"url":scv('url'),"image":scv('image'),
+        "worksFor":scv('worksFor')?{"@type":"Organization","name":scv('worksFor'),"url":scv('worksForUrl')}:undefined,
+        "alumniOf":scv('alumniOf'),"knowsAbout":lines(scv('knowsAbout')),"sameAs":lines(scv('sameAs'))};
+    } else if(t==='BreadcrumbList'){
+      o={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":crumbItems(scv('crumbs'))};
+    } else if(t==='Organization'){
+      o={"@context":"https://schema.org","@type":"Organization","name":scv('name'),"url":scv('url'),"logo":scv('logo'),"telephone":scv('telephone'),"email":scv('email'),"foundingDate":scv('founded'),
+        "founder":scv('founder')?{"@type":"Person","name":scv('founder')}:undefined,"sameAs":lines(scv('sameAs'))};
+    }
+    document.getElementById('scOut').textContent='<script type="application/ld+json">\n'+JSON.stringify(prune(o),null,2)+'\n<\/script>';
+  }
+  if(scSel){
+    scSel.addEventListener('change',scRender);
+    var scCp=document.getElementById('scCopy');
+    if(scCp)scCp.addEventListener('click',function(){var b=this,t=document.getElementById('scOut').textContent;try{navigator.clipboard.writeText(t);b.textContent='copied ✔';}catch(e){b.textContent='select all ↑';}setTimeout(function(){b.textContent='copy';},1400);});
+    scRender();
+  }
+
+  // ---- serp previewer ----
+  var cv=document.createElement('canvas'), cx=cv.getContext('2d');
+  function pxw(text,font){cx.font=font;return cx.measureText(text).width;}
+  function truncPx(text,font,max){if(pxw(text,font)<=max)return text;var t=text;while(t.length>1&&pxw(t+'…',font)>max){t=t.slice(0,-1);}return t.replace(/\s+$/,'')+'…';}
+  function meterRow(label,val,max){
+    var w=Math.min(100,Math.round(val/max*100));
+    var cls=val>max?'bad':(val>max*0.92?'warn':'');
+    var note=val>max?'over — truncates':(val>max*0.92?'near limit':'ok');
+    return '<div class="m"><span class="lab">'+label+'</span><span class="bar"><span class="bf '+cls+'" style="width:'+w+'%"></span></span><span>'+val+'/'+max+'px · '+note+'</span></div>';
+  }
+  function renderSerp(){
+    var title=(document.getElementById('spTitle').value||'').trim();
+    var url=(document.getElementById('spUrl').value||'').trim();
+    var desc=(document.getElementById('spDesc').value||'').trim();
+    var tF='700 20px arial', dF='14px arial';
+    var tPx=Math.round(pxw(title,tF)), dPx=Math.round(pxw(desc,dF));
+    document.getElementById('sTitle').textContent=truncPx(title,tF,600)||'Title tag';
+    document.getElementById('sDesc').textContent=truncPx(desc,dF,920)||'Meta description preview…';
+    var crumb=url;
+    try{var u=new URL(url);var parts=u.pathname.split('/').filter(Boolean);crumb=u.hostname.replace(/^www\./,'')+(parts.length?' › '+parts.join(' › '):'');}catch(e){}
+    document.getElementById('sUrl').textContent=crumb||'example.com';
+    document.getElementById('sMeter').innerHTML=meterRow('title',tPx,600)+meterRow('description',dPx,920);
+  }
+  ['spTitle','spUrl','spDesc'].forEach(function(id){var e=document.getElementById(id);if(e)e.addEventListener('input',renderSerp);});
+  if(document.getElementById('spTitle'))renderSerp();
+
+  function bindCopy(bid,oid){var b=document.getElementById(bid);if(b)b.addEventListener('click',function(){try{navigator.clipboard.writeText(document.getElementById(oid).textContent);b.textContent='copied ✔';}catch(e){b.textContent='select all ↑';}setTimeout(function(){b.textContent='copy';},1400);});}
+
+  // ---- quiz (Easy / Medium / Hard, 10 each) ----
+  var QSET={
+    easy:[
+      {q:'Which HTTP status is a permanent redirect?',o:['302','301','307','404'],a:1},
+      {q:'What does "Disallow: /" in robots.txt do?',o:['Deindexes the site','Nothing','Blocks crawling of the whole site','Blocks only images'],a:2},
+      {q:'Which tag marks the preferred URL among duplicates?',o:['hreflang','canonical','viewport','robots'],a:1},
+      {q:'Which of these is a Core Web Vital?',o:['DA','CTR','LCP','PA'],a:2},
+      {q:'An HTTP 404 means…',o:['Permanent redirect','Not found','Server error','Forbidden'],a:1},
+      {q:'Where do you submit an XML sitemap?',o:['Google Analytics','Tag Manager','Google Ads','Google Search Console'],a:3},
+      {q:'A meta robots "noindex" tells Google to…',o:['Keep the page out of the index','Stop crawling the whole domain','Redirect the page','Cache the page'],a:0},
+      {q:'The main SEO benefit of HTTPS over HTTP is…',o:['Faster DNS','Encryption / security','More keywords','Nothing'],a:1},
+      {q:'Image alt text primarily helps…',o:['Page caching','Backlinks','Accessibility & image search','CSS'],a:2},
+      {q:'The title tag appears in…',o:['Only the footer','The browser tab and the SERP title','Only the sitemap','Only robots.txt'],a:1}
+    ],
+    medium:[
+      {q:'In robots.txt, when Allow and Disallow match with equal path length, which wins?',o:['Disallow','Allow','First listed','It errors'],a:1},
+      {q:'JavaScript-dependent content is typically rendered by Google…',o:['During the first crawl','In a deferred second wave','Never','Only via AMP'],a:1},
+      {q:'Which robots.txt directive does Google NOT officially support?',o:['Allow','Sitemap','Crawl-delay','Disallow'],a:2},
+      {q:'In 2024, INP became a Core Web Vital, replacing…',o:['LCP','FID','CLS','TTFB'],a:1},
+      {q:'For hreflang to work, annotations between two pages must be…',o:['One-way','Reciprocal','In robots.txt','On the homepage'],a:1},
+      {q:'rel="canonical" is best described as…',o:['A hard directive','A hint about the preferred URL','A redirect','A robots rule'],a:1},
+      {q:'To reliably deindex a page, its noindex tag must be…',o:['Also Disallowed in robots.txt','Crawlable (NOT robots-blocked)','In the sitemap','A canonical'],a:1},
+      {q:'Which GSC report explains why URLs are or aren’t indexed?',o:['Page indexing (Coverage)','Links','Core Web Vitals','Sitemaps only'],a:0},
+      {q:'Modern pagination best practice is…',o:['rel=next / rel=prev','A self-referencing canonical on each page','noindex page 2+','Canonical everything to page 1'],a:1},
+      {q:'The loading="lazy" attribute should NOT be applied to…',o:['Below-the-fold images','The LCP / hero image','Footer images','Sidebar icons'],a:1}
+    ],
+    hard:[
+      {q:'A URL is Disallowed in robots.txt but strongly linked externally. In GSC it most likely shows as…',o:['Indexed, no issues','Indexed though blocked by robots.txt (no snippet)','Excluded by noindex','Soft 404'],a:1},
+      {q:'For a JS-injected internal link to pass signals it must be…',o:['An onclick handler','A real <a href> in the rendered DOM','Inside an HTML comment','Nofollowed'],a:1},
+      {q:'Page A 301s to B, but B canonicals back to A. Google most likely…',o:['Indexes both','Follows the redirect and resolves to B (conflicting signals)','Ignores the redirect','Deindexes both'],a:1},
+      {q:'Which HTTP response header can apply noindex at the server level?',o:['X-Robots-Tag','Cache-Control','Vary','ETag'],a:0},
+      {q:'A "soft 404" is…',o:['A 404 with a custom page','A 200 response on a page that looks empty / not-found','A 410 status','A redirect loop'],a:1},
+      {q:'"Vary: User-Agent" primarily signals that…',o:['The site is mobile-first','Content differs by device (dynamic serving) — caches must vary','A canonical exists','A redirect exists'],a:1},
+      {q:'Under mobile-first indexing, Google predominantly uses…',o:['The desktop version','The mobile version for indexing & ranking','The AMP version','The fastest version'],a:1},
+      {q:'To consolidate two near-duplicate URLs when removing one, the strongest signal is…',o:['A canonical','A 301 redirect','A noindex','A robots Disallow'],a:1},
+      {q:'A common cause of hreflang errors flagged in GSC is…',o:['Missing return (reciprocal) tags','Too many sitemaps','Slow TTFB','Missing alt text'],a:0},
+      {q:'Raw HTML has an empty <div id="root"> and content appears only after JS. The core SEO risk is…',o:['CLS only','First-wave crawl sees no content or links (render dependency)','Duplicate content','Slow DNS'],a:1}
+    ]
+  };
+  function renderQuiz(id,arr){
+    var w=document.getElementById(id); if(!w)return;
+    var total=arr.length, answered=0, score=0;
+    w.innerHTML=arr.map(function(it,i){
+      var opts=it.o.map(function(o,j){return '<button class="opt" data-o="'+j+'" type="button">'+esc(o)+'</button>';}).join('');
+      return '<div class="q" data-i="'+i+'"><p class="qn"><b>'+String(i+1).padStart(2,'0')+'</b>'+esc(it.q)+'</p>'+opts+'</div>';
+    }).join('')+'<div class="qscore"></div>';
+    w.querySelectorAll('.q').forEach(function(qEl,qi){
+      qEl.querySelectorAll('.opt').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          if(qEl.dataset.done)return; qEl.dataset.done='1'; answered++;
+          var correct=arr[qi].a, oi=+btn.dataset.o;
+          qEl.querySelectorAll('.opt').forEach(function(b){b.disabled=true;if(+b.dataset.o===correct)b.classList.add('correct');});
+          if(oi===correct)score++; else btn.classList.add('wrong');
+          if(answered===total){var s=score,r=s<=5?'Fundamentals are there.':s<=8?'Strong — solid technical grip.':s<=9?'Expert territory.':'Flawless.';w.querySelector('.qscore').innerHTML='<div class="score"><div class="big">'+s+' / '+total+'</div><div>'+r+'</div></div>';}
+        });
+      });
+    });
+  }
+  var qtabs=document.querySelectorAll('.qtab');
+  if(qtabs.length){
+    qtabs.forEach(function(b){b.addEventListener('click',function(){
+      qtabs.forEach(function(x){x.classList.remove('is-on');}); b.classList.add('is-on');
+      ['easy','medium','hard'].forEach(function(d){var el=document.getElementById('quiz-'+d);if(el)el.hidden=(d!==b.dataset.diff);});
+    });});
+    renderQuiz('quiz-easy',QSET.easy); renderQuiz('quiz-medium',QSET.medium); renderQuiz('quiz-hard',QSET.hard);
+  }
+
+  // ---- render-gap demo ----
+  var RG={
+    'Client-side React (CSR)':{
+      raw:'<!doctype html>\n<html>\n<head>\n  <title>Loading…</title>\n</head>\n<body>\n  <div id="root"></div>\n  <script src="/static/app.bundle.js"><\/script>\n</body>\n</html>',
+      dom:'<!doctype html>\n<html>\n<head><title>AC Repair in Harrisburg | Penn Air</title></head>\n<body>\n  <div id="root">\n    <h1>AC Repair & Installation in Harrisburg, PA</h1>\n    <p>24/7 emergency service. Licensed, insured technicians.</p>\n    <a href="/book">Book a visit</a>\n  </div>\n</body>\n</html>',
+      note:'The crawler fetches an empty shell — no headline, copy, or links. Everything appears only after the JS bundle executes, so a first-wave crawl sees nothing and internal links may never be discovered.'
+    },
+    'Server-rendered (SSR/SSG)':{
+      raw:'<!doctype html>\n<html>\n<head><title>AC Repair in Harrisburg | Penn Air</title></head>\n<body>\n  <h1>AC Repair & Installation in Harrisburg, PA</h1>\n  <p>24/7 emergency service. Licensed, insured technicians.</p>\n  <a href="/book">Book a visit</a>\n</body>\n</html>',
+      dom:'<!doctype html>\n<html>\n<head><title>AC Repair in Harrisburg | Penn Air</title></head>\n<body>\n  <h1>AC Repair & Installation in Harrisburg, PA</h1>\n  <p>24/7 emergency service. Licensed, insured technicians.</p>\n  <a href="/book">Book a visit</a>\n</body>\n</html>',
+      note:'Content and links are present in the raw HTML. Crawlers see everything on the first pass — no render dependency, no lost links.'
+    }
+  };
+  var rgSel=document.getElementById('rgSel'), rgView='raw';
+  function rgWords(h){var t=h.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();return t?t.split(' ').length:0;}
+  function rgRender(){
+    if(!rgSel)return; var d=RG[rgSel.value]; document.getElementById('rgCode').textContent=(rgView==='raw'?d.raw:d.dom);
+    document.getElementById('rgNote').innerHTML='<b>Words a crawler sees in the raw HTML: '+rgWords(d.raw)+'</b><br>'+esc(d.note);
+    document.querySelectorAll('.rgtoggle').forEach(function(b){b.classList.toggle('is-on',b.dataset.v===rgView);});
+  }
+  if(rgSel){rgSel.addEventListener('change',rgRender);document.querySelectorAll('.rgtoggle').forEach(function(b){b.addEventListener('click',function(){rgView=b.dataset.v;rgRender();});});rgRender();}
+
+  // ---- hreflang generator ----
+  var hlIn=document.getElementById('hlPairs'), hlX=document.getElementById('hlXdefault');
+  function hlRender(){
+    if(!hlIn)return;
+    var rows=pipe(hlIn.value).filter(function(r){return r[0]&&r[1];});
+    var out=rows.map(function(r){return '<link rel="alternate" hreflang="'+esc(r[0])+'" href="'+esc(r[1])+'" />';});
+    var xd=(hlX.value||'').trim(); if(xd)out.push('<link rel="alternate" hreflang="x-default" href="'+esc(xd)+'" />');
+    document.getElementById('hlOut').textContent=out.join('\n');
+    var warn=[], seen={}, dup=false;
+    rows.forEach(function(r){var k=r[0].toLowerCase(); if(seen[k])dup=true; seen[k]=1;});
+    if(!xd)warn.push('No x-default set — recommended for language/country selectors.');
+    if(dup)warn.push('Duplicate hreflang value — each must be unique.');
+    warn.push('Reciprocity: every alternate page must output this SAME full set, or Google ignores the cluster.');
+    document.getElementById('hlWarn').innerHTML=warn.map(function(w){return '• '+esc(w);}).join('<br>');
+  }
+  if(hlIn){[hlIn,hlX].forEach(function(e){e.addEventListener('input',hlRender);});hlRender();bindCopy('hlCopy','hlOut');}
+
+  // ---- open graph / meta generator ----
+  function ogv(k){var e=document.getElementById(k);return e?e.value.trim():'';}
+  function ogRender(){
+    if(!document.getElementById('ogTitle'))return;
+    var t=ogv('ogTitle'),d=ogv('ogDesc'),u=ogv('ogUrl'),img=ogv('ogImage'),site=ogv('ogSite'),type=ogv('ogType'),tw=ogv('twCard'),tws=ogv('twSite');
+    var tags=['<meta property="og:title" content="'+esc(t)+'" />','<meta property="og:description" content="'+esc(d)+'" />','<meta property="og:type" content="'+esc(type)+'" />','<meta property="og:url" content="'+esc(u)+'" />','<meta property="og:image" content="'+esc(img)+'" />','<meta property="og:site_name" content="'+esc(site)+'" />','<meta name="twitter:card" content="'+esc(tw)+'" />','<meta name="twitter:title" content="'+esc(t)+'" />','<meta name="twitter:description" content="'+esc(d)+'" />','<meta name="twitter:image" content="'+esc(img)+'" />'];
+    if(tws)tags.push('<meta name="twitter:site" content="'+esc(tws)+'" />');
+    document.getElementById('ogOut').textContent=tags.join('\n');
+    var host=u; try{host=new URL(u).hostname.replace(/^www\./,'');}catch(e){}
+    var ci=document.getElementById('ogCardImg'); if(img){ci.style.backgroundImage='url("'+img.replace(/"/g,'')+'")';} else {ci.style.backgroundImage='none';}
+    document.getElementById('ogCardHost').textContent=host||'example.com';
+    document.getElementById('ogCardTitle').textContent=t||'Your title';
+    document.getElementById('ogCardDesc').textContent=d||'Your description';
+  }
+  ['ogTitle','ogDesc','ogUrl','ogImage','ogSite','ogType','twCard','twSite'].forEach(function(id){var e=document.getElementById(id);if(e){e.addEventListener('input',ogRender);e.addEventListener('change',ogRender);}});
+  function ogMeta(html,prop){
+    var q='["\']', cap='([^"\']*)';
+    var a=html.match(new RegExp('<meta[^>]+(?:property|name)='+q+prop+q+'[^>]+content='+q+cap+q,'i'));
+    if(a)return a[1];
+    var b=html.match(new RegExp('<meta[^>]+content='+q+cap+q+'[^>]+(?:property|name)='+q+prop+q,'i'));
+    return b?b[1]:'';
+  }
+  function ogDecode(s){return (s||'').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#0?39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');}
+  function ogSet(id,v){if(v){var e=document.getElementById(id);if(e)e.value=ogDecode(v);}}
+  function ogParse(html){
+    if(!html)return;
+    var titleTag=(html.match(/<title[^>]*>([^<]*)<\/title>/i)||[])[1]||'';
+    var canon=(html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["']/i)||[])[1]||'';
+    ogSet('ogTitle',ogMeta(html,'og:title')||titleTag);
+    ogSet('ogDesc',ogMeta(html,'og:description')||ogMeta(html,'description'));
+    ogSet('ogUrl',ogMeta(html,'og:url')||canon);
+    ogSet('ogImage',ogMeta(html,'og:image'));
+    ogSet('ogSite',ogMeta(html,'og:site_name'));
+    var ty=ogMeta(html,'og:type'); if(ty&&['website','article','profile'].indexOf(ty)>=0)document.getElementById('ogType').value=ty;
+    var tw=ogMeta(html,'twitter:card'); if(tw&&['summary_large_image','summary'].indexOf(tw)>=0)document.getElementById('twCard').value=tw;
+    ogSet('twSite',ogMeta(html,'twitter:site'));
+    ogRender();
+  }
+  var ogEx=document.getElementById('ogExtract'); if(ogEx)ogEx.addEventListener('click',function(){ogParse(document.getElementById('ogPaste').value||'');});
+  if(document.getElementById('ogTitle')){ogRender();bindCopy('ogCopy','ogOut');}
+
+  // ---- index-coverage decision tree ----
+  var IT={
+    start:{q:'Does the URL return HTTP 200 (not a 3xx / 4xx / 5xx)?',yes:'robots',no:{r:'Not a 200 — Google only indexes 200 pages. Resolve the status: 3xx should land on a real 200 target; 404/410 means gone; 5xx is a server error. Check the response headers first.'}},
+    robots:{q:'Is the URL crawlable — NOT Disallowed in robots.txt?',yes:'noindex',no:{r:'Blocked by robots.txt. Google can’t fetch it (and can’t even see a noindex). It may still appear as a URL-only listing. Remove the Disallow if you want it indexed.'}},
+    noindex:{q:'Is the page free of a noindex directive (meta robots / X-Robots-Tag)?',yes:'canon',no:{r:'A noindex directive is present — an explicit “keep out”. Remove it AND keep the page crawlable so Google can re-read and re-include it.'}},
+    canon:{q:'Does the canonical point to THIS URL (self-referencing)?',yes:'sitemap',no:{r:'Canonical points elsewhere. Google consolidates to the canonical target and drops this URL as a duplicate. Fix the canonical if this page should rank on its own.'}},
+    sitemap:{q:'Is it discoverable — in the XML sitemap and internally linked?',yes:'quality',no:{r:'Discovery gap. Add it to the sitemap and link to it internally so Google can find and prioritize crawling it.'}},
+    quality:{q:'Is the content unique and substantial (not thin or duplicate)?',yes:{r:'Technically indexable. If GSC still says “Crawled / Discovered – currently not indexed”, it’s a QUALITY & priority signal, not a bug — strengthen content depth, internal links and topical authority. This is the Graduation problem.'},no:{r:'Thin or duplicate content. Google often withholds indexing for low-value pages (“Crawled – currently not indexed”). Consolidate, materially improve, or noindex it deliberately.'}}
+  };
+  var itPath=[], itNode=IT.start;
+  function itDraw(){
+    var box=document.getElementById('itBox'); if(!box)return;
+    var html='<div class="ittree">';
+    itPath.forEach(function(step){html+='<div class="itnode done"><div class="itq2">'+esc(step.q)+'</div><span class="itchip '+(step.choice==='yes'?'y':'n')+'">'+(step.choice==='yes'?'Yes':'No')+'</span></div>';});
+    if(itNode.q){html+='<div class="itnode current"><div class="itq2">'+esc(itNode.q)+'</div><div class="itbtns"><button class="btn primary" data-a="yes" type="button">Yes</button><button class="btn" data-a="no" type="button">No</button></div></div>';}
+    else {html+='<div class="itnode leaf"><div class="itresult">'+esc(itNode.r)+'</div></div>';}
+    html+='</div><div class="itbtns" style="margin-top:16px"><button class="btn" id="itReset" type="button">↻ start over</button></div>';
+    box.innerHTML=html;
+    var cur=box.querySelector('.itnode.current');
+    if(cur)cur.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var ch=b.dataset.a;itPath.push({q:itNode.q,choice:ch});var nx=ch==='yes'?itNode.yes:itNode.no;itNode=(typeof nx==='string')?IT[nx]:nx;itDraw();});});
+    document.getElementById('itReset').addEventListener('click',function(){itPath=[];itNode=IT.start;itDraw();});
+  }
+  if(document.getElementById('itBox'))itDraw();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Kushal Pathak - Technical SEO Strategist
+> Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.
+
+## About
+Kushal Pathak is a technical SEO strategist based in Kathmandu, Nepal. Since 2024 he has worked on 50+ websites across 10 countries and 20+ industries, specialising in JavaScript rendering, crawl architecture, structured data, indexation strategy, analytics and measurement (GA4, GTM, Looker Studio, BigQuery) and forensic Google Search Console diagnosis. Platform-agnostic across WordPress, Shopify, BigCommerce, Squarespace, Wix, Webflow and custom CMS, plus hosting and infrastructure management (Cloudflare, Cloudways, SiteGround, Kinsta, WP Engine, AWS, Hostinger, Bluehost, HostGator).
+
+## Contact
+- Email: kushalpathak18@gmail.com
+- LinkedIn: https://www.linkedin.com/in/kushal-pathak-485838196/
+- GitHub: https://github.com/Kushzz18

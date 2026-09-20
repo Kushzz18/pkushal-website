@@ -1,0 +1,42 @@
+# =============================================================
+#  pkushal.com.np  ·  robots.txt
+#  Kushal Pathak — Technical SEO Strategist, Kathmandu
+# =============================================================
+#
+#        .-----.
+#       | ^   ^ |     Hi, crawler — you found the robots.txt.
+#       |   >   |     Everything here is  Allow: /
+#       |  '-'  |     I already fixed whatever was worth hiding.
+#        '--+--'
+#        __|_|__      Rendered == raw on this site: no render gap,
+#       |_______|     no JavaScript hide-and-seek. What you fetch
+#        |     |      is exactly what you get.
+#
+#  Reading this in view-source? Hello, fellow technical.
+#  Rankings are an engineering problem — let's talk: /#contact
+#
+# -- Humans & crawlers: welcome ------------------------------
+User-agent: *
+Allow: /
+
+# -- AI crawlers: come in, cite freely -----------------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# The only thing I'm hiding is that there's nothing to hide.
+Sitemap: https://pkushal.com.np/sitemap.xml
