@@ -22,7 +22,7 @@ i = s.index('<header class="nav">')
 head_part = s[:i]
 body_part = s[i:]
 head_part = head_part.replace('<title>Kushal Pathak</title>',
-    '<title>Kushal Pathak — Technical SEO Strategist in Kathmandu</title>', 1)
+    '<title>Kushal Pathak, Technical SEO Strategist in Kathmandu</title>', 1)
 
 jsonld = ('{"@context":"https://schema.org","@graph":['
 '{"@type":"Person","@id":"https://pkushal.com.np/#kushal","name":"Kushal Pathak","url":"https://pkushal.com.np/",'
@@ -33,7 +33,7 @@ jsonld = ('{"@context":"https://schema.org","@graph":['
 '"address":{"@type":"PostalAddress","addressLocality":"Kathmandu","addressCountry":"NP"},'
 '"sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},'
 '{"@type":"WebSite","@id":"https://pkushal.com.np/#website","url":"https://pkushal.com.np/","name":"Kushal Pathak","publisher":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"},'
-'{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak — Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
+'{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak, Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
 
 GTM_HEAD = (
 "<!-- Google Tag Manager -->\n"
@@ -51,19 +51,19 @@ GTM_NOSCRIPT = (
 HEAD_EXTRA = (
 GTM_HEAD +
 '<meta name="google-site-verification" content="CIKjY7k4ZzqAcKmJATjz5bCmdoRyQMdc8zQQJv7j5cg">\n'
-'<meta name="description" content="Kushal Pathak — technical SEO strategist in Kathmandu. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.">\n'
+'<meta name="description" content="Kushal Pathak, technical SEO strategist in Kathmandu. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.">\n'
 '<link rel="canonical" href="https://pkushal.com.np/">\n'
 '<meta name="robots" content="index,follow,max-image-preview:large">\n'
 '<meta name="theme-color" content="#0a0f14">\n'
 '<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
 '<meta property="og:type" content="website">\n'
 '<meta property="og:site_name" content="Kushal Pathak">\n'
-'<meta property="og:title" content="Kushal Pathak — Technical SEO Strategist">\n'
-'<meta property="og:description" content="Rankings are an engineering problem. I do the engineering — rendering, crawlability, schema and indexation.">\n'
+'<meta property="og:title" content="Kushal Pathak, Technical SEO Strategist">\n'
+'<meta property="og:description" content="Rankings are an engineering problem. I do the engineering, rendering, crawlability, schema and indexation.">\n'
 '<meta property="og:url" content="https://pkushal.com.np/">\n'
 '<meta property="og:image" content="https://pkushal.com.np/assets/kushal.webp">\n'
 '<meta name="twitter:card" content="summary_large_image">\n'
-'<meta name="twitter:title" content="Kushal Pathak — Technical SEO Strategist">\n'
+'<meta name="twitter:title" content="Kushal Pathak, Technical SEO Strategist">\n'
 '<meta name="twitter:description" content="Rankings are an engineering problem. I do the engineering.">\n'
 '<meta name="twitter:image" content="https://pkushal.com.np/assets/kushal.webp">\n'
 '<style>[hidden]{display:none!important}img{max-width:100%;height:auto}</style>\n'
@@ -119,7 +119,7 @@ files["favicon.svg"] = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64
 files["404.html"] = (
 '<!doctype html><html lang="en"><head><meta charset="utf-8">'
 '<meta name="viewport" content="width=device-width, initial-scale=1">'
-'<title>404 — Not Found | Kushal Pathak</title><meta name="robots" content="noindex">'
+'<title>404, Not Found | Kushal Pathak</title><meta name="robots" content="noindex">'
 '<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
 '<style>:root{--bg:#0a0f14;--txt:#e6edf3;--muted:#8b98a5;--accent:#5cc8ff;--prompt:#7ee787}'
 '*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;'
@@ -127,8 +127,8 @@ files["404.html"] = (
 '.box{max-width:560px}.p{color:var(--muted)}.c{color:var(--prompt)}.big{font-size:clamp(2.4rem,7vw,4rem);margin:0 0 10px}'
 'a{color:var(--accent)}</style></head><body><div class="box">'
 '<p class="p"><span class="c">$</span> curl -I pkushal.com.np/&lt;path&gt;</p>'
-'<p class="big">404 <span class="p">— Not Found</span></p>'
-'<p class="p">The crawler followed a link that resolves to nothing — a broken internal link. Exactly the kind of thing I fix.</p>'
+'<p class="big">404 <span class="p">, Not Found</span></p>'
+'<p class="p">The crawler followed a link that resolves to nothing, a broken internal link. Exactly the kind of thing I fix.</p>'
 '<p><span class="c">$</span> cd <a href="/">~/home</a> <span style="color:var(--prompt)">▉</span></p>'
 '</div></body></html>')
 
