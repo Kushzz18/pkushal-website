@@ -40,7 +40,7 @@ jsonld = ('{"@context":"https://schema.org","@graph":['
 '"address":{"@type":"PostalAddress","addressLocality":"Kathmandu","addressCountry":"NP"},'
 '"sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},'
 '{"@type":"WebSite","@id":"https://pkushal.com.np/#website","url":"https://pkushal.com.np/","name":"Kushal Pathak","publisher":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"},'
-'{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak, Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
+'{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak, Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"mainEntity":{"@id":"https://pkushal.com.np/#kushal"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
 
 GTM_HEAD = (
 "<!-- Google Tag Manager -->\n"
