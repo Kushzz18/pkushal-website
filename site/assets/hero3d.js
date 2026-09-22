@@ -30,8 +30,8 @@
 
   function init(THREE) {
     var mobile = Math.min(window.innerWidth, window.innerHeight) < 700;
-    var COUNT = mobile ? 90 : 200;
-    var LINK = mobile ? 36 : 30;
+    var COUNT = mobile ? 110 : 260;
+    var LINK = mobile ? 34 : 28;
     var CZ = 128; // base camera distance
     var W = canvas.clientWidth || 1, H = canvas.clientHeight || 1;
 
@@ -70,7 +70,7 @@
     var lpos = new Float32Array(segs.length * 3);
     var lgeo = new THREE.BufferGeometry();
     lgeo.setAttribute('position', new THREE.BufferAttribute(lpos, 3));
-    var lmat = new THREE.LineBasicMaterial({ color: 0x2f6f96, transparent: true, opacity: 0.42, blending: THREE.AdditiveBlending, depthWrite: false });
+    var lmat = new THREE.LineBasicMaterial({ color: 0x3d86b8, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false });
     group.add(new THREE.LineSegments(lgeo, lmat));
 
     var mx = 0, my = 0, tmx = 0, tmy = 0, sN = 0;
