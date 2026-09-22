@@ -31,12 +31,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <title>Kushal Pathak, Technical SEO Strategist in Kathmandu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"></noscript>
 <style>
   :root{
     --bg:#0a0f14; --bg-2:#0d131a; --surface:#121a23; --surface-2:#17212c;
     --border:#22303d; --border-2:#2d3f4f;
-    --text:#e6edf3; --muted:#8b98a5; --dim:#5f6d7a;
+    --text:#e6edf3; --muted:#8b98a5; --dim:#8a97a4;
     --accent:#5cc8ff; --accent-dim:#2a6f96;
     --ok:#3fb950; --bad:#f85149; --warn:#d29922; --prompt:#7ee787;
     --maxw:1120px; --gutter:22px;
@@ -141,8 +143,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* services */
   .svc{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
   .svc .it{background:var(--bg-2);padding:18px 20px}
-  .svc .it h4{font-family:var(--mono);font-size:.9rem;margin:0 0 .35rem;color:var(--text);display:flex;gap:.55em;align-items:baseline}
-  .svc .it h4 i{color:var(--accent);font-style:normal;font-size:.78rem}
+  .svc .it h3{font-family:var(--mono);font-size:.9rem;font-weight:600;margin:0 0 .35rem;color:var(--text);display:flex;gap:.55em;align-items:baseline}
+  .svc .it h3 i{color:var(--accent);font-style:normal;font-size:.78rem}
   .svc .it p{color:var(--muted);font-size:.82rem;margin:0}
 
   /* skills */
@@ -151,7 +153,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .skill .nm{font-size:.92rem}
   .skill .pct{font-family:var(--mono);font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
   .skill .track{grid-column:1/-1;height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden}
-  .skill .fill{height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent))}
+  .skill .fill{height:100%;width:100%;transform:scaleX(0);transform-origin:left center;will-change:transform;background:linear-gradient(90deg,var(--accent-dim),var(--accent))}
   .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
   .tag{font-family:var(--mono);font-size:.76rem;color:var(--muted);border:1px solid var(--border);border-radius:20px;padding:.35em .85em}
 
@@ -364,7 +366,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- PHOTO BAND -->
   <section aria-label="Kushal Pathak in the field" style="padding-top:0;border-top:none">
     <div class="photoband">
-      <img src="/assets/kushal.webp" alt="Kushal Pathak sitting by an alpine lake in the Nepal Himalaya" width="1440" height="1440">
+      <img src="/assets/kushal-band.webp" width="860" height="860" fetchpriority="high" decoding="async" alt="Kushal Pathak sitting by an alpine lake in the Nepal Himalaya">
       <div class="pcap mono">// off the clock, Gosaikunda, Nepal</div>
     </div>
   </section>
@@ -389,17 +391,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h2 class="big">Full-stack technical SEO &amp; measurement.</h2>
     <p class="sub">From crawl to conversion tracking, the whole pipeline that turns a page into a ranked, measured, revenue-attributed asset.</p>
     <div class="svc">
-      <div class="it"><h4><i>01</i> Technical Audits &amp; Forensics</h4><p>Page-level, evidence-bound audits with prioritized fixes.</p></div>
-      <div class="it"><h4><i>02</i> Rendering &amp; Crawl Architecture</h4><p>JS rendering, robots/llms.txt, log &amp; crawl-budget analysis.</p></div>
-      <div class="it"><h4><i>03</i> Schema / Structured Data</h4><p>Hand-built JSON-LD, entity markup, rich-result engineering.</p></div>
-      <div class="it"><h4><i>04</i> Entity &amp; Topical Architecture</h4><p>Ontologies, topical maps, query-deserves-a-page planning.</p></div>
-      <div class="it"><h4><i>05</i> Migrations &amp; Indexation</h4><p>Canonical strategy, product vs. collection indexation, redirects.</p></div>
-      <div class="it"><h4><i>06</i> Core Web Vitals</h4><p>Field-data-driven performance and rendering optimization.</p></div>
-      <div class="it"><h4><i>07</i> GSC Diagnostics &amp; Recovery</h4><p>Drops, core &amp; spam updates, the sandbox/graduation problem.</p></div>
-      <div class="it"><h4><i>08</i> Analytics &amp; Measurement</h4><p>GA4, Google Tag Manager, data-layer &amp; conversion tracking, Looker Studio, BigQuery.</p></div>
-      <div class="it"><h4><i>09</i> Paid-Media Tracking &amp; Feeds</h4><p>Google &amp; Meta Ads tracking, Google Merchant Center product feeds.</p></div>
-      <div class="it"><h4><i>10</i> SEO Automation &amp; Tooling</h4><p>Apps Script, Python, WordPress plugins, and a self-built SEO automation assistant.</p></div>
-      <div class="it"><h4><i>11</i> Hosting, DNS &amp; Migrations</h4><p>Cloudflare, SSL, CDN/caching, and server moves across cPanel, managed WordPress &amp; cloud hosts.</p></div>
+      <div class="it"><h3><i>01</i> Technical Audits &amp; Forensics</h3><p>Page-level, evidence-bound audits with prioritized fixes.</p></div>
+      <div class="it"><h3><i>02</i> Rendering &amp; Crawl Architecture</h3><p>JS rendering, robots/llms.txt, log &amp; crawl-budget analysis.</p></div>
+      <div class="it"><h3><i>03</i> Schema / Structured Data</h3><p>Hand-built JSON-LD, entity markup, rich-result engineering.</p></div>
+      <div class="it"><h3><i>04</i> Entity &amp; Topical Architecture</h3><p>Ontologies, topical maps, query-deserves-a-page planning.</p></div>
+      <div class="it"><h3><i>05</i> Migrations &amp; Indexation</h3><p>Canonical strategy, product vs. collection indexation, redirects.</p></div>
+      <div class="it"><h3><i>06</i> Core Web Vitals</h3><p>Field-data-driven performance and rendering optimization.</p></div>
+      <div class="it"><h3><i>07</i> GSC Diagnostics &amp; Recovery</h3><p>Drops, core &amp; spam updates, the sandbox/graduation problem.</p></div>
+      <div class="it"><h3><i>08</i> Analytics &amp; Measurement</h3><p>GA4, Google Tag Manager, data-layer &amp; conversion tracking, Looker Studio, BigQuery.</p></div>
+      <div class="it"><h3><i>09</i> Paid-Media Tracking &amp; Feeds</h3><p>Google &amp; Meta Ads tracking, Google Merchant Center product feeds.</p></div>
+      <div class="it"><h3><i>10</i> SEO Automation &amp; Tooling</h3><p>Apps Script, Python, WordPress plugins, and a self-built SEO automation assistant.</p></div>
+      <div class="it"><h3><i>11</i> Hosting, DNS &amp; Migrations</h3><p>Cloudflare, SSL, CDN/caching, and server moves across cPanel, managed WordPress &amp; cloud hosts.</p></div>
     </div>
   </section>
 
@@ -473,15 +475,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="eyebrow">// 06, the lab</p>
     <h2 class="big">The technical SEO lab.</h2>
     <p class="sub">Four working tools, not screenshots, each running the actual algorithm I use every day, live in your browser.</p>
-    <div class="tabs" role="tablist">
-      <button class="tab is-on" data-tab="robots" type="button">robots.txt</button>
-      <button class="tab" data-tab="schema" type="button">schema generator</button>
-      <button class="tab" data-tab="serp" type="button">serp preview</button>
-      <button class="tab" data-tab="render" type="button">render-gap</button>
-      <button class="tab" data-tab="hreflang" type="button">hreflang</button>
-      <button class="tab" data-tab="og" type="button">open graph</button>
-      <button class="tab" data-tab="index" type="button">index tree</button>
-      <button class="tab" data-tab="quiz" type="button">quiz</button>
+    <div class="tabs" role="tablist" aria-label="Technical SEO lab tools">
+      <button class="tab is-on" role="tab" aria-selected="true" aria-controls="tab-robots" data-tab="robots" type="button">robots.txt</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-schema" data-tab="schema" type="button">schema generator</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-serp" data-tab="serp" type="button">serp preview</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-render" data-tab="render" type="button">render-gap</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-hreflang" data-tab="hreflang" type="button">hreflang</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-og" data-tab="og" type="button">open graph</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-index" data-tab="index" type="button">index tree</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tab-quiz" data-tab="quiz" type="button">quiz</button>
     </div>
     <div class="tabpane" id="tab-robots">
     <p class="labnote">Google's real matching logic, group selection, longest-match wins, <b>Allow</b> beats <b>Disallow</b> on ties, with <code>*</code> and <code>$</code> wildcards.</p>
@@ -719,8 +721,8 @@ en-au | https://example.com.au/</textarea></div>
 (function(){
   // reveal skill bars from a visible resting state
   document.querySelectorAll('#skillList .row').forEach(function(r){
-    var f=r.querySelector('.fill'); f.style.width='6%';
-    requestAnimationFrame(function(){ setTimeout(function(){ f.style.transition='width .9s cubic-bezier(.2,.7,.2,1)'; f.style.width=r.dataset.p+'%'; },60); });
+    var f=r.querySelector('.fill'); f.style.transform='scaleX(.06)';
+    requestAnimationFrame(function(){ setTimeout(function(){ f.style.transition='transform .9s cubic-bezier(.2,.7,.2,1)'; f.style.transform='scaleX('+(r.dataset.p/100)+')'; },60); });
   });
 
   // ---- robots.txt matcher (Google-style) ----
@@ -803,10 +805,11 @@ en-au | https://example.com.au/</textarea></div>
 
   // ---- tabs (only the top-level lab tabs carry data-tab) ----
   var mainTabs=document.querySelectorAll('.tab[data-tab]');
+  document.querySelectorAll('.tabpane').forEach(function(p){p.setAttribute('role','tabpanel');p.setAttribute('tabindex','0');});
   mainTabs.forEach(function(t){
     t.addEventListener('click',function(){
-      mainTabs.forEach(function(x){x.classList.remove('is-on');});
-      t.classList.add('is-on');
+      mainTabs.forEach(function(x){x.classList.remove('is-on');x.setAttribute('aria-selected','false');});
+      t.classList.add('is-on');t.setAttribute('aria-selected','true');
       document.querySelectorAll('.tabpane').forEach(function(p){p.hidden=true;});
       var pane=document.getElementById('tab-'+t.dataset.tab); if(pane) pane.hidden=false;
     });

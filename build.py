@@ -17,7 +17,14 @@ OUT = os.path.join(HERE, "site")
 os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
 
 s = open(SRC, encoding="utf-8").read()
-s = re.sub(r'src="data:image/webp;base64,[^"]*"', 'src="/assets/kushal.webp"', s)
+# Replace the inline preview photo (a base64 data URI used only for local editing)
+# with the optimised, responsive band image so the page stays light on mobile.
+s = re.sub(
+    r'<img\b[^>]*src="data:image/webp;base64,[^"]*"[^>]*>',
+    '<img src="/assets/kushal-band.webp" width="860" height="860" '
+    'fetchpriority="high" decoding="async" '
+    'alt="Kushal Pathak sitting by an alpine lake in the Nepal Himalaya">',
+    s, count=1)
 i = s.index('<header class="nav">')
 head_part = s[:i]
 body_part = s[i:]
@@ -75,18 +82,28 @@ doc = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(doc)
 
 shutil.copy(PHOTO, os.path.join(OUT, "assets", "kushal.webp"))
+shutil.copy(os.path.join(HERE, "src", "assets", "kushal-band.webp"),
+            os.path.join(OUT, "assets", "kushal-band.webp"))
 
 files = {}
 # NOTE: robots.txt is intentionally NOT written here (hand-maintained ASCII-art file).
 files["llms.txt"] = (
-"# Kushal Pathak - Technical SEO Strategist\n"
-"> Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.\n\n"
-"## About\n"
-"Kushal Pathak is a technical SEO strategist based in Kathmandu, Nepal. Since 2024 he has worked on 50+ websites across 10 countries and 20+ industries, specialising in JavaScript rendering, crawl architecture, structured data, indexation strategy, analytics and measurement (GA4, GTM, Looker Studio, BigQuery) and forensic Google Search Console diagnosis. Platform-agnostic across WordPress, Shopify, BigCommerce, Squarespace, Wix, Webflow and custom CMS, plus hosting and infrastructure management (Cloudflare, Cloudways, SiteGround, Kinsta, WP Engine, AWS, Hostinger, Bluehost, HostGator).\n\n"
-"## Contact\n"
-"- Email: kushalpathak18@gmail.com\n"
-"- LinkedIn: https://www.linkedin.com/in/kushal-pathak-485838196/\n"
-"- GitHub: https://github.com/Kushzz18\n")
+"# Kushal Pathak\n\n"
+"> Technical SEO strategist in Kathmandu, Nepal. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.\n\n"
+"Since 2024, Kushal Pathak has worked on 50+ websites across 10 countries and 20+ industries, focused on JavaScript rendering, crawl architecture, structured data, indexation strategy, analytics and measurement (GA4, Google Tag Manager, Looker Studio, BigQuery) and forensic Google Search Console diagnosis. Platform and host agnostic across WordPress, Shopify, BigCommerce, Squarespace, Wix, Webflow and custom CMS, plus Cloudflare, Cloudways, SiteGround, Kinsta, WP Engine, AWS, Hostinger, Bluehost and HostGator.\n\n"
+"## Pages\n\n"
+"- [Home](https://pkushal.com.np/): Overview, named frameworks, services, an interactive technical SEO lab and contact.\n"
+"- [Experience](https://pkushal.com.np/experience/): First-person write-ups of real technical SEO and analytics builds.\n\n"
+"## Experience articles\n\n"
+"- [Moving conversion tracking server-side with Stape](https://pkushal.com.np/experience/server-side-tracking-with-stape/): Server-side GTM, first-party GA4 and Meta Conversions API deduplication, verified end to end.\n"
+"- [Recovering form leads from a sealed iframe into Meta](https://pkushal.com.np/experience/leads-from-a-sealed-iframe/): Polling a CRM's GraphQL API and posting SHA-256 hashed Lead events to the Meta Conversions API from one Cloudflare Worker.\n\n"
+"## Contact\n\n"
+"- [Email](mailto:kushalpathak18@gmail.com): kushalpathak18@gmail.com\n"
+"- [LinkedIn](https://www.linkedin.com/in/kushal-pathak-485838196/): Professional profile.\n"
+"- [GitHub](https://github.com/Kushzz18): Code and tooling, including the SEO Automation Assistant.\n\n"
+"## Optional\n\n"
+"- [RankMeTop](https://rankmetop.net/): The agency Kushal works with.\n"
+"- [Sitemap](https://pkushal.com.np/sitemap.xml): All indexable URLs.\n")
 
 files["sitemap.xml"] = (
 '<?xml version="1.0" encoding="UTF-8"?>\n'

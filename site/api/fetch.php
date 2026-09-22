@@ -1,5 +1,5 @@
 <?php
-// pkushal.com.np — lab fetch proxy. Modes: og (default) | robots | schema.
+// pkushal.com.np - lab fetch proxy. Modes: og (default) | robots | schema.
 // SSRF-hardened: http/https only, private/reserved IPs blocked, DNS pinned,
 // size- and time-limited, returns parsed data only (never the raw body wholesale
 // except robots.txt, which is public plain text by design).

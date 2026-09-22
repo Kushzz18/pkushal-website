@@ -1,10 +1,26 @@
-# Kushal Pathak - Technical SEO Strategist
-> Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.
+# Kushal Pathak
 
-## About
-Kushal Pathak is a technical SEO strategist based in Kathmandu, Nepal. Since 2024 he has worked on 50+ websites across 10 countries and 20+ industries, specialising in JavaScript rendering, crawl architecture, structured data, indexation strategy, analytics and measurement (GA4, GTM, Looker Studio, BigQuery) and forensic Google Search Console diagnosis. Platform-agnostic across WordPress, Shopify, BigCommerce, Squarespace, Wix, Webflow and custom CMS, plus hosting and infrastructure management (Cloudflare, Cloudways, SiteGround, Kinsta, WP Engine, AWS, Hostinger, Bluehost, HostGator).
+> Technical SEO strategist in Kathmandu, Nepal. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.
+
+Since 2024, Kushal Pathak has worked on 50+ websites across 10 countries and 20+ industries, focused on JavaScript rendering, crawl architecture, structured data, indexation strategy, analytics and measurement (GA4, Google Tag Manager, Looker Studio, BigQuery) and forensic Google Search Console diagnosis. Platform and host agnostic across WordPress, Shopify, BigCommerce, Squarespace, Wix, Webflow and custom CMS, plus Cloudflare, Cloudways, SiteGround, Kinsta, WP Engine, AWS, Hostinger, Bluehost and HostGator.
+
+## Pages
+
+- [Home](https://pkushal.com.np/): Overview, named frameworks, services, an interactive technical SEO lab and contact.
+- [Experience](https://pkushal.com.np/experience/): First-person write-ups of real technical SEO and analytics builds.
+
+## Experience articles
+
+- [Moving conversion tracking server-side with Stape](https://pkushal.com.np/experience/server-side-tracking-with-stape/): Server-side GTM, first-party GA4 and Meta Conversions API deduplication, verified end to end.
+- [Recovering form leads from a sealed iframe into Meta](https://pkushal.com.np/experience/leads-from-a-sealed-iframe/): Polling a CRM's GraphQL API and posting SHA-256 hashed Lead events to the Meta Conversions API from one Cloudflare Worker.
 
 ## Contact
-- Email: kushalpathak18@gmail.com
-- LinkedIn: https://www.linkedin.com/in/kushal-pathak-485838196/
-- GitHub: https://github.com/Kushzz18
+
+- [Email](mailto:kushalpathak18@gmail.com): kushalpathak18@gmail.com
+- [LinkedIn](https://www.linkedin.com/in/kushal-pathak-485838196/): Professional profile.
+- [GitHub](https://github.com/Kushzz18): Code and tooling, including the SEO Automation Assistant.
+
+## Optional
+
+- [RankMeTop](https://rankmetop.net/): The agency Kushal works with.
+- [Sitemap](https://pkushal.com.np/sitemap.xml): All indexable URLs.

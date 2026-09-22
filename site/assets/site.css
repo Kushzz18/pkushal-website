@@ -1,8 +1,8 @@
-/* pkushal.com.np — shared styles for subpages (experience list + articles) */
+/* pkushal.com.np - shared styles for subpages (experience list + articles) */
 :root{
   --bg:#0a0f14; --bg-2:#0d131a; --surface:#121a23; --surface-2:#17212c;
   --border:#22303d; --border-2:#2d3f4f;
-  --text:#e6edf3; --muted:#8b98a5; --dim:#5f6d7a;
+  --text:#e6edf3; --muted:#8b98a5; --dim:#8a97a4;
   --accent:#5cc8ff; --accent-dim:#2a6f96; --ok:#3fb950; --prompt:#7ee787;
   --maxw:1120px; --gutter:22px;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -19,6 +19,7 @@ a:hover{text-decoration:underline;text-underline-offset:3px}
 ::selection{background:rgba(92,200,255,.25);color:#fff}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .mono{font-family:var(--mono)}
 .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:.6em;margin:0 0 1.1rem}
 .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent-dim)}
