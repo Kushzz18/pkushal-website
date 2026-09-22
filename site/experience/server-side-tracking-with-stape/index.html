@@ -83,6 +83,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h2>What I built</h2>
     <p>I stood up a <strong>server-side GTM (sGTM)</strong> container on <strong>Stape.io</strong>, pointed a neutral <strong>first-party subdomain</strong> at it (region set to match where the audience actually is), and routed GA4 through it with <strong>server-managed cookies</strong> to stretch attribution. On the Meta side I consolidated the pixel and gave <strong>every event a shared <code>event_id</code></strong>, mirrored into the <code>dataLayer</code>, which is what lets Meta match and de-duplicate browser and server events. I also enabled <strong>Google Tag Gateway</strong> so Google's own scripts load first-party, coexisting cleanly with the server container.</p>
 
+    <h2>Why it actually recovers data</h2>
+    <p>It helps to know why this works, not just that it does. Browser-side tracking leans on third-party requests and short-lived cookies, exactly the things ad blockers strip out and Safari's ITP caps to a few days. Routing everything through a first-party server flips that. The requests now come from the site's own subdomain, so they read as first-party rather than someone else's tracker, and the server sets its own longer-lived cookies instead of relying on the browser's. Less gets blocked, and what does get through stays attributed for longer. That is the whole mechanism: move the collection point off the browser, where it is fragile, onto infrastructure you control.</p>
+
+    <h2>Why I chose Stape</h2>
+    <p>There were three ways to host the server container: self-host it on Google Cloud Run, hand it to a managed third-party vendor, or use Stape. I went with Stape for the balance of cost and control. It is inexpensive, it handles the infrastructure I would otherwise have to babysit on Cloud Run, and it still leaves me in charge of the container and the data. Self-hosting is cheaper at scale but is more to maintain; a full-service vendor is less to think about but costs more and takes the control away. Stape sat in the middle, which is where this project needed to be.</p>
+
     <h2>The parts worth sharing</h2>
     <p>The deduplication hinges on one shared id used by every event and mirrored into the <code>dataLayer</code> so the server can reuse it. This is the small piece that does the heavy lifting:</p>
     <pre><code>// one helper, used by every event, so the browser pixel and the
@@ -123,9 +129,12 @@ window.addEventListener('message', function (e) {
     </ul>
     <p>Only once every one of those was green did I sign off. That discipline is the difference between tracking you can trust and a dashboard that quietly lies.</p>
 
-    <h2>Where it landed</h2>
-    <p>GA4 now runs <strong>fully server-side</strong> behind a first-party server, so far more of the data survives the trip. Every Meta event carries a shared <code>event_id</code>, so a conversion is counted once whether it comes from the browser or the server. First-party cookies stretch attribution, and Google's scripts serve first-party alongside everything else. The net result is what the ads team wanted from the start: more complete, better-matched conversion data to optimise against.</p>
-    <p>One decision mattered as much as any of the build. Digging in, I found an existing <strong>AWS Conversions API Gateway</strong> already sending deduplicated server events, so I built the parallel Stape Meta CAPI path but left it <strong>paused</strong> rather than publishing a second server source that would double-count. Keeping the data clean beat shipping something duplicate.</p>
+    <h2>What it changed</h2>
+    <p>The point of all this was never the plumbing, it was the payoff. Once Meta was receiving cleaner, deduplicated data, <strong>event match quality climbed from around 6 to 8 out of 10</strong>, and <strong>cost per result improved</strong> as the platform had better signal to optimise against. Underneath that: GA4 now runs fully server-side behind a first-party server, so far more of the data survives the trip; every Meta event carries a shared <code>event_id</code>, so a conversion is counted once whether it comes from the browser or the server; first-party cookies stretch attribution; and Google's scripts serve first-party alongside everything else.</p>
+    <p>One decision mattered as much as the build. I found an existing <strong>AWS Conversions API Gateway</strong> already sending deduplicated server events, so I built the parallel Stape Meta CAPI path but left it <strong>paused</strong> rather than publishing a second server source that would double-count. Cleaner data beat shipping something duplicate.</p>
+
+    <h2>What server-side won't fix</h2>
+    <p>One honest caveat, because server-side gets sold as a cure-all and it is not one. It recovers data that was being blocked in transit, but it cannot recover data you never collected. That is why lifting match quality took more than the server work alone: the booking sat inside a CRM iframe with no email or phone captured on the site, so there was less to match on, and part of the gain came from wiring the CRM's own data into Meta. Server-side moves the collection point, it does not invent signal that was never there, and consent and privacy rules still apply.</p>
 
     <h2>A few snags worth knowing about</h2>
     <p>Nothing here derailed the build, but each one costs an afternoon if you don't know it's coming:</p>
