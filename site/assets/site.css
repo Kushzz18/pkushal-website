@@ -56,7 +56,9 @@ main{padding-block:clamp(40px,7vw,72px)}
 .breadcrumb a{color:var(--muted)}
 
 /* experience list cards */
-.exp-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,360px));gap:16px;margin-top:2.4rem}
+.exp-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:2.4rem}
+@media(max-width:900px){.exp-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.exp-list{grid-template-columns:1fr}}
 .exp-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:.15s}
 .exp-card:hover{border-color:var(--border-2);transform:translateY(-2px);text-decoration:none}
 .exp-card .thumb{aspect-ratio:16/8;background:var(--bg-2);border-bottom:1px solid var(--border)}
