@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" role="img" aria-label="The launch decision: why running the campaign before a working checkout would waste a learning phase.">
+  <defs>
+    <marker id="dw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#f0662f"/></marker>
+    <marker id="dg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7ee787"/></marker>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.sub{fill:#8b98a5}
+    </style>
+  </defs>
+  <rect width="960" height="400" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="30" y="42" font-size="20">The launch decision</text>
+  <text class="t sub" x="30" y="66" font-size="13">Why holding paid spend protects the campaign's learning phase</text>
+
+  <rect x="30" y="92" width="440" height="270" rx="12" fill="#160f0d" stroke="#7a3a24"/>
+  <text class="t" x="50" y="120" font-size="14" font-weight="700" fill="#f0662f">Run now on a soft signal</text>
+  <rect x="50" y="134" width="400" height="40" rx="8" fill="#1e1310" stroke="#5c2f1f"/>
+  <text class="t" x="70" y="159" font-size="12.5" fill="#d79e86">Off-site hand-off click counts as the conversion</text>
+  <line x1="250" y1="174" x2="250" y2="190" stroke="#f0662f" stroke-width="2" marker-end="url(#dw)"/>
+  <rect x="50" y="192" width="400" height="40" rx="8" fill="#1e1310" stroke="#5c2f1f"/>
+  <text class="t" x="70" y="217" font-size="12.5" fill="#d79e86">No purchase value, value bidding has nothing to bid on</text>
+  <line x1="250" y1="232" x2="250" y2="248" stroke="#f0662f" stroke-width="2" marker-end="url(#dw)"/>
+  <rect x="50" y="250" width="400" height="40" rx="8" fill="#1e1310" stroke="#5c2f1f"/>
+  <text class="t" x="70" y="275" font-size="12.5" fill="#d79e86">Real checkout goes live, conversion action changes</text>
+  <line x1="250" y1="290" x2="250" y2="306" stroke="#f0662f" stroke-width="2" marker-end="url(#dw)"/>
+  <rect x="50" y="308" width="400" height="42" rx="8" fill="#241012" stroke="#f0662f"/>
+  <text class="t" x="250" y="334" font-size="12.5" font-weight="700" fill="#f4a07a" text-anchor="middle">Learning resets, paid for twice, trained wrong</text>
+
+  <rect x="490" y="92" width="440" height="270" rx="12" fill="#0d1712" stroke="#2f7d52"/>
+  <text class="t" x="510" y="120" font-size="14" font-weight="700" fill="#7ee787">Hold spend, build in parallel</text>
+  <rect x="510" y="134" width="400" height="40" rx="8" fill="#10241a" stroke="#245c3f"/>
+  <text class="t" x="530" y="159" font-size="12.5" fill="#8fcaa6">Tracking built + validated in test, staged ready</text>
+  <line x1="710" y1="174" x2="710" y2="190" stroke="#7ee787" stroke-width="2" marker-end="url(#dg)"/>
+  <rect x="510" y="192" width="400" height="40" rx="8" fill="#10241a" stroke="#245c3f"/>
+  <text class="t" x="530" y="217" font-size="12.5" fill="#8fcaa6">Feed, ad pages and audience prep finished</text>
+  <line x1="710" y1="232" x2="710" y2="248" stroke="#7ee787" stroke-width="2" marker-end="url(#dg)"/>
+  <rect x="510" y="250" width="400" height="40" rx="8" fill="#10241a" stroke="#245c3f"/>
+  <text class="t" x="530" y="275" font-size="12.5" fill="#8fcaa6">Real checkout live, switch on real purchase value</text>
+  <line x1="710" y1="290" x2="710" y2="306" stroke="#7ee787" stroke-width="2" marker-end="url(#dg)"/>
+  <rect x="510" y="308" width="400" height="42" rx="8" fill="#12331f" stroke="#7ee787"/>
+  <text class="t" x="710" y="334" font-size="12.5" font-weight="700" fill="#a7e9b8" text-anchor="middle">One clean learning phase on the right signal</text>
+</svg>

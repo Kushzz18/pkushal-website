@@ -29,7 +29,7 @@ i = s.index('<header class="nav">')
 head_part = s[:i]
 body_part = s[i:]
 head_part = head_part.replace('<title>Kushal Pathak</title>',
-    '<title>Kushal Pathak, Technical SEO Strategist in Kathmandu</title>', 1)
+    '<title>Kushal Pathak, Technical SEO Strategist</title>', 1)
 
 jsonld = ('{"@context":"https://schema.org","@graph":['
 '{"@type":"Person","@id":"https://pkushal.com.np/#kushal","name":"Kushal Pathak","url":"https://pkushal.com.np/",'
@@ -37,7 +37,7 @@ jsonld = ('{"@context":"https://schema.org","@graph":['
 '"worksFor":{"@type":"Organization","name":"RankMeTop","url":"https://rankmetop.net/"},'
 '"alumniOf":"Bachelor of Information Technology (BIT)",'
 '"knowsAbout":["Technical SEO","JavaScript Rendering","Structured Data","Indexation Strategy","Core Web Vitals","Analytics and Measurement"],'
-'"address":{"@type":"PostalAddress","addressLocality":"Kathmandu","addressCountry":"NP"},'
+'"address":{"@type":"PostalAddress","addressCountry":"NP"},'
 '"sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},'
 '{"@type":"WebSite","@id":"https://pkushal.com.np/#website","url":"https://pkushal.com.np/","name":"Kushal Pathak","publisher":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"},'
 '{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak, Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"mainEntity":{"@id":"https://pkushal.com.np/#kushal"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
@@ -58,7 +58,7 @@ GTM_NOSCRIPT = (
 HEAD_EXTRA = (
 GTM_HEAD +
 '<meta name="google-site-verification" content="CIKjY7k4ZzqAcKmJATjz5bCmdoRyQMdc8zQQJv7j5cg">\n'
-'<meta name="description" content="Kushal Pathak, technical SEO strategist in Kathmandu. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.">\n'
+'<meta name="description" content="Kushal Pathak, technical SEO strategist working with clients worldwide. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.">\n'
 '<link rel="canonical" href="https://pkushal.com.np/">\n'
 '<meta name="robots" content="index,follow,max-image-preview:large">\n'
 '<meta name="theme-color" content="#0a0f14">\n'
@@ -92,7 +92,7 @@ files = {}
 # NOTE: robots.txt is intentionally NOT written here (hand-maintained ASCII-art file).
 files["llms.txt"] = (
 "# Kushal Pathak\n\n"
-"> Technical SEO strategist in Kathmandu, Nepal. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.\n\n"
+"> Technical SEO strategist working with clients worldwide. Rendering, crawlability, structured data and Search Console forensics for sites that are indexed but not winning.\n\n"
 "Since 2024, Kushal Pathak has worked on 50+ websites across 10 countries and 20+ industries, focused on JavaScript rendering, crawl architecture, structured data, indexation strategy, analytics and measurement (GA4, Google Tag Manager, Looker Studio, BigQuery) and forensic Google Search Console diagnosis. Platform and host agnostic across WordPress, Shopify, BigCommerce, Squarespace, Wix, Webflow and custom CMS, plus Cloudflare, Cloudways, SiteGround, Kinsta, WP Engine, AWS, Hostinger, Bluehost and HostGator.\n\n"
 "## Pages\n\n"
 "- [Home](https://pkushal.com.np/): Overview, named frameworks, services, an interactive technical SEO lab and contact.\n"
@@ -131,6 +131,12 @@ files["sitemap.xml"] = (
 '  </url>\n'
 '  <url>\n'
 '    <loc>https://pkushal.com.np/experience/leads-from-a-sealed-iframe/</loc>\n'
+'    <lastmod>2026-09-22</lastmod>\n'
+'    <changefreq>monthly</changefreq>\n'
+'    <priority>0.7</priority>\n'
+'  </url>\n'
+'  <url>\n'
+'    <loc>https://pkushal.com.np/experience/restricted-vertical-google-ads/</loc>\n'
 '    <lastmod>2026-09-22</lastmod>\n'
 '    <changefreq>monthly</changefreq>\n'
 '    <priority>0.7</priority>\n'
