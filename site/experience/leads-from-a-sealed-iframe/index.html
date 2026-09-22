@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDRG93B8');</script>
+<!-- End Google Tag Manager -->
+<title>Recovering form leads from a sealed iframe into Meta | Kushal Pathak</title>
+<meta name="description" content="A booking form was a cross-origin iframe the browser could not see into, so no submit event was possible. Here is how I fired a Meta Lead for every submission by polling the CRM's API and posting hashed events to the Conversions API from one Cloudflare Worker.">
+<link rel="canonical" href="https://pkushal.com.np/experience/leads-from-a-sealed-iframe/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0a0f14">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kushal Pathak">
+<meta property="og:title" content="Recovering form leads from a sealed iframe into Meta">
+<meta property="og:description" content="When the form is a cross-origin iframe with no submit event, client-side tracking is impossible. I went around the browser: poll the CRM API, hash the data, post to Meta CAPI from one Cloudflare Worker.">
+<meta property="og:url" content="https://pkushal.com.np/experience/leads-from-a-sealed-iframe/">
+<meta property="og:image" content="https://pkushal.com.np/assets/kushal.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Recovering form leads from a sealed iframe into Meta">
+<meta name="twitter:description" content="Polling a CRM's GraphQL API and posting SHA-256 hashed Lead events to Meta CAPI from a single Cloudflare Worker, after a form the browser could not see.">
+<meta name="twitter:image" content="https://pkushal.com.np/assets/kushal.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=2">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BlogPosting","@id":"https://pkushal.com.np/experience/leads-from-a-sealed-iframe/#article","headline":"Recovering form leads from a sealed iframe, and getting them into Meta","description":"A first-person account of firing a Meta Lead for every booking-form submission when the form was a cross-origin Jobber iframe with no submit event, by polling Jobber's GraphQL API and posting SHA-256 hashed events to the Conversions API from one Cloudflare Worker.","image":["https://pkushal.com.np/experience/leads-from-a-sealed-iframe/iframe.svg","https://pkushal.com.np/assets/kushal.webp"],"datePublished":"2026-09-22","dateModified":"2026-09-22","articleSection":"Experience","keywords":"server-side tracking, Meta Conversions API, Cloudflare Workers, Jobber API, cross-origin iframe, OAuth, SHA-256","author":{"@type":"Person","name":"Kushal Pathak","url":"https://pkushal.com.np/","sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},"publisher":{"@type":"Person","name":"Kushal Pathak"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://pkushal.com.np/experience/leads-from-a-sealed-iframe/"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pkushal.com.np/"},{"@type":"ListItem","position":2,"name":"Experience","item":"https://pkushal.com.np/experience/"},{"@type":"ListItem","position":3,"name":"Leads from a sealed iframe","item":"https://pkushal.com.np/experience/leads-from-a-sealed-iframe/"}]}
+]}</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDRG93B8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="nav"><div class="wrap row">
+  <a class="brand" href="/">~/kushal-pathak <b>$</b></a>
+  <nav class="links" id="navLinks">
+    <a href="/#about">about</a>
+    <a href="/#frameworks">frameworks</a>
+    <a href="/experience/" class="on">experience</a>
+    <a href="/#skills">skills</a>
+    <a href="/#playground">lab</a>
+    <a href="/#contact">contact</a>
+  </nav>
+  <button class="navtoggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#8801;</button>
+</div></header>
+
+<main class="wrap">
+  <div class="breadcrumb"><a href="/">home</a> / <a href="/experience/">experience</a> / leads from a sealed iframe</div>
+  <div class="phead">
+    <p class="eyebrow">Experience &middot; Tracking &amp; Automation</p>
+    <h1>Recovering form leads from a sealed iframe, and getting them into Meta</h1>
+    <p class="sub">The booking form was a cross-origin iframe the browser could not see into, so a submit event was flat-out impossible. Here is how I fired a Meta Lead for every submission anyway, by going around the browser, and why my first build had to be thrown away.</p>
+  </div>
+
+  <article class="article">
+    <p class="mono" style="color:var(--dim);font-size:.8rem">September 2026 &middot; ~8 min read &middot; Cloudflare Workers, Jobber API, Meta CAPI</p>
+
+    <figure class="featured">
+      <img src="iframe.svg?v=1" width="860" height="360" alt="A client website contains a cross-origin Jobber booking form in an iframe. The submit event stays trapped inside the iframe and never reaches the pixel or tag manager on the page.">
+    </figure>
+    <p class="cap">The whole problem in one picture: the form lives in another origin, so the submit never reaches the page's pixel.</p>
+
+    <p class="lead">Most conversion tracking assumes the browser can see the thing you want to measure. Sometimes it simply cannot. On this project the booking form was embedded from a field-service CRM as a cross-origin iframe, and a same-origin page has no way to read inside another origin's frame. No click, no submit, no event. The ads account was optimising against a conversion that, from the browser's point of view, never happened. This is the story of getting that Lead event to fire anyway, and of the first architecture I built, watched fail, and deliberately replaced.</p>
+
+    <h2>The goal</h2>
+    <p>For a home-services website running Meta ads, every real inquiry came through one embedded booking form. The ads team needed a <strong>Lead</strong> conversion to fire on each submission so the campaigns could optimise toward actual inquiries instead of proxy signals. One hard constraint set the tone for the whole build: <strong>no paid tooling</strong> until the leads proved themselves. It had to work on free infrastructure first.</p>
+
+    <h2>The wall: a form the browser can't see</h2>
+    <p>The booking widget was served inside an <strong>iframe from the CRM, Jobber</strong>, on a different origin from the site. I confirmed the important part by live inspection: the frame emits <strong>no <code>postMessage</code></strong> on submit. That matters because a cross-origin iframe is a sealed box by design. The browser's same-origin policy stops the parent page reading the frame's DOM or its events, and without a <code>postMessage</code> handshake there is nothing to listen for. GTM triggers, the pixel, a custom listener, none of them can observe a submit that happens inside another origin. Client-side tracking here was not hard, it was impossible. That is a useful thing to recognise early, because the honest move is to stop trying to force the browser and go find the data somewhere it actually exists.</p>
+
+    <h2>The way around it, and why it works</h2>
+    <p>The data did exist, just not in the page. Every submission lands in <strong>Jobber as a work request</strong>. So instead of watching the browser, I watched the source of truth: poll <strong>Jobber's API</strong> on a schedule, take each new request, hash the personal fields, and send a Lead to <strong>Meta's Conversions API</strong> server-to-server. The reason this works is the same reason server-side tracking works in general: Meta's Conversions API accepts events from a trusted server, not only from a browser pixel, so the browser never needs to witness the conversion at all. If Jobber knows a booking happened, I can tell Meta a booking happened, and the sealed iframe becomes irrelevant.</p>
+
+    <h2>The first build, and why I moved off it</h2>
+    <p>My first instinct was to keep it visual and low-code, so I self-hosted <strong>n8n on a free Hugging Face Space</strong>: a scheduled workflow that hit Jobber's GraphQL API, filtered and hashed in a Code node, and posted to Meta. It ran. But the free host turned into a fight, and the fights taught me exactly where a build like this actually breaks:</p>
+    <figure class="featured" style="margin-top:14px">
+      <img src="migration.svg?v=1" width="860" height="394" alt="Before: Jobber feeds n8n on Hugging Face, which needed a Cloudflare relay to reach Meta, with the free host sleeping and resetting. After: Jobber feeds a single Cloudflare Worker that goes straight to Meta.">
+    </figure>
+    <p class="cap">The move that fixed it: retire the fragile free host and collapse every moving part into one Cloudflare Worker.</p>
+    <ul>
+      <li><strong>The host kept losing my token.</strong> Jobber's OAuth refresh with token rotation on, combined with the Space's ephemeral storage, meant the rotated refresh token vanished on every restart and auth broke. I turned <strong>rotation off</strong> and stored state somewhere that survives restarts.</li>
+      <li><strong>The runtime had no crypto.</strong> The self-hosted Code node had no Web Crypto global, so <code>crypto.subtle</code> was undefined and hashing failed. I dropped in a <strong>dependency-free, pure-JS SHA-256</strong> to get past it.</li>
+      <li><strong>Meta rejected the auth twice over.</strong> First the header had to be a real <code>Authorization: Bearer &lt;token&gt;</code>, not a raw value; then the System User token needed the pixel <strong>assigned</strong> with full control and <code>ads_management</code>. Once both were right, I got my first <code>events_received: 1</code>.</li>
+      <li><strong>Meta's edge refused the host's IP.</strong> Outbound TLS to <code>graph.facebook.com</code> died with <code>EPROTO / SSL alert number 0</code>, a reset because the shared free-host IP was untrusted. I bought myself one more run by adding a <strong>Cloudflare Worker as a trusted relay</strong> in front of Meta.</li>
+      <li><strong>Then the host started dropping its own connections.</strong> <code>ECONNRESET</code> before the TLS handshake even finished, plus the editor session disconnecting. At that point the pattern was clear: the free Space itself was the weak link, not any one config.</li>
+    </ul>
+    <p>That last failure was the useful one. I had already put a Cloudflare Worker in the path as a relay, so the honest question was: why keep the fragile host at all? <strong>The decision was to retire n8n and Hugging Face entirely and collapse everything into a single Cloudflare Worker.</strong> The trade-off was giving up n8n's visual workflow for hand-written code, but in return I got a runtime with built-in Web Crypto, a trusted egress IP Meta accepts, persistent storage, and a real scheduler, the exact four things the free host kept taking away.</p>
+
+    <h2>The finished pipeline</h2>
+    <figure class="featured">
+      <img src="pipeline.svg?v=1" width="860" height="384" alt="A cron trigger fires a Cloudflare Worker every ten minutes. The Worker reads and writes state in a KV store, fetches new bookings from the Jobber GraphQL API, and posts SHA-256 hashed Lead events to the Meta Conversions API.">
+    </figure>
+    <p class="cap">One Worker, one schedule, one store. Nothing to keep warm and nothing to babysit.</p>
+    <p>The final system is a <strong>single Cloudflare Worker on a ten-minute cron</strong>. On each run it refreshes the Jobber OAuth token, queries <strong>Jobber's GraphQL API</strong> for new work requests, hashes the personal fields with the Worker's <strong>native Web Crypto SHA-256</strong>, and posts a Lead to the <strong>Meta Conversions API</strong>. All state lives in <strong>Cloudflare KV</strong>: the Jobber refresh token, and the set of request IDs already sent. Connecting it is a one-time step, an <code>/auth/start</code> endpoint kicks off the Jobber OAuth flow and the callback stores the refresh token in KV, after which the cron runs unattended. There is also a test endpoint that sends a single event with Meta's <code>test_event_code</code> so I can prove the path without touching live dedup.</p>
+
+    <h2>The decisions that made it reliable</h2>
+    <p>Getting an event to send once is easy. Getting it to send <em>exactly</em> once, forever, unattended, is the actual work. Four decisions carried that weight:</p>
+    <ul>
+      <li><strong>Send-then-mark dedup.</strong> A request ID is written to the KV <code>seen</code> set only <em>after</em> Meta confirms <code>events_received &gt;= 1</code>. A failed send is never marked, so it simply retries on the next run instead of being lost.</li>
+      <li><strong>A first-run baseline.</strong> The very first live run records the IDs that already exist and sends nothing, so switching the system on never blasts weeks of old bookings into Meta as fresh leads.</li>
+      <li><strong>A source filter.</strong> Only requests whose source starts with the embedded form are sent, so manual or phone entries in the CRM don't masquerade as web leads.</li>
+      <li><strong>Secrets out of the code.</strong> The Jobber refresh token lives in KV, the Meta token is a Worker secret, and nothing sensitive is ever committed. The Worker code is safe to read; the credentials are not in it.</li>
+    </ul>
+    <p>The core loop is small enough to hold in your head, which is exactly what you want from something that runs on its own:</p>
+    <pre><code>async function runJob(env) {
+  const token = await refreshToken(env);            // Jobber OAuth, refreshed from KV
+  const requests = await fetchRequests(env, token); // Jobber GraphQL: new work requests
+  const state = await env.KV.get("state", "json");
+  const seen = new Set(state.seen);
+
+  for (const r of requests) {
+    if (seen.has(r.id)) continue;                   // already sent, skip
+    if (!r.source.startsWith("embedded")) continue; // form leads only
+
+    const event = await buildEvent(r);              // PII hashed with SHA-256
+    const meta  = await sendToMeta(env, [event]);   // Meta Conversions API
+
+    if (meta.events_received >= 1) seen.add(r.id);  // mark only on a confirmed send
+  }
+
+  await env.KV.put("state", JSON.stringify({ ...state, seen: [...seen] }));
+}</code></pre>
+    <p>And the hashing, the one piece that had no home on the free host, is native here:</p>
+    <pre><code>// on the free host crypto.subtle was undefined, so this line failed there.
+// on Cloudflare Workers the Web Crypto API is built in, so this is native.
+async function sha256(value) {
+  const data = new TextEncoder().encode(String(value).trim().toLowerCase());
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return [...new Uint8Array(digest)].map(b =&gt; b.toString(16).padStart(2, '0')).join('');
+}</code></pre>
+
+    <h2>How I proved it worked</h2>
+    <p>I did not trust it until every layer showed its work. The test endpoint returned <code>{ ok:true, mode:"live", sent:1, results:[{ ok:true, status:200, events_received:1 }] }</code>. In <strong>Meta Events Manager</strong> the Lead event showed as <strong>Active</strong> with the integration listed as <strong>Conversions API</strong>. Then a real form submission on the site flowed all the way through on its own, no clicking, no manual push. That end-to-end pass, from a booking the browser could never see to a Lead landing in Meta, was the moment it was actually done.</p>
+
+    <h2>What it changed</h2>
+    <p>The payoff here is blunt: a conversion that was <strong>impossible to track went to fully tracked</strong>. Before, not a single booking-form submission could fire a Lead, because the browser had no way to observe the sealed iframe. Now every embedded-form submission produces a server-side Lead <strong>automatically, on a ten-minute cadence, across every page of the site, at zero hosting cost, on infrastructure that never sleeps</strong>. Meta went from optimising against a conversion it never received to optimising against real inquiries. Going from nothing to something reliable is a bigger jump than any tuning that comes after it.</p>
+
+    <h2>What this approach won't fix</h2>
+    <p>An honest limit, because server-side is often sold as a finish line and it is not. A purely server-side Lead carries <strong>no browser click identifiers</strong>, no <code>fbc</code> or <code>fbp</code>, so Meta has less to match on and <strong>event match quality starts low with a real ceiling</strong>. It climbs as each lead arrives with more real detail, email, phone, name, city, but it will not reach what a browser event with click IDs would. The clean way to lift it further is a <strong>phase two</strong>: a native, same-origin form on the site that captures the click IDs in the browser and feeds them alongside the server event. That was scoped as optional, later work. Two smaller caveats: the OAuth connection needs occasional care, and the pipeline is near-real-time at about ten minutes, not instant. For ad optimisation that is fine; for anything needing a sub-minute reaction it would not be.</p>
+
+    <h2>What I'd carry into the next build</h2>
+    <p>The biggest lesson had nothing to do with tracking. <strong>A free tier that resets your state and rotates your egress IP will cost you more time than the money it saves</strong>, and the failures show up as someone else's TLS errors, which is the worst kind to debug. The second lesson: when you find yourself adding a relay to prop up a shaky component, that is usually a sign the component should go, not get propped. Collapsing four fragile pieces into one Worker made the system easier to reason about <em>and</em> more reliable at the same time, which does not happen often. And the send-then-mark plus baseline pattern is now my default for any unattended job that must never double-fire and must never replay history.</p>
+
+    <h2>Stacks involved</h2>
+    <div class="stack">
+      <span>Jobber GraphQL API</span><span>OAuth 2.0</span><span>n8n (first attempt)</span><span>Hugging Face Spaces (first attempt)</span><span>Cloudflare Workers</span><span>Cloudflare KV</span><span>Cron Triggers</span><span>Meta Conversions API</span><span>SHA-256</span><span>server-side tracking</span>
+    </div>
+
+    <a class="btn backlink" href="/experience/">&larr; more of my work</a>
+  </article>
+</main>
+
+<footer><div class="wrap">
+  <div>&copy; 2026 Kushal Pathak &middot; Technical SEO Strategist</div>
+  <div style="margin-top:8px"><a href="/">home</a> &middot; <a href="/experience/">experience</a> &middot; <a href="/#contact">contact</a></div>
+</div></footer>
+
+<script src="/assets/site.js?v=2" defer></script>
+</body>
+</html>

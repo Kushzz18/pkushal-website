@@ -2,10 +2,10 @@
 # Deploy pkushal.com.np: build -> package -> upload -> extract into the docroot.
 # The SSH key is referenced by path (never committed). Override with DEPLOY_KEY.
 #
-#   DEPLOY_KEY="/c/Users/ASUS/Downloads/SSHKushalWebsite_nopass" ./deploy.sh
+#   DEPLOY_KEY="/c/Users/ASUS/SSHKushalWebsite_nopass" ./deploy.sh
 #
 set -e
-KEY="${DEPLOY_KEY:-$HOME/Downloads/SSHKushalWebsite_nopass}"
+KEY="${DEPLOY_KEY:-$HOME/SSHKushalWebsite_nopass}"
 HOST="rankmeto@65.98.12.7"
 PORT="22"
 DOCROOT="/home/rankmeto/pkushal.com.np"

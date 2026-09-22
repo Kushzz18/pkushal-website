@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-label="A cron trigger fires a Cloudflare Worker every ten minutes. The Worker reads and writes dedup state in a KV store, fetches new bookings from the Jobber GraphQL API, and posts SHA-256 hashed Lead events to the Meta Conversions API.">
+  <defs>
+    <marker id="p" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b98a5"/></marker>
+    <marker id="pa" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5cc8ff"/></marker>
+    <style>
+      .bg{fill:#0b1017}
+      .t{font-family:'IBM Plex Sans',sans-serif;fill:#e6edf3}
+      .mo{font-family:'IBM Plex Mono',monospace}
+      .m{fill:#8b98a5}.a{fill:#5cc8ff}.g{fill:#7ee787}
+      .box{fill:#121a23;stroke:#2d3f4f;stroke-width:1.5}
+      .accbox{fill:#0f2130;stroke:#2a6f96;stroke-width:2}
+      .ln{stroke:#8b98a5;stroke-width:1.6}.lna{stroke:#5cc8ff;stroke-width:1.9}
+      .chip{fill:#0b1017}
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="720" height="320" rx="14"/>
+
+  <!-- cron -->
+  <rect class="box" x="24" y="140" width="126" height="52" rx="9"/>
+  <text class="t" x="87" y="164" text-anchor="middle" font-size="13">Cron trigger</text>
+  <text class="mo m" x="87" y="182" text-anchor="middle" font-size="10">every 10 min</text>
+
+  <!-- worker -->
+  <rect class="accbox" x="222" y="124" width="184" height="84" rx="12"/>
+  <text class="t" x="314" y="158" text-anchor="middle" font-size="14.5" font-weight="600">Cloudflare Worker</text>
+  <text class="mo a" x="314" y="178" text-anchor="middle" font-size="10.5">refresh &#183; fetch &#183; hash &#183; send</text>
+  <line class="ln" x1="150" y1="166" x2="218" y2="166" marker-end="url(#p)"/>
+
+  <!-- KV -->
+  <rect class="box" x="228" y="24" width="172" height="52" rx="9"/>
+  <text class="t" x="314" y="48" text-anchor="middle" font-size="13">KV store</text>
+  <text class="mo m" x="314" y="66" text-anchor="middle" font-size="10">token &#183; seen ids</text>
+  <line class="ln" x1="300" y1="124" x2="300" y2="78" marker-end="url(#p)"/>
+  <line class="ln" x1="328" y1="78" x2="328" y2="122" marker-end="url(#p)"/>
+  <rect class="chip" x="356" y="90" width="70" height="18" rx="5"/>
+  <text class="mo m" x="391" y="103" text-anchor="middle" font-size="10">state</text>
+
+  <!-- Jobber -->
+  <rect class="box" x="470" y="36" width="186" height="60" rx="9"/>
+  <text class="t" x="563" y="62" text-anchor="middle" font-size="13.5">Jobber GraphQL</text>
+  <text class="mo m" x="563" y="80" text-anchor="middle" font-size="10">new bookings</text>
+  <line class="ln" x1="406" y1="150" x2="500" y2="98" marker-end="url(#p)"/>
+  <rect class="chip" x="430" y="112" width="52" height="18" rx="5"/>
+  <text class="mo m" x="456" y="125" text-anchor="middle" font-size="10">fetch</text>
+
+  <!-- Meta -->
+  <rect class="accbox" x="470" y="228" width="186" height="60" rx="9"/>
+  <text class="t" x="563" y="254" text-anchor="middle" font-size="13.5" font-weight="600">Meta CAPI</text>
+  <text class="mo a" x="563" y="272" text-anchor="middle" font-size="10.5">Lead &#183; hashed</text>
+  <line class="lna" x1="406" y1="182" x2="500" y2="228" marker-end="url(#pa)"/>
+  <rect class="chip" x="418" y="196" width="96" height="18" rx="5"/>
+  <text class="mo a" x="466" y="209" text-anchor="middle" font-size="10">POST SHA-256</text>
+</svg>

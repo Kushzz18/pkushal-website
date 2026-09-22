@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" role="img" aria-label="Before: Jobber feeds n8n self-hosted on Hugging Face, which relays to a Cloudflare Worker, then to Meta. After: Jobber feeds one Cloudflare Worker directly, which sends to Meta. The fragile host is removed.">
+  <defs>
+    <marker id="am" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b98a5"/></marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5cc8ff"/></marker>
+    <style>
+      .bg{fill:#0b1017}
+      .t{font-family:'IBM Plex Sans',sans-serif;fill:#e6edf3}
+      .mo{font-family:'IBM Plex Mono',monospace}
+      .m{fill:#8b98a5}.w{fill:#f0662f}.a{fill:#5cc8ff}
+      .box{fill:#121a23;stroke:#2d3f4f;stroke-width:1.5}
+      .warnbox{fill:#221512;stroke:#f0662f;stroke-width:1.5}
+      .accbox{fill:#0f2130;stroke:#2a6f96;stroke-width:2}
+      .lnm{stroke:#8b98a5;stroke-width:1.6}.lna{stroke:#5cc8ff;stroke-width:2}
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="720" height="330" rx="14"/>
+
+  <text class="mo m" x="24" y="30" font-size="12" letter-spacing="1">BEFORE</text>
+  <rect class="box" x="24" y="46" width="110" height="50" rx="9"/>
+  <text class="t" x="79" y="76" text-anchor="middle" font-size="13">Jobber API</text>
+  <rect class="warnbox" x="178" y="42" width="150" height="58" rx="9"/>
+  <text class="t" x="253" y="66" text-anchor="middle" font-size="12.5">n8n on Hugging Face</text>
+  <text class="mo w" x="253" y="84" text-anchor="middle" font-size="10">sleeps &#183; resets</text>
+  <rect class="box" x="372" y="46" width="130" height="50" rx="9"/>
+  <text class="t" x="437" y="76" text-anchor="middle" font-size="13">Cloudflare relay</text>
+  <rect class="box" x="546" y="46" width="110" height="50" rx="9"/>
+  <text class="t" x="601" y="76" text-anchor="middle" font-size="13">Meta</text>
+  <line class="lnm" x1="134" y1="71" x2="174" y2="71" marker-end="url(#am)"/>
+  <line class="lnm" x1="328" y1="71" x2="368" y2="71" marker-end="url(#am)"/>
+  <line class="lnm" x1="502" y1="71" x2="542" y2="71" marker-end="url(#am)"/>
+
+  <line x1="24" y1="150" x2="696" y2="150" stroke="#22303d"/>
+
+  <text class="mo a" x="24" y="186" font-size="12" letter-spacing="1">AFTER</text>
+  <rect class="box" x="24" y="204" width="130" height="56" rx="9"/>
+  <text class="t" x="89" y="238" text-anchor="middle" font-size="13">Jobber API</text>
+  <rect class="accbox" x="266" y="196" width="180" height="72" rx="11"/>
+  <text class="t" x="356" y="226" text-anchor="middle" font-size="14" font-weight="600">Cloudflare Worker</text>
+  <text class="mo a" x="356" y="246" text-anchor="middle" font-size="10.5">poll &#183; hash &#183; send</text>
+  <rect class="box" x="558" y="204" width="120" height="56" rx="9"/>
+  <text class="t" x="618" y="238" text-anchor="middle" font-size="13">Meta</text>
+  <line class="lna" x1="154" y1="232" x2="262" y2="232" marker-end="url(#aa)"/>
+  <line class="lna" x1="446" y1="232" x2="554" y2="232" marker-end="url(#aa)"/>
+</svg>
