@@ -1,10 +1,8 @@
 # pkushal.com.np
 
 Personal site of **Kushal Pathak — Technical SEO Strategist** (Kathmandu, Nepal).
-Hand-built, statically rendered, dark "engineer/terminal" theme, with a live
-technical-SEO lab (robots.txt matcher, entity-grade schema generator, SERP
-pixel-width preview, render-gap demo, hreflang, Open Graph, index-coverage tree,
-tiered quiz).
+Hand-built, statically rendered, with a live technical-SEO lab (robots.txt matcher, entity-grade schema generator, SERP
+pixel-width preview, render-gap demo, hreflang, Open Graph, index-coverage tree, tiered quiz).
 
 Live: https://pkushal.com.np
 
@@ -29,21 +27,3 @@ deploy.sh            # build + upload to the server over SSH
 1. Edit **`src/home.html`** (content) and/or **`site/robots.txt`** (the fun robots file).
 2. Build: `python build.py`  → regenerates `site/`.
 3. Deploy: `DEPLOY_KEY="/path/to/SSHKushalWebsite_nopass" ./deploy.sh`
-
-The SSH key is **never** committed (see `.gitignore`). Keep it outside the repo
-(e.g. `~/Downloads/SSHKushalWebsite_nopass`).
-
-## Hosting / infra facts
-
-- Host: Babal Unlimited (cPanel, server s1309, IP `65.98.12.7`), user `rankmeto`.
-- Docroot: `/home/rankmeto/pkushal.com.np`.
-- SSL: cPanel AutoSSL (Let's Encrypt) for `pkushal.com.np`, `www`, `mail`.
-- DNS: `pkushal.com.np` A record → `65.98.12.7` (registered at register.com.np).
-- Search Console: verified via `<meta name="google-site-verification">` in `build.py`.
-- IndexNow: key file lives in `site/` and at the docroot root.
-
-## Roadmap
-
-- Analytics: GA4 + GTM snippet.
-- URL-autofill for the OG/schema tools via a small same-origin PHP endpoint.
-- Migrate to Astro when the blog / case studies are added (content collections).
