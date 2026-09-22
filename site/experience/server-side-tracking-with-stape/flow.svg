@@ -24,7 +24,7 @@
   <!-- Server (first-party) -->
   <rect class="boxc" x="345" y="130" width="200" height="160" rx="12"/>
   <text class="t" x="445" y="172" font-size="16" text-anchor="middle" font-weight="600">First-party server</text>
-  <text class="t a" x="445" y="196" font-size="13" text-anchor="middle">Stape &middot; sGTM</text>
+  <text class="t a" x="445" y="196" font-size="13" text-anchor="middle">Stape &#183; sGTM</text>
   <text class="t m" x="445" y="228" font-size="12" text-anchor="middle">server-managed</text>
   <text class="t m" x="445" y="245" font-size="12" text-anchor="middle">cookies</text>
 
