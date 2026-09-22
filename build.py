@@ -68,11 +68,14 @@ GTM_HEAD +
 '<meta property="og:title" content="Kushal Pathak, Technical SEO Strategist">\n'
 '<meta property="og:description" content="Rankings are an engineering problem. I do the engineering, rendering, crawlability, schema and indexation.">\n'
 '<meta property="og:url" content="https://pkushal.com.np/">\n'
-'<meta property="og:image" content="https://pkushal.com.np/assets/kushal.webp">\n'
+'<meta property="og:image" content="https://pkushal.com.np/assets/og-home.png">\n'
+'<meta property="og:image:width" content="1200">\n'
+'<meta property="og:image:height" content="630">\n'
+'<meta property="og:image:alt" content="Kushal Pathak, Technical SEO Strategist">\n'
 '<meta name="twitter:card" content="summary_large_image">\n'
 '<meta name="twitter:title" content="Kushal Pathak, Technical SEO Strategist">\n'
 '<meta name="twitter:description" content="Rankings are an engineering problem. I do the engineering.">\n'
-'<meta name="twitter:image" content="https://pkushal.com.np/assets/kushal.webp">\n'
+'<meta name="twitter:image" content="https://pkushal.com.np/assets/og-home.png">\n'
 '<style>[hidden]{display:none!important}img{max-width:100%;height:auto}</style>\n'
 '<script type="application/ld+json">' + jsonld + '</script>\n')
 
@@ -178,6 +181,14 @@ files[".htaccess"] = (
 
 for name, content in files.items():
     open(os.path.join(OUT, name), "w", encoding="utf-8").write(content)
+
+# Generate the Open Graph feature cards (homepage + each article).
+try:
+    import og_gen
+    for it in og_gen.ITEMS:
+        og_gen.make(it["title"], it["tag"], it["out"])
+except Exception as e:
+    print("WARN: og_gen skipped:", e)
 
 print("BUILD OK ->", OUT)
 for root, _, fs in os.walk(OUT):
