@@ -67,9 +67,10 @@
   /* HERO */
   .hero{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;
     padding-block:clamp(52px,9vw,104px);border-top:none}
-  .hero>div,.hero>.term{position:relative;z-index:1}
-  #bg3d{position:absolute;inset:0;z-index:0;width:100%;height:100%;display:block;pointer-events:none;opacity:.5;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 52%);mask-image:linear-gradient(90deg,transparent,#000 52%)}
+  /* site-wide interactive constellation, fixed behind all content */
+  #bg3d{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none;opacity:.34}
+  header.nav,main,footer{position:relative;z-index:1}
+  header.nav{z-index:20}
   @media(prefers-reduced-motion:reduce){#bg3d{display:none}}
   .hero h1{font-family:var(--mono);font-weight:600;font-size:clamp(2rem,4.6vw,3.35rem);letter-spacing:-.01em}
   .hero h1 .hl{color:var(--accent)}
@@ -270,11 +271,11 @@
   </div>
 </header>
 
+<canvas id="bg3d" aria-hidden="true"></canvas>
 <main class="wrap">
 
   <!-- HERO -->
   <section class="hero" style="border-top:none">
-    <canvas id="bg3d" aria-hidden="true"></canvas>
     <div>
       <p class="eyebrow" style="margin-bottom:1.4rem">Technical SEO Strategist · Kathmandu</p>
       <h1>Rankings are an <span class="hl">engineering</span> problem.<br>I do the engineering.<span class="cur">▋</span></h1>

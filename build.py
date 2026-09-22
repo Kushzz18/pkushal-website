@@ -182,11 +182,10 @@ files[".htaccess"] = (
 for name, content in files.items():
     open(os.path.join(OUT, name), "w", encoding="utf-8").write(content)
 
-# Generate the Open Graph feature cards (homepage + each article).
+# Generate the Open Graph feature cards (homepage + every article, auto-discovered).
 try:
     import og_gen
-    for it in og_gen.ITEMS:
-        og_gen.make(it["title"], it["tag"], it["out"])
+    og_gen.run()
 except Exception as e:
     print("WARN: og_gen skipped:", e)
 

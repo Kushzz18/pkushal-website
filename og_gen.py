@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 """Generate on-brand Open Graph feature cards (1200x630 PNG) for pkushal.com.np.
 
-Dark terminal theme to match the site: a title, a tag, a brand line, a byline,
-and a small constellation motif that echoes the hero. Add an entry to ITEMS for
-each new page/article and re-run (build.py also calls this).
+Auto-discovers every experience article under site/experience/*/index.html, reads
+its share title (og:title) and tag (the eyebrow), renders a dark terminal-style
+card into that folder as og.png, and makes sure the article's og:image /
+twitter:image point at it. The homepage card is rendered explicitly. build.py
+calls run(), so current and future articles get a card with no manual steps.
 """
-import os, math, random
+import os, re, glob, math, random, html
 from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "site")
+BASE = "https://pkushal.com.np"
 W, H = 1200, 630
 
-# Colours (match site tokens)
 BG = (10, 15, 20)
 INK = (233, 240, 245)
 MUTED = (150, 165, 178)
 ACCENT = (92, 200, 255)
 ACCENT_DIM = (47, 111, 150)
-CHIP = (34, 48, 61)
 
-# Consolas (bold mono) reads as a clean terminal face, matches the IBM Plex Mono look.
-F_MONO = "C:/Windows/Fonts/consolab.ttf"
+F_MONO = "C:/Windows/Fonts/consolab.ttf"    # bold mono, reads like IBM Plex Mono
 F_MONO_R = "C:/Windows/Fonts/consola.ttf"
 
 
@@ -60,37 +60,29 @@ def constellation(draw):
 def make(title, tag, out_rel):
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
-
-    # soft accent glow, top-right
     glow = Image.new("RGB", (W, H), BG)
     gd = ImageDraw.Draw(glow)
     for i, rad in enumerate(range(520, 0, -26)):
         a = int(10 * (1 - i / 20.0))
-        col = (min(BG[0] + a, 255), min(BG[1] + a + 2, 255), min(BG[2] + a + 6, 255))
-        gd.ellipse([W - 300 - rad, -260 - rad, W - 300 + rad, -260 + rad], fill=col)
+        gd.ellipse([W - 300 - rad, -260 - rad, W - 300 + rad, -260 + rad],
+                   fill=(min(BG[0] + a, 255), min(BG[1] + a + 2, 255), min(BG[2] + a + 6, 255)))
     img = Image.blend(img, glow, 0.6)
     d = ImageDraw.Draw(img)
-
     constellation(d)
 
     PAD = 80
-    # left accent bar
     d.rectangle([PAD - 16, 96, PAD - 12, 534], fill=ACCENT)
 
-    # brand line
     fb = font(F_MONO, 26)
     d.text((PAD, 74), "~/kushal-pathak", font=fb, fill=MUTED)
-    bw = d.textlength("~/kushal-pathak ", font=fb)
-    d.text((PAD + bw, 74), "$", font=fb, fill=ACCENT)
+    d.text((PAD + d.textlength("~/kushal-pathak ", font=fb), 74), "$", font=fb, fill=ACCENT)
 
-    # tag chip
     ft = font(F_MONO, 22)
-    label = tag.upper()
+    label = tag.upper()[:44]
     tw = d.textlength(label, font=ft)
     d.rounded_rectangle([PAD, 150, PAD + tw + 36, 194], radius=10, outline=ACCENT_DIM, width=2)
     d.text((PAD + 18, 160), label, font=ft, fill=ACCENT)
 
-    # title (auto-fit)
     size = 68
     while size >= 40:
         ftitle = font(F_MONO, size)
@@ -104,16 +96,12 @@ def make(title, tag, out_rel):
         d.text((PAD, y), ln, font=ftitle, fill=INK)
         y += lh
 
-    # byline
     fby = font(F_MONO_R, 25)
     d.text((PAD, 556), "Kushal Pathak  ", font=fby, fill=MUTED)
-    off = d.textlength("Kushal Pathak  ", font=fby)
-    d.text((PAD + off, 556), "// Technical SEO Strategist", font=fby, fill=ACCENT_DIM)
+    d.text((PAD + d.textlength("Kushal Pathak  ", font=fby), 556), "// Technical SEO Strategist", font=fby, fill=ACCENT_DIM)
     host = "pkushal.com.np"
-    hw = d.textlength(host, font=fby)
-    d.text((W - PAD - hw, 556), host, font=fby, fill=ACCENT)
+    d.text((W - PAD - d.textlength(host, font=fby), 556), host, font=fby, fill=ACCENT)
 
-    # bottom hairline
     d.rectangle([0, 626, W, 630], fill=ACCENT_DIM)
 
     out = os.path.join(OUT, out_rel)
@@ -122,15 +110,48 @@ def make(title, tag, out_rel):
     print("og ->", out_rel, os.path.getsize(out), "bytes")
 
 
-ITEMS = [
-    dict(out="assets/og-home.png", tag="Technical SEO Strategist",
-         title="Rankings are an engineering problem. I do the engineering."),
-    dict(out="experience/leads-from-a-sealed-iframe/og.png", tag="Experience \u00b7 Tracking",
-         title="Recovering form leads from a sealed iframe into Meta"),
-    dict(out="experience/server-side-tracking-with-stape/og.png", tag="Experience \u00b7 Analytics",
-         title="Moving conversion tracking server-side with Stape"),
-]
+def _meta(pattern, s):
+    m = re.search(pattern, s)
+    return html.unescape(m.group(1)).strip() if m else None
+
+
+def _ensure_meta(path, s, og_url):
+    """Point og:image / twitter:image at the card; add dimensions if missing."""
+    s2 = re.sub(r'(<meta property="og:image" content=")[^"]*(">)', r'\1' + og_url + r'\2', s)
+    s2 = re.sub(r'(<meta name="twitter:image" content=")[^"]*(">)', r'\1' + og_url + r'\2', s2)
+    if 'og:image:width' not in s2:
+        s2 = s2.replace('<meta property="og:image" content="%s">' % og_url,
+                        '<meta property="og:image" content="%s">\n'
+                        '<meta property="og:image:width" content="1200">\n'
+                        '<meta property="og:image:height" content="630">' % og_url)
+    if s2 != s:
+        open(path, "w", encoding="utf-8").write(s2)
+        print("   patched og meta ->", os.path.relpath(path, OUT))
+
+
+def discover():
+    items = []
+    for path in glob.glob(os.path.join(OUT, "experience", "*", "index.html")):
+        slug = os.path.basename(os.path.dirname(path))
+        s = open(path, encoding="utf-8").read()
+        title = _meta(r'<meta property="og:title" content="([^"]+)"', s) \
+            or _meta(r'<h1[^>]*>(.*?)</h1>', re.sub(r'<[^>]+>', '', s))
+        tag = _meta(r'<p class="eyebrow">(.*?)</p>', s) or "Experience"
+        tag = re.sub(r'<[^>]+>', '', tag)
+        out_rel = os.path.join("experience", slug, "og.png")
+        items.append((title, tag, out_rel, path, "%s/experience/%s/og.png" % (BASE, slug)))
+    return items
+
+
+def run():
+    # homepage
+    make("Rankings are an engineering problem. I do the engineering.",
+         "Technical SEO Strategist", "assets/og-home.png")
+    # every experience article, auto-discovered
+    for title, tag, out_rel, path, og_url in discover():
+        make(title, tag, out_rel)
+        _ensure_meta(path, open(path, encoding="utf-8").read(), og_url)
+
 
 if __name__ == "__main__":
-    for it in ITEMS:
-        make(it["title"], it["tag"], it["out"])
+    run()
