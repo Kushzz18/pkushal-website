@@ -130,12 +130,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>The dedup hinges on one shared id used by every event, mirrored into the <code>dataLayer</code> so the server can reuse it:</p>
     <pre><code>// one helper, used by every event, so the browser pixel and the
 // server (CAPI) can be matched and de-duplicated by Meta
-window.rmtEventId = function (name) {
+window.makeEventId = function (name) {
   return name + '.' + Date.now() + '.' + Math.random().toString(36).slice(2, 12);
 };
 
 fbq('init', 'YOUR_PIXEL_ID');
-var eid = window.rmtEventId('PageView');
+var eid = window.makeEventId('PageView');
 fbq('track', 'PageView', {}, { eventID: eid });
 
 // mirror the id into the dataLayer so the server side reuses it
@@ -150,7 +150,7 @@ window.addEventListener('message', function (e) {
   var payload = JSON.stringify(e.data || '');
   if (!booked &amp;&amp; payload.indexOf('booking-complete') !== -1) {
     booked = true;
-    var eid = window.rmtEventId('Book');
+    var eid = window.makeEventId('Book');
     fbq('trackCustom', 'Book', {}, { eventID: eid });
   }
 });</code></pre>
