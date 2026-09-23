@@ -131,15 +131,16 @@ def _ensure_meta(path, s, og_url):
 
 def discover():
     items = []
-    for path in glob.glob(os.path.join(OUT, "experience", "*", "index.html")):
-        slug = os.path.basename(os.path.dirname(path))
-        s = open(path, encoding="utf-8").read()
-        title = _meta(r'<meta property="og:title" content="([^"]+)"', s) \
-            or _meta(r'<h1[^>]*>(.*?)</h1>', re.sub(r'<[^>]+>', '', s))
-        tag = _meta(r'<p class="eyebrow">(.*?)</p>', s) or "Experience"
-        tag = re.sub(r'<[^>]+>', '', tag)
-        out_rel = os.path.join("experience", slug, "og.png")
-        items.append((title, tag, out_rel, path, "%s/experience/%s/og.png" % (BASE, slug)))
+    for section in ("experience", "case-study"):
+        for path in glob.glob(os.path.join(OUT, section, "*", "index.html")):
+            slug = os.path.basename(os.path.dirname(path))
+            s = open(path, encoding="utf-8").read()
+            title = _meta(r'<meta property="og:title" content="([^"]+)"', s) \
+                or _meta(r'<h1[^>]*>(.*?)</h1>', re.sub(r'<[^>]+>', '', s))
+            tag = _meta(r'<p class="eyebrow">(.*?)</p>', s) or section.replace("-", " ").title()
+            tag = re.sub(r'<[^>]+>', '', tag)
+            out_rel = os.path.join(section, slug, "og.png")
+            items.append((title, tag, out_rel, path, "%s/%s/%s/og.png" % (BASE, section, slug)))
     return items
 
 

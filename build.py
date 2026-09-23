@@ -141,6 +141,18 @@ files["sitemap.xml"] = (
 '    <changefreq>monthly</changefreq>\n'
 '    <priority>0.7</priority>\n'
 '  </url>\n'
+'  <url>\n'
+'    <loc>https://pkushal.com.np/case-study/</loc>\n'
+'    <lastmod>2026-09-23</lastmod>\n'
+'    <changefreq>weekly</changefreq>\n'
+'    <priority>0.8</priority>\n'
+'  </url>\n'
+'  <url>\n'
+'    <loc>https://pkushal.com.np/case-study/recipe-schema/</loc>\n'
+'    <lastmod>2026-09-23</lastmod>\n'
+'    <changefreq>monthly</changefreq>\n'
+'    <priority>0.7</priority>\n'
+'  </url>\n'
 '</urlset>\n')
 
 files["favicon.svg"] = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-label="Bar chart of one premium-beef store's top cooking and recipe pages by Google impressions over roughly ten months, led by a best-cuts-for-stew guide at about 461,000 impressions.">
+  <defs>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.lbl{fill:#c7d0d9}.val{fill:#9bd8ff}
+    </style>
+  </defs>
+  <rect width="900" height="360" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="30" y="40" font-size="19">One store's cooking &amp; recipe content, impressions in ~10 months</text>
+  <text class="t m" x="30" y="63" font-size="13">Editorial pages carrying recipe and how-to markup, the traffic surface behind the storefront</text>
+
+  <!-- rows -->
+  <g>
+    <rect x="330" y="93" width="560" height="34" rx="6" fill="#5cc8ff"/>
+    <text class="t lbl" x="30" y="115" font-size="12.5">Best cuts of beef for stew (guide)</text>
+    <text class="mo" x="878" y="115" font-size="12.5" fill="#0b1017" text-anchor="end" font-weight="700">461K</text>
+  </g>
+  <g>
+    <rect x="330" y="143" width="196" height="34" rx="6" fill="#2a6f96"/>
+    <text class="t lbl" x="30" y="165" font-size="12.5">Best cuts for slow cooking</text>
+    <text class="mo val" x="536" y="165" font-size="12.5">161K</text>
+  </g>
+  <g>
+    <rect x="330" y="193" width="145" height="34" rx="6" fill="#2a6f96"/>
+    <text class="t lbl" x="30" y="215" font-size="12.5">How to cook bone marrow at home</text>
+    <text class="mo val" x="485" y="215" font-size="12.5">120K</text>
+  </g>
+  <g>
+    <rect x="330" y="243" width="89" height="34" rx="6" fill="#2a6f96"/>
+    <text class="t lbl" x="30" y="265" font-size="12.5">Beef marbling, a complete guide</text>
+    <text class="mo val" x="429" y="265" font-size="12.5">73K</text>
+  </g>
+  <g>
+    <rect x="330" y="293" width="16" height="34" rx="6" fill="#2a6f96"/>
+    <text class="t lbl" x="30" y="315" font-size="12.5">Pull-apart beef brisket recipe</text>
+    <text class="mo val" x="356" y="315" font-size="12.5">11K</text>
+  </g>
+</svg>
