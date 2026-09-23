@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-label="Rebuilding a decade-old URL inventory: the Wayback Machine, a Semrush export and Ahrefs backlinks feed one consolidated inventory, which drives the mapping decisions.">
+  <defs>
+    <marker id="iv" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b98a5"/></marker>
+    <marker id="ia" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5cc8ff"/></marker>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.a{fill:#9bd8ff}.g{fill:#7ee787}
+      .box{fill:#121a23;stroke:#2d3f4f;stroke-width:1.5}
+    </style>
+  </defs>
+  <rect width="1000" height="440" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="28" y="42" font-size="19">Rebuilding a decade-old URL inventory</text>
+
+  <rect class="box" x="24" y="96" width="250" height="72" rx="10"/>
+  <text class="t" x="42" y="128" font-size="14" font-weight="600" fill="#e6edf3">Wayback Machine</text>
+  <text class="t m" x="42" y="150" font-size="11.5">archived snapshots of the old store</text>
+
+  <rect class="box" x="24" y="188" width="250" height="72" rx="10"/>
+  <text class="t" x="42" y="220" font-size="14" font-weight="600" fill="#e6edf3">Semrush export</text>
+  <text class="t m" x="42" y="242" font-size="11.5">historic URLs with visibility</text>
+
+  <rect class="box" x="24" y="280" width="250" height="72" rx="10"/>
+  <text class="t" x="42" y="312" font-size="14" font-weight="600" fill="#e6edf3">Ahrefs backlinks</text>
+  <text class="t m" x="42" y="334" font-size="11.5">legacy URLs that still earn links</text>
+
+  <line x1="274" y1="132" x2="366" y2="210" stroke="#57636f" stroke-width="1.6" marker-end="url(#iv)"/>
+  <line x1="274" y1="224" x2="366" y2="224" stroke="#57636f" stroke-width="1.6" marker-end="url(#iv)"/>
+  <line x1="274" y1="316" x2="366" y2="238" stroke="#57636f" stroke-width="1.6" marker-end="url(#iv)"/>
+
+  <rect x="370" y="180" width="240" height="92" rx="11" fill="#0f2130" stroke="#2a6f96" stroke-width="2"/>
+  <text class="t" x="490" y="214" font-size="14.5" font-weight="700" fill="#9bd8ff" text-anchor="middle">Consolidated inventory</text>
+  <text class="mo a" x="490" y="236" font-size="10.5" text-anchor="middle">dedupe &#183; normalise</text>
+  <text class="mo a" x="490" y="252" font-size="10.5" text-anchor="middle">group by type &#183; link equity</text>
+
+  <line x1="610" y1="226" x2="666" y2="226" stroke="#5cc8ff" stroke-width="2.2" marker-end="url(#ia)"/>
+
+  <rect x="672" y="96" width="304" height="256" rx="12" fill="#0d1712" stroke="#2f7d52" stroke-width="2"/>
+  <text class="t" x="694" y="132" font-size="15" font-weight="700" fill="#7ee787">Mapping decisions</text>
+  <g class="t" font-size="12.5" fill="#c7d0d9">
+    <text x="694" y="166">Category pages <tspan class="g">&#8594;</tspan> matching category</text>
+    <text x="694" y="196">Product pages <tspan class="g">&#8594;</tspan> parent category</text>
+    <text x="694" y="226">CMS policy pages <tspan class="g">&#8594;</tspan> current policy page</text>
+    <text x="694" y="256">Account pages <tspan class="g">&#8594;</tspan> /my-account/</text>
+    <text x="694" y="286">No live equivalent <tspan class="g">&#8594;</tspan> nearest intent</text>
+    <text x="694" y="316">Unknown URLs <tspan class="g">&#8594;</tspan> homepage (fallback)</text>
+  </g>
+</svg>

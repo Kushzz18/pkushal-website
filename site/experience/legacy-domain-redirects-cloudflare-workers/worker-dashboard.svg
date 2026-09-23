@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-label="Recreated Cloudflare Worker dashboard with identifiers removed: two invocations, 389 microseconds CPU time, zero errors, routes on the root and www hostnames, and an active version deployed with zero errors.">
+  <defs>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.a{fill:#9bd8ff}.g{fill:#7ee787}.ink{fill:#e6edf3}
+      .box{fill:#0f1620;stroke:#22303d;stroke-width:1.5}
+      .lbl{fill:#8b98a5}
+    </style>
+  </defs>
+  <rect width="1000" height="440" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="28" y="42" font-size="18">Recreated from the live Worker dashboard (identifiers removed)</text>
+
+  <rect class="box" x="24" y="66" width="952" height="52" rx="10"/>
+  <text class="mo" x="44" y="98" font-size="13" fill="#c7d0d9">legacy-redirects.&lt;account&gt;.workers.dev  <tspan class="m">&#183;  Automatic deployment on upload</tspan></text>
+
+  <rect class="box" x="24" y="134" width="620" height="158" rx="10"/>
+  <text class="t lbl" x="46" y="166" font-size="13">Metrics &#183; last 24 hours</text>
+  <text class="t lbl" x="46" y="204" font-size="12">Invocations</text>
+  <text class="t ink" x="46" y="240" font-size="30" font-weight="700">2</text>
+  <text class="t lbl" x="240" y="204" font-size="12">CPU time</text>
+  <text class="t ink" x="240" y="240" font-size="30" font-weight="700">389 &#181;s</text>
+  <text class="t lbl" x="470" y="204" font-size="12">Errors</text>
+  <text class="g" x="470" y="240" font-size="30" font-weight="700" font-family="'IBM Plex Sans',sans-serif">0</text>
+
+  <rect class="box" x="664" y="134" width="312" height="158" rx="10"/>
+  <text class="t lbl" x="686" y="166" font-size="13">Domains and routes</text>
+  <text class="t m" x="686" y="196" font-size="12">Custom domains: none (routes used)</text>
+  <text class="t ink" x="686" y="228" font-size="12.5" font-weight="600">Route: legacy-domain.com/*</text>
+  <text class="t ink" x="686" y="254" font-size="12.5" font-weight="600">Route: www.legacy-domain.com/*</text>
+
+  <rect class="box" x="24" y="308" width="952" height="90" rx="10"/>
+  <text class="t lbl" x="46" y="340" font-size="13">Versions</text>
+  <text class="t ink" x="46" y="372" font-size="13">Active version deployed from the dashboard editor <tspan class="m">&#183; 0 errors on deploy</tspan></text>
+  <circle cx="936" cy="353" r="7" fill="#3fb950"/>
+</svg>

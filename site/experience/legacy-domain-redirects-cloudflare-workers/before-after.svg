@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-label="Before: root-level domain forwarding sends every legacy URL to the homepage. After: a Cloudflare Worker sends each legacy URL to its closest matching live page with a 301.">
+  <defs>
+    <marker id="bw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b98a5"/></marker>
+    <marker id="bg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7ee787"/></marker>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .u{fill:#c7d0d9}.w{fill:#f0662f}.g{fill:#7ee787}.m{fill:#8b98a5}
+    </style>
+  </defs>
+  <rect width="1000" height="540" rx="14" fill="#0b1017"/>
+
+  <!-- BEFORE -->
+  <rect x="20" y="24" width="470" height="492" rx="12" fill="none" stroke="#f0662f"/>
+  <text class="t w" x="44" y="58" font-size="16" font-weight="700">BEFORE: root-level domain forwarding</text>
+  <g class="mo" font-size="11.5">
+    <rect x="40" y="86" width="250" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="52" y="111">/5-category-capsules-on-sale</text>
+    <rect x="40" y="150" width="250" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="52" y="175">/6-category-powder-for-sale</text>
+    <rect x="40" y="214" width="250" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="52" y="239">/content/19-wholesale</text>
+    <rect x="40" y="278" width="250" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="52" y="303">/content/13-money-back</text>
+    <rect x="40" y="342" width="250" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="52" y="367">/index.php?controller=contact</text>
+  </g>
+  <line x1="290" y1="106" x2="356" y2="300" stroke="#57636f" stroke-width="1.5" marker-end="url(#bw)"/>
+  <line x1="290" y1="170" x2="356" y2="305" stroke="#57636f" stroke-width="1.5" marker-end="url(#bw)"/>
+  <line x1="290" y1="234" x2="356" y2="310" stroke="#57636f" stroke-width="1.5" marker-end="url(#bw)"/>
+  <line x1="290" y1="298" x2="356" y2="315" stroke="#57636f" stroke-width="1.5" marker-end="url(#bw)"/>
+  <line x1="290" y1="362" x2="356" y2="320" stroke="#57636f" stroke-width="1.5" marker-end="url(#bw)"/>
+  <rect x="360" y="286" width="110" height="66" rx="9" fill="#241012" stroke="#f0662f"/>
+  <text class="t" x="415" y="314" font-size="13" font-weight="700" fill="#f4a07a" text-anchor="middle">Homepage</text>
+  <text class="t m" x="415" y="334" font-size="10.5" text-anchor="middle">(every URL)</text>
+  <text class="t w" x="44" y="494" font-size="12.5" font-weight="600">Page-level relevance lost. Deep links land on the homepage.</text>
+
+  <!-- AFTER -->
+  <rect x="510" y="24" width="470" height="492" rx="12" fill="none" stroke="#7ee787"/>
+  <text class="t g" x="534" y="58" font-size="16" font-weight="700">AFTER: page-to-page 301 via a Worker</text>
+  <g class="mo" font-size="11">
+    <rect x="524" y="86" width="196" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="534" y="111">/5-category-capsules-on-sale</text>
+    <rect x="760" y="86" width="196" height="40" rx="7" fill="#10241a" stroke="#2f7d52"/><text class="g" x="772" y="111">/shop/capsules/</text>
+    <rect x="524" y="150" width="196" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="534" y="175">/6-category-powder-for-sale</text>
+    <rect x="760" y="150" width="196" height="40" rx="7" fill="#10241a" stroke="#2f7d52"/><text class="g" x="772" y="175">/shop/powders/</text>
+    <rect x="524" y="214" width="196" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="534" y="239">/content/19-wholesale</text>
+    <rect x="760" y="214" width="196" height="40" rx="7" fill="#10241a" stroke="#2f7d52"/><text class="g" x="772" y="239">/wholesale/</text>
+    <rect x="524" y="278" width="196" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="534" y="303">/content/13-money-back</text>
+    <rect x="760" y="278" width="196" height="40" rx="7" fill="#10241a" stroke="#2f7d52"/><text class="g" x="772" y="303">/refund-policy/</text>
+    <rect x="524" y="342" width="196" height="40" rx="7" fill="#141d27" stroke="#2d3f4f"/><text class="u" x="534" y="367">/index.php?controller=contact</text>
+    <rect x="760" y="342" width="196" height="40" rx="7" fill="#10241a" stroke="#2f7d52"/><text class="g" x="772" y="367">/contact-us/</text>
+  </g>
+  <line x1="720" y1="106" x2="758" y2="106" stroke="#7ee787" stroke-width="2" marker-end="url(#bg)"/>
+  <line x1="720" y1="170" x2="758" y2="170" stroke="#7ee787" stroke-width="2" marker-end="url(#bg)"/>
+  <line x1="720" y1="234" x2="758" y2="234" stroke="#7ee787" stroke-width="2" marker-end="url(#bg)"/>
+  <line x1="720" y1="298" x2="758" y2="298" stroke="#7ee787" stroke-width="2" marker-end="url(#bg)"/>
+  <line x1="720" y1="362" x2="758" y2="362" stroke="#7ee787" stroke-width="2" marker-end="url(#bg)"/>
+  <text class="t g" x="534" y="494" font-size="12.5" font-weight="600">Each legacy URL points to its closest matching live page.</text>
+</svg>

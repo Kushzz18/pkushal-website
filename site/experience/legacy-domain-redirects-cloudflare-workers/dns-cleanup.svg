@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 486" role="img" aria-label="DNS clean-up after moving nameservers to Cloudflare: only the root and www stay proxied for the Worker route, every Microsoft 365 record moves to DNS only, and mail and verification records stay intact.">
+  <defs>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.ink{fill:#d7dee8}
+      .w{fill:#f0662f}.g{fill:#7ee787}.head{fill:#e6edf3;font-weight:700}
+    </style>
+  </defs>
+  <rect width="1000" height="486" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="28" y="42" font-size="19">DNS clean-up after moving nameservers to Cloudflare</text>
+
+  <!-- header -->
+  <rect x="24" y="66" width="952" height="40" rx="8" fill="#161f29"/>
+  <text class="t head" x="40" y="92" font-size="12.5">Record</text>
+  <text class="t head" x="300" y="92" font-size="12.5">Type</text>
+  <text class="t head" x="380" y="92" font-size="12.5">Imported as</text>
+  <text class="t head" x="520" y="92" font-size="12.5">Changed to</text>
+  <text class="t head" x="700" y="92" font-size="12.5">Reason</text>
+
+  <g class="t" font-size="11.5">
+    <!-- rows -->
+    <text class="ink" x="40" y="140">@ (two old forwarding IPs)</text><text class="m" x="300" y="140">A</text><text class="w" x="380" y="140">Proxied</text><text class="g" x="520" y="140">192.0.2.1, Proxied</text><text class="m" x="700" y="140">Remove dependence on old forward</text>
+    <line x1="24" y1="158" x2="976" y2="158" stroke="#1c2733"/>
+    <text class="ink" x="40" y="186">www</text><text class="m" x="300" y="186">CNAME</text><text class="m" x="380" y="186">Proxied</text><text class="ink" x="520" y="186" font-weight="600">Proxied (unchanged)</text><text class="m" x="700" y="186">Needed for the www route</text>
+    <line x1="24" y1="204" x2="976" y2="204" stroke="#1c2733"/>
+    <text class="ink" x="40" y="232">autodiscover, mail, msoid</text><text class="m" x="300" y="232">CNAME</text><text class="w" x="380" y="232">Proxied</text><text class="g" x="520" y="232" font-weight="600">DNS only</text><text class="m" x="700" y="232">Outlook setup breaks behind proxy</text>
+    <line x1="24" y1="250" x2="976" y2="250" stroke="#1c2733"/>
+    <text class="ink" x="40" y="278">lyncdiscover, sip</text><text class="m" x="300" y="278">CNAME</text><text class="w" x="380" y="278">Proxied</text><text class="g" x="520" y="278" font-weight="600">DNS only</text><text class="m" x="700" y="278">Teams / Skype need direct DNS</text>
+    <line x1="24" y1="296" x2="976" y2="296" stroke="#1c2733"/>
+    <text class="ink" x="40" y="324">enterpriseenrollment / registration</text><text class="m" x="300" y="324">CNAME</text><text class="w" x="380" y="324">Proxied</text><text class="g" x="520" y="324" font-weight="600">DNS only</text><text class="m" x="700" y="324">Device enrollment needs direct DNS</text>
+    <line x1="24" y1="342" x2="976" y2="342" stroke="#1c2733"/>
+    <text class="ink" x="40" y="370">_domainconnect</text><text class="m" x="300" y="370">CNAME</text><text class="w" x="380" y="370">Proxied</text><text class="g" x="520" y="370" font-weight="600">DNS only</text><text class="m" x="700" y="370">Registrar service record</text>
+    <line x1="24" y1="388" x2="976" y2="388" stroke="#1c2733"/>
+    <text class="ink" x="40" y="416">MX, SPF, SRV, verification TXT</text><text class="m" x="300" y="416">various</text><text class="m" x="380" y="416">DNS only</text><text class="g" x="520" y="416" font-weight="600">DNS only (unchanged)</text><text class="m" x="700" y="416">Mail and verification kept intact</text>
+  </g>
+  <rect x="24" y="66" width="952" height="372" rx="8" fill="none" stroke="#22303d"/>
+</svg>

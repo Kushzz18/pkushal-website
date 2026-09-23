@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 400" role="img" aria-label="Request flow with no hosting and no server: a visitor or crawler requests a legacy URL, Cloudflare DNS proxies it, a Worker route catches it, redirect logic picks a destination, and a single-hop 301 lands on the matching page on the new domain.">
+  <defs>
+    <marker id="rf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b98a5"/></marker>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.a{fill:#9bd8ff}.g{fill:#7ee787}
+      .box{fill:#121a23;stroke:#2d3f4f;stroke-width:1.5}
+      .acc{fill:#0f2130;stroke:#2a6f96;stroke-width:2}
+      .ok{fill:#0d1712;stroke:#2f7d52;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="980" height="400" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="28" y="42" font-size="19">Request flow: no hosting, no server, one Worker</text>
+
+  <g>
+    <rect class="box" x="20" y="80" width="140" height="96" rx="11"/>
+    <text class="t" x="90" y="122" text-anchor="middle" font-size="13" font-weight="600" fill="#e6edf3">Visitor / crawler</text>
+    <text class="t m" x="90" y="142" text-anchor="middle" font-size="10.5">requests a legacy URL</text>
+
+    <rect class="acc" x="192" y="80" width="140" height="96" rx="11"/>
+    <text class="t a" x="262" y="122" text-anchor="middle" font-size="13" font-weight="600">Cloudflare DNS</text>
+    <text class="mo m" x="262" y="142" text-anchor="middle" font-size="10">@ and www proxied</text>
+
+    <rect class="acc" x="364" y="80" width="140" height="96" rx="11"/>
+    <text class="t a" x="434" y="122" text-anchor="middle" font-size="13" font-weight="600">Worker route</text>
+    <text class="mo m" x="434" y="142" text-anchor="middle" font-size="9.5">legacy-domain.com/*</text>
+
+    <rect class="acc" x="536" y="80" width="140" height="96" rx="11"/>
+    <text class="t a" x="606" y="118" text-anchor="middle" font-size="13" font-weight="600">Redirect logic</text>
+    <text class="mo m" x="606" y="138" text-anchor="middle" font-size="9.5">query rules, path</text>
+    <text class="mo m" x="606" y="152" text-anchor="middle" font-size="9.5">map, fallback</text>
+
+    <rect class="ok" x="708" y="80" width="120" height="96" rx="11"/>
+    <text class="t g" x="768" y="122" text-anchor="middle" font-size="13" font-weight="600">301 response</text>
+    <text class="t m" x="768" y="142" text-anchor="middle" font-size="10.5">single hop</text>
+
+    <rect class="ok" x="852" y="80" width="112" height="96" rx="11"/>
+    <text class="t g" x="908" y="118" text-anchor="middle" font-size="12.5" font-weight="600">New domain</text>
+    <text class="t m" x="908" y="138" text-anchor="middle" font-size="10">matching page</text>
+    <text class="t m" x="908" y="152" text-anchor="middle" font-size="10">200</text>
+  </g>
+  <g stroke-width="2">
+    <line x1="160" y1="128" x2="188" y2="128" stroke="#8b98a5" marker-end="url(#rf)"/>
+    <line x1="332" y1="128" x2="360" y2="128" stroke="#8b98a5" marker-end="url(#rf)"/>
+    <line x1="504" y1="128" x2="532" y2="128" stroke="#8b98a5" marker-end="url(#rf)"/>
+    <line x1="676" y1="128" x2="704" y2="128" stroke="#8b98a5" marker-end="url(#rf)"/>
+    <line x1="828" y1="128" x2="848" y2="128" stroke="#8b98a5" marker-end="url(#rf)"/>
+  </g>
+
+  <rect x="20" y="216" width="944" height="150" rx="12" fill="#0f1620" stroke="#22303d"/>
+  <text class="t" x="40" y="248" font-size="14" font-weight="700" fill="#e6edf3">Why this works</text>
+  <text class="t" x="40" y="280" font-size="12.5" fill="#c7d0d9">The Worker answers at Cloudflare's edge before any origin is contacted, so the legacy domain needs no hosting.</text>
+  <text class="t" x="40" y="308" font-size="12.5" fill="#c7d0d9">The DNS A record points to a placeholder (192.0.2.1). It only exists so Cloudflare can proxy the hostname.</text>
+  <text class="t" x="40" y="336" font-size="12.5" fill="#c7d0d9">Mail records (MX, SPF, Microsoft 365) stay DNS only and keep working, untouched.</text>
+</svg>

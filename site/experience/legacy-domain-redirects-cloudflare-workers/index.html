@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDRG93B8');</script>
+<!-- End Google Tag Manager -->
+<title>Page-level 301s for a dead domain, with no server | Kushal Pathak</title>
+<meta name="description" content="A decade-old migration was done with no redirects, then a GoDaddy forward that sent every URL to the homepage. Here is how I rebuilt the old URL inventory from archives and shipped page-level 301s from a single Cloudflare Worker, with no hosting and without breaking email.">
+<link rel="canonical" href="https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0a0f14">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kushal Pathak">
+<meta property="og:title" content="Page-level 301s for a dead domain, with no server">
+<meta property="og:description" content="Rebuilding a decade-old URL inventory from archives and shipping page-level 301 redirects from one Cloudflare Worker, no hosting, no server, without breaking email.">
+<meta property="og:url" content="https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/">
+<meta property="og:image" content="https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Page-level 301s for a dead domain, with no server">
+<meta name="twitter:description" content="Rebuilding a decade-old URL inventory from archives and shipping page-level 301s from one Cloudflare Worker, no hosting, no server.">
+<meta name="twitter:image" content="https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="/assets/site.css?v=6">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BlogPosting","@id":"https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/#article","headline":"Fixing a decade-old migration with page-level 301s, and no server","description":"A first-person account of rebuilding a legacy domain's redirect layer: reconstructing the old URL inventory from the Wayback Machine, Semrush and Ahrefs, mapping each URL to its closest live page by intent, and serving page-level 301s from a single Cloudflare Worker with no hosting, then cleaning up DNS so Microsoft 365 email kept working.","image":["https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/og.png","https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/before-after.svg"],"datePublished":"2026-09-23","dateModified":"2026-09-23","articleSection":"Experience","keywords":"Cloudflare Workers, 301 redirects, domain migration, legacy domain, DNS, edge compute, SEO, link equity","author":{"@type":"Person","name":"Kushal Pathak","url":"https://pkushal.com.np/","sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},"publisher":{"@type":"Person","name":"Kushal Pathak"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pkushal.com.np/"},{"@type":"ListItem","position":2,"name":"Experience","item":"https://pkushal.com.np/experience/"},{"@type":"ListItem","position":3,"name":"Legacy domain redirects with Cloudflare Workers","item":"https://pkushal.com.np/experience/legacy-domain-redirects-cloudflare-workers/"}]}
+]}</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDRG93B8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="nav"><div class="wrap row">
+  <a class="brand" href="/">~/kushal-pathak <b>$</b></a>
+  <nav class="links" id="navLinks">
+    <a href="/#about">about</a>
+    <a href="/#frameworks">frameworks</a>
+    <a href="/experience/" class="on">experience</a>
+    <a href="/case-study/">case studies</a>
+    <a href="/#skills">skills</a>
+    <a href="/#playground">lab</a>
+    <a href="/#contact">contact</a>
+  </nav>
+  <button class="navtoggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#8801;</button>
+</div></header>
+
+<main class="wrap">
+  <div class="breadcrumb"><a href="/">home</a> / <a href="/experience/">experience</a> / legacy domain redirects</div>
+  <div class="phead">
+    <p class="eyebrow">Experience &middot; Migrations &amp; Infra</p>
+    <h1>Fixing a decade-old migration with page-level 301s, and no server</h1>
+    <p class="sub">A brand moved domains about ten years ago with no redirects, so every link the old domain earned was stranded. Later it got a blanket forward that dumped every URL on the homepage. Here is how I gave each old page its own 301, from a single Cloudflare Worker, with nothing to host.</p>
+  </div>
+
+  <article class="article">
+    <p class="mono" style="color:var(--dim);font-size:.8rem">September 2026 &middot; ~9 min read &middot; Cloudflare Workers, DNS, migration recovery</p>
+
+    <figure class="featured">
+      <img src="before-after.svg?v=1" width="900" height="486" alt="Before: root-level domain forwarding sends every legacy URL to the homepage. After: a Cloudflare Worker sends each legacy URL to its closest matching live page with a 301.">
+    </figure>
+    <p class="cap">The whole point in one picture: stop dumping every old link on the homepage, and send each one where it belongs.</p>
+
+    <p class="lead">Around ten years ago this brand ran its store on a different domain, then moved to a new one and set up no redirects at all. Every link, ranking and bit of trust the old domain had earned over the years simply stayed behind on a domain that no longer served a website. Later, someone pointed a GoDaddy domain forward at it, which sent every single URL to the new homepage. Better than a dead end, but search engines read a thousand different links all landing on the homepage as weak relevance, so most of the page-level value still never reached the pages that deserved it. My job was to finish the migration properly, ten years late, and do it without renting a server to hold a handful of redirect rules.</p>
+
+    <h2>What I walked into</h2>
+    <p>The situation was specific. The legacy domain had <strong>no website and no hosting</strong>, just a registration at GoDaddy and a domain forward. It still carried live email on Microsoft 365, so whatever I did to DNS could not break mail. And the only record of the old site's URLs was in third-party archives, because the old store, a PrestaShop build I could identify from its URL patterns, had been gone for years with no sitemap or database to export. So the task split into four honest problems: find the old URLs, decide where each should go, serve the redirects with no server, and move DNS without knocking out email.</p>
+
+    <h2>Why a blanket forward is not a migration</h2>
+    <p>It helps to be precise about what was wrong, because "the domain forwards, so we're fine" is a common and costly misread. A GoDaddy domain forward can only send the <em>whole</em> domain to one destination. It has no way to say "send <code>/content/19-wholesale</code> to <code>/wholesale/</code>." So a backlink pointing at the old capsules category, the wholesale page and the refund policy all resolve to the same homepage. A 301 is meant to tell search engines "this specific page moved here"; a blanket forward tells them "everything is now the homepage," which passes far less page-level signal and can look like a soft error pattern. The fix is page-to-page 301s, one per old URL, each landing on the live page that carries on its purpose.</p>
+
+    <h2>Rebuilding the old URL inventory</h2>
+    <figure class="featured">
+      <img src="url-inventory.svg?v=1" width="900" height="396" alt="Three sources, the Wayback Machine, a Semrush export and Ahrefs backlinks, feed one consolidated inventory that is deduped, normalised and grouped by page type and link equity, which then drives the mapping decisions.">
+    </figure>
+    <p class="cap">No sitemap survived, so the URL list was rebuilt from three archives and ranked by the links each URL still holds.</p>
+    <p>With no export to work from, I treated this like an archaeology dig across three sources. The <strong>Wayback Machine</strong> showed which pages existed and how the old URLs were structured. A <strong>Semrush</strong> export gave historic URLs that once had search visibility. <strong>Ahrefs</strong> showed which old URLs still had backlinks pointing at them, and how many were dofollow. I merged the three lists, normalised them to lowercase with no trailing slash, removed duplicates, and <strong>ranked every URL by the link equity it still carried</strong>. That ranking is what tells you where to spend care: the single highest-equity legacy URL here was one old category page holding over a hundred dofollow links, so getting that one mapping right mattered more than any other.</p>
+
+    <h2>Mapping by intent, not by keyword</h2>
+    <p>For each URL I asked one question: what was a person looking for when they landed here, and which live page answers that same need? Category pages went to the matching category, retired product URLs went to their parent category, policy pages went to the current policy page, and the scattered account screens (addresses, order history, identity) all went to the single account area. A store-locator page with no modern equivalent went to contact, the closest intent, rather than repeating the original mistake and sending it to the homepage. Only genuinely unmappable URLs fall back to the homepage, so the new behaviour is never worse than the old forward, just far more precise where it can be.</p>
+
+    <h2>The decision that made it cheap: a Worker, not a host</h2>
+    <figure class="featured">
+      <img src="request-flow.svg?v=1" width="900" height="367" alt="Request flow: a visitor or crawler requests a legacy URL, Cloudflare DNS proxies it, a Worker route catches it, redirect logic picks a destination, and a single-hop 301 lands on the matching page on the new domain.">
+    </figure>
+    <p class="cap">The Worker answers at the edge before any origin is contacted, so the domain needs no hosting at all.</p>
+    <p>Normally redirect rules live in an <code>.htaccess</code> file, an Nginx config or a plugin, and all of those need a running website. This domain had nothing behind it but DNS, and buying hosting plus a CMS just to store 35 rules would have added a bill, setup time and something to maintain forever. So I moved the domain onto <strong>Cloudflare</strong> (Free plan) and wrote a <strong>Cloudflare Worker</strong> that holds the whole map and returns a 301 at Cloudflare's edge. Attached to a route like <code>legacy-domain.com/*</code>, the Worker runs for every request to that hostname <em>before</em> Cloudflare tries to reach any origin, so the domain does not need an origin at all. The Worker is the entire "website." The logic runs in three steps: query-string rules first (the PrestaShop contact page lives in a parameter, not a path), then an exact path lookup, then a homepage fallback for anything unmapped.</p>
+    <pre><code>const TARGET = "https://new-domain.com";
+
+// legacy path (lowercase, no trailing slash) -> final destination (single hop, 200)
+const MAP = {
+  "/": "/",
+  "/5-category-capsules-on-sale": "/shop/capsules/",
+  "/6-category-powder-for-sale": "/shop/powders/",
+  "/content/19-wholesale": "/wholesale/",
+  "/content/13-money-back": "/refund-policy/",
+  "/authentication": "/my-account/",
+  "/order-history": "/my-account/",
+  // ...the rest of the map
+};
+
+const QUERY_RULES = [
+  { path: "/index.php", param: "controller", value: "contact", to: "/contact-us/" },
+];
+
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    let path = url.pathname.toLowerCase();
+    if (path.length &gt; 1 &amp;&amp; path.endsWith("/")) path = path.slice(0, -1);
+
+    // 1. query-string rules first
+    for (const r of QUERY_RULES) {
+      if (path === r.path &amp;&amp;
+          (url.searchParams.get(r.param) || "").toLowerCase() === r.value) {
+        return Response.redirect(TARGET + r.to, 301);
+      }
+    }
+    // 2. exact path map (params like ?redirect=... are ignored on purpose)
+    if (MAP[path]) return Response.redirect(TARGET + MAP[path], 301);
+
+    // 3. anything unmapped -> homepage, same safety net as the old forward
+    return Response.redirect(TARGET + "/", 301);
+  },
+};</code></pre>
+    <p>Two small details there do a lot of work. Every destination ends with the trailing slash the new site uses, so the new site never adds a second redirect of its own, and the Worker never copies old query strings onto the new URL, which keeps junk parameters out of the new site's index. Both keep every redirect a clean single hop.</p>
+
+    <h2>Moving DNS without breaking email</h2>
+    <figure class="featured">
+      <img src="dns-cleanup.svg?v=1" width="900" height="437" alt="DNS clean-up table: the root A record moves to a 192.0.2.1 placeholder and stays proxied, www stays proxied for the route, every Microsoft 365 record moves from proxied to DNS only, and mail, SPF, SRV and verification records stay intact.">
+    </figure>
+    <p class="cap">An import is a copy, not a review. Proxy only what the Worker must catch; leave everything email touches on DNS only.</p>
+    <p>When Cloudflare imported the domain, it set everything to <strong>Proxied</strong>, including the Microsoft 365 CNAMEs (autodiscover, mail, msoid, lyncdiscover, sip and the device-enrollment records). Those need direct DNS answers, and left proxied they break Outlook account setup and Teams/Skype discovery quietly, the kind of failure nobody notices until a new laptop cannot set up mail. So I moved every one of them to <strong>DNS only</strong>, and kept only the root and <code>www</code> proxied, because those are the two the Worker route must intercept. The two old GoDaddy forwarding IPs on the root became a single <code>192.0.2.1</code> placeholder, still proxied, an address reserved for documentation that never answers, which is exactly the point: it only exists so Cloudflare has a hostname to proxy, and the Worker replies before any origin is contacted. MX, SPF, SRV and the verification TXT records stayed exactly as they were, including the Search Console verification I will need for the change-of-address step.</p>
+
+    <h2>Proving it, not assuming it</h2>
+    <figure class="featured">
+      <img src="worker-dashboard.svg?v=1" width="900" height="396" alt="Recreated Cloudflare Worker dashboard with identifiers removed: two invocations, 389 microseconds of CPU time, zero errors, routes on the root and www hostnames, and an active version deployed with zero errors.">
+    </figure>
+    <p class="cap">Deployed clean, both hostnames routed, sub-millisecond CPU time, zero errors.</p>
+    <p>A redirect that looks right in a dashboard is not proof. I wrote a small bash script that checks every legacy URL against three conditions: it returns <strong>301</strong>, the <code>Location</code> header matches the <strong>expected destination exactly</strong>, and that destination returns <strong>200</strong>, which proves a single hop with no chain.</p>
+    <pre><code>T="https://new-domain.com"
+while IFS='|' read -r SRC EXP; do
+  LOC=$(curl -s -o /dev/null -w "%{redirect_url}" "$SRC")
+  CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SRC")
+  DEST=$(curl -s -o /dev/null -w "%{http_code}" "$LOC")
+  if [ "$CODE" = "301" ] &amp;&amp; [ "$LOC" = "$T$EXP" ] &amp;&amp; [ "$DEST" = "200" ]; then
+    R="PASS"; else R="FAIL"; fi
+  echo "$R | $CODE -&gt; $DEST | $SRC"
+done &lt;&lt;'EOF'
+https://legacy-domain.com/5-category-capsules-on-sale|/shop/capsules/
+https://legacy-domain.com/index.php?controller=contact|/contact-us/
+https://legacy-domain.com/authentication?redirect=my-account|/my-account/
+EOF</code></pre>
+    <p>The live list runs the full set of URLs plus deliberate edge cases: a login URL with a changing parameter, an <code>http://</code> request and a <code>www</code> request. For a quick check without a terminal, the same test works in any HTTP status checker, one 301 hop then a 200.</p>
+
+    <h2>What it changed</h2>
+    <p>The legacy domain now behaves the way it should have from the day of the migration. Every mapped old URL returns a <strong>single-hop 301 to its matching live page</strong> instead of the homepage, the Worker deployed with zero errors and serves each redirect in well under a millisecond of CPU time, both hostnames are covered, and email and Microsoft 365 stayed intact because the proxied records were caught during the move. The whole redirect layer is one Worker file and a DNS zone, both on Cloudflare's free tier, no hosting, no CMS, no server to patch.</p>
+
+    <h2>What this does not undo</h2>
+    <p>An honest limit, because a redirect set up ten years late does not restore everything the domain once had. Some signal fades with time, and search engines take a while to recrawl old links and process the new destinations, so this is not a switch that lights up rankings overnight. What it does is give the <em>remaining</em> signal a clear, correct path: every backlink that still points at an old page now tells search engines exactly which new page carries its purpose, instead of pointing everyone at the homepage. That is far stronger than a blanket forward and far better than leaving a decade of links stranded. Better late than never is the honest framing, and it is still worth doing.</p>
+
+    <h2>What I'd carry forward</h2>
+    <ul>
+      <li><strong>Domain forwarding is not a migration.</strong> If a domain ever had pages that earned links, those pages need their own 301s, not a blanket redirect to the homepage.</li>
+      <li><strong>You do not need hosting to run redirects.</strong> An edge function like a Cloudflare Worker can be the entire site for a redirect-only domain.</li>
+      <li><strong>Old URLs never truly disappear.</strong> The Wayback Machine, SEO-tool exports and backlink indexes hold enough history to rebuild an inventory years later.</li>
+      <li><strong>Review every imported DNS record.</strong> Proxying email and Microsoft 365 records breaks them quietly; proxy only what the edge must handle.</li>
+      <li><strong>Prove it with a script.</strong> Status code, exact destination and a 200 on arrival, for every URL. A dashboard is not a test.</li>
+    </ul>
+
+    <h2>Stacks involved</h2>
+    <div class="stack">
+      <span>Cloudflare Workers</span><span>Cloudflare DNS</span><span>GoDaddy (registrar)</span><span>Wayback Machine</span><span>Semrush</span><span>Ahrefs</span><span>Microsoft 365 DNS</span><span>PrestaShop (legacy, detected)</span><span>curl</span></div>
+
+    <a class="btn backlink" href="/experience/">&larr; more of my work</a>
+  </article>
+</main>
+
+<footer><div class="wrap">
+  <div>&copy; 2026 Kushal Pathak &middot; Technical SEO Strategist</div>
+  <div style="margin-top:8px"><a href="/">home</a> &middot; <a href="/experience/">experience</a> &middot; <a href="/case-study/">case studies</a> &middot; <a href="/#contact">contact</a></div>
+</div></footer>
+
+<script src="/assets/site.js?v=2" defer></script>
+</body>
+</html>
