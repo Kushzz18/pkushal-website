@@ -726,11 +726,11 @@ en-au | https://example.com.au/</textarea></div>
     <p class="sub">Real builds, written from experience, what I did, the hurdles I hit, and how I got past them. No client names; just the engineering.</p>
     <div class="recent">
       <a class="rcard" href="/experience/legacy-domain-redirects-cloudflare-workers/">
-        <div class="rthumb"><img src="/experience/legacy-domain-redirects-cloudflare-workers/before-after.svg?v=1" alt="Root-level forwarding to the homepage versus page-to-page 301s via a Cloudflare Worker" loading="lazy"></div>
+        <div class="rthumb"><img src="/experience/legacy-domain-redirects-cloudflare-workers/before-after.svg?v=2" alt="Root-level forwarding to the homepage versus page-to-page 301s via a Cloudflare Worker" loading="lazy"></div>
         <div class="rbody">
           <span class="rt">Migrations &amp; infra</span>
           <h3>Fixing a decade-old migration with page-level 301s, and no server</h3>
-          <p>A ten-year-old domain move with no redirects, then a blanket forward. I rebuilt the URL history from archives and shipped page-level 301s from one Cloudflare Worker.</p>
+          <p>A ten-year-old domain move with no redirects, so every deep URL 404'd. I rebuilt the URL history from archives and shipped page-level 301s from one Cloudflare Worker.</p>
           <div class="rmeta">Sep 2026 · ~9 min read · read →</div>
         </div>
       </a>
@@ -1060,28 +1060,28 @@ en-au | https://example.com.au/</textarea></div>
       {q:'The title tag appears in…',o:['Only the footer','The browser tab and the SERP title','Only the sitemap','Only robots.txt'],a:1}
     ],
     medium:[
-      {q:'In robots.txt, when Allow and Disallow match with equal path length, which wins?',o:['Disallow','Allow','First listed','It errors'],a:1},
-      {q:'JavaScript-dependent content is typically rendered by Google…',o:['During the first crawl','In a deferred second wave','Never','Only via AMP'],a:1},
-      {q:'Which robots.txt directive does Google NOT officially support?',o:['Allow','Sitemap','Crawl-delay','Disallow'],a:2},
-      {q:'In 2024, INP became a Core Web Vital, replacing…',o:['LCP','FID','CLS','TTFB'],a:1},
-      {q:'For hreflang to work, annotations between two pages must be…',o:['One-way','Reciprocal','In robots.txt','On the homepage'],a:1},
-      {q:'rel="canonical" is best described as…',o:['A hard directive','A hint about the preferred URL','A redirect','A robots rule'],a:1},
-      {q:'To reliably deindex a page, its noindex tag must be…',o:['Also Disallowed in robots.txt','Crawlable (NOT robots-blocked)','In the sitemap','A canonical'],a:1},
-      {q:'Which GSC report explains why URLs are or aren’t indexed?',o:['Page indexing (Coverage)','Links','Core Web Vitals','Sitemaps only'],a:0},
-      {q:'Modern pagination best practice is…',o:['rel=next / rel=prev','A self-referencing canonical on each page','noindex page 2+','Canonical everything to page 1'],a:1},
-      {q:'The loading="lazy" attribute should NOT be applied to…',o:['Below-the-fold images','The LCP / hero image','Footer images','Sidebar icons'],a:1}
+      {q:'In robots.txt, when Allow and Disallow match with equal path length, which wins?',o:['Disallow','First listed','Allow','It errors'],a:2},
+      {q:'JavaScript-dependent content is typically rendered by Google…',o:['In a deferred second wave','During the first crawl','Never','Only via AMP'],a:0},
+      {q:'Which robots.txt directive does Google NOT officially support?',o:['Allow','Crawl-delay','Sitemap','Disallow'],a:1},
+      {q:'In 2024, INP became a Core Web Vital, replacing…',o:['LCP','CLS','TTFB','FID'],a:3},
+      {q:'For hreflang to work, annotations between two pages must be…',o:['One-way','In robots.txt','Reciprocal','On the homepage'],a:2},
+      {q:'rel="canonical" is best described as…',o:['A hint about the preferred URL','A hard directive','A redirect','A robots rule'],a:0},
+      {q:'To reliably deindex a page, its noindex tag must be…',o:['Also Disallowed in robots.txt','In the sitemap','A canonical','Crawlable (NOT robots-blocked)'],a:3},
+      {q:'Which GSC report explains why URLs are or aren’t indexed?',o:['Links','Page indexing (Coverage)','Core Web Vitals','Sitemaps only'],a:1},
+      {q:'Modern pagination best practice is…',o:['A self-referencing canonical on each page','rel=next / rel=prev','noindex page 2+','Canonical everything to page 1'],a:0},
+      {q:'The loading="lazy" attribute should NOT be applied to…',o:['Below-the-fold images','Footer images','Sidebar icons','The LCP / hero image'],a:3}
     ],
     hard:[
-      {q:'A URL is Disallowed in robots.txt but strongly linked externally. In GSC it most likely shows as…',o:['Indexed, no issues','Indexed though blocked by robots.txt (no snippet)','Excluded by noindex','Soft 404'],a:1},
-      {q:'For a JS-injected internal link to pass signals it must be…',o:['An onclick handler','A real <a href> in the rendered DOM','Inside an HTML comment','Nofollowed'],a:1},
-      {q:'Page A 301s to B, but B canonicals back to A. Google most likely…',o:['Indexes both','Follows the redirect and resolves to B (conflicting signals)','Ignores the redirect','Deindexes both'],a:1},
-      {q:'Which HTTP response header can apply noindex at the server level?',o:['X-Robots-Tag','Cache-Control','Vary','ETag'],a:0},
-      {q:'A "soft 404" is…',o:['A 404 with a custom page','A 200 response on a page that looks empty / not-found','A 410 status','A redirect loop'],a:1},
-      {q:'"Vary: User-Agent" primarily signals that…',o:['The site is mobile-first','Content differs by device (dynamic serving), caches must vary','A canonical exists','A redirect exists'],a:1},
-      {q:'Under mobile-first indexing, Google predominantly uses…',o:['The desktop version','The mobile version for indexing & ranking','The AMP version','The fastest version'],a:1},
-      {q:'To consolidate two near-duplicate URLs when removing one, the strongest signal is…',o:['A canonical','A 301 redirect','A noindex','A robots Disallow'],a:1},
-      {q:'A common cause of hreflang errors flagged in GSC is…',o:['Missing return (reciprocal) tags','Too many sitemaps','Slow TTFB','Missing alt text'],a:0},
-      {q:'Raw HTML has an empty <div id="root"> and content appears only after JS. The core SEO risk is…',o:['CLS only','First-wave crawl sees no content or links (render dependency)','Duplicate content','Slow DNS'],a:1}
+      {q:'A URL is Disallowed in robots.txt but strongly linked externally. In GSC it most likely shows as…',o:['Indexed, no issues','Excluded by noindex','Indexed though blocked by robots.txt (no snippet)','Soft 404'],a:2},
+      {q:'For a JS-injected internal link to pass signals it must be…',o:['A real <a href> in the rendered DOM','An onclick handler','Inside an HTML comment','Nofollowed'],a:0},
+      {q:'Page A 301s to B, but B canonicals back to A. Google most likely…',o:['Indexes both','Ignores the redirect','Deindexes both','Follows the redirect and resolves to B (conflicting signals)'],a:3},
+      {q:'Which HTTP response header can apply noindex at the server level?',o:['Cache-Control','X-Robots-Tag','Vary','ETag'],a:1},
+      {q:'A "soft 404" is…',o:['A 404 with a custom page','A 410 status','A 200 response on a page that looks empty / not-found','A redirect loop'],a:2},
+      {q:'"Vary: User-Agent" primarily signals that…',o:['The site is mobile-first','A canonical exists','A redirect exists','Content differs by device (dynamic serving), caches must vary'],a:3},
+      {q:'Under mobile-first indexing, Google predominantly uses…',o:['The mobile version for indexing & ranking','The desktop version','The AMP version','The fastest version'],a:0},
+      {q:'To consolidate two near-duplicate URLs when removing one, the strongest signal is…',o:['A canonical','A noindex','A 301 redirect','A robots Disallow'],a:2},
+      {q:'A common cause of hreflang errors flagged in GSC is…',o:['Too many sitemaps','Missing return (reciprocal) tags','Slow TTFB','Missing alt text'],a:1},
+      {q:'Raw HTML has an empty <div id="root"> and content appears only after JS. The core SEO risk is…',o:['CLS only','Duplicate content','Slow DNS','First-wave crawl sees no content or links (render dependency)'],a:3}
     ]
   };
   function renderQuiz(id,arr){
