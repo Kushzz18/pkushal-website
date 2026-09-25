@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDRG93B8');</script>
+<!-- End Google Tag Manager -->
+<title>Fixing WordPress TTFB behind an nginx proxy cache | Kushal Pathak</title>
+<meta name="description" content="An audit said the HTML was not edge cached and the first byte was multi-second. The real defect was subtler: a proxy cache that stored pages but revalidated a slow origin on every hit. Here is how I found it, fixed it at the Apache layer with no CDN or DNS access, and named the render floor honestly.">
+<link rel="canonical" href="https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0a0f14">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kushal Pathak">
+<meta property="og:title" content="Fixing WordPress TTFB behind an nginx proxy cache">
+<meta property="og:description" content="A cache HIT was no faster than a MISS. Tracing that one fact to header-driven revalidation, fixing it in .htaccess with no CDN access, and being honest about the render floor.">
+<meta property="og:url" content="https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/">
+<meta property="og:image" content="https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fixing WordPress TTFB behind an nginx proxy cache">
+<meta name="twitter:description" content="A cache HIT was no faster than a MISS. The fix was one header, not a CDN. A performance case, with the measurements.">
+<meta name="twitter:image" content="https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="/assets/site.css?v=7">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BlogPosting","@id":"https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/#article","headline":"Fixing multi-second TTFB on a WordPress site behind an nginx proxy cache","description":"A first-person performance case: verifying a slow-TTFB audit with live curl timing, tracing it to a proxy cache that revalidated a slow origin on every hit, fixing it in .htaccess with a rewrite-driven environment flag (no CDN or DNS access), hardening headers, closing a phpinfo exposure, and diagnosing the render floor to page-builder PHP.","image":["https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/og.png","https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/architecture.svg"],"datePublished":"2026-09-25","dateModified":"2026-09-25","articleSection":"Experience","keywords":"TTFB, WordPress, nginx reverse proxy cache, Apache, .htaccess, Cache-Control, WP Rocket, Elementor, Query Monitor, Core Web Vitals","author":{"@type":"Person","name":"Kushal Pathak","url":"https://pkushal.com.np/","sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},"publisher":{"@type":"Person","name":"Kushal Pathak"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pkushal.com.np/"},{"@type":"ListItem","position":2,"name":"Experience","item":"https://pkushal.com.np/experience/"},{"@type":"ListItem","position":3,"name":"WordPress TTFB behind a proxy cache","item":"https://pkushal.com.np/experience/wordpress-ttfb-proxy-cache/"}]}
+]}</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDRG93B8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="nav"><div class="wrap row">
+  <a class="brand" href="/">~/kushal-pathak <b>$</b></a>
+  <nav class="links" id="navLinks">
+    <a href="/#about">about</a>
+    <a href="/#frameworks">frameworks</a>
+    <a href="/experience/" class="on">experience</a>
+    <a href="/case-study/">case studies</a>
+    <a href="/#skills">skills</a>
+    <a href="/#playground">lab</a>
+    <a href="/#contact">contact</a>
+  </nav>
+  <button class="navtoggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#8801;</button>
+</div></header>
+
+<main class="wrap">
+  <div class="breadcrumb"><a href="/">home</a> / <a href="/experience/">experience</a> / wordpress ttfb behind a proxy cache</div>
+  <div class="phead">
+    <p class="eyebrow">Experience &middot; Performance &amp; Infra</p>
+    <h1>Fixing multi-second TTFB on WordPress behind an nginx proxy cache</h1>
+    <p class="sub">An audit flagged slow, inconsistent first byte and "HTML not edge cached." Part of that was real, part was a measurement artifact, and the actual defect was hidden in a single header. The decisive clue: a cache HIT was no faster than a MISS.</p>
+  </div>
+
+  <article class="article">
+    <p class="mono" style="color:var(--dim);font-size:.8rem">September 2026 &middot; ~10 min read &middot; TTFB, nginx cache, Apache, WordPress</p>
+
+    <figure class="featured">
+      <img src="architecture.svg?v=1" width="820" height="360" alt="Request path with two caching layers: a visitor or crawler hits an nginx reverse-proxy cache, which passes to Apache driven by .htaccess, which runs WordPress on PHP and Elementor.">
+    </figure>
+    <p class="cap">Two layers. The origin's headers decide what the nginx cache in front is allowed to do, which is the whole story.</p>
+
+    <p class="lead">A client's WordPress site had slow, highly variable Time To First Byte, and an SEO audit had flagged it as "HTML not edge cached, multi-second and inconsistent first byte." The claim was partly true, partly a measurement artifact, and the real fix was more subtle than the audit suggested. I had no DNS or CDN access, so the textbook answer was off the table. What I did have was the origin, a careful set of measurements, and one observation that reframed the entire problem.</p>
+
+    <h2>The stack I was working in</h2>
+    <p>Naming it matters, because the fix lives in how these pieces talk to each other. WordPress with <strong>Elementor Pro</strong>, cached by <strong>WP Rocket</strong>, with Gravity Forms, ACF Pro, Wordfence and Profile Builder in the render path. The web server was <strong>Apache driven by <code>.htaccess</code></strong>, and in front of it sat an <strong>nginx reverse-proxy cache</strong> (an InMotion-style cPanel setup where <code>Server: nginx</code> fronts an Apache origin). The runtime was <strong>PHP 8.1 with Zend OPcache</strong>. My instruments were <strong>curl</strong> for header and timing analysis and <strong>Query Monitor</strong> for server-side profiling. The key realisation, early, was that this is a two-layer architecture: the cache headers the Apache origin sends decide what the nginx layer is allowed to do.</p>
+
+    <h2>Measure before you prescribe</h2>
+    <p>The audit quoted a dramatic spread, roughly 350 ms up to 5,000 ms, plus headers showing <code>Cache-Control: max-age=0</code> and an <code>Expires</code> pinned to now. Before accepting or rejecting that, I reproduced it with repeated <code>curl</code> requests, capturing the full timing breakdown (DNS, connect, TLS, TTFB, total) and the headers on every load. TTFB actually sat consistently in the 2.1 to 4.3 s range, and the proxy status alternated between MISS and HIT. Then the decisive observation:</p>
+    <p class="pullquote">A cache HIT was no faster than a cache MISS. Both sat around 2.5 seconds.</p>
+    <p>That single fact pointed straight at the cause. A working HIT should serve in tens of milliseconds of server time. A HIT that costs the same as a MISS means the cache is <em>storing</em> the page but is forced to <em>revalidate against the slow origin on every request</em>, which is exactly what <code>Cache-Control: max-age=0</code> plus an expired <code>Expires</code> instructs a shared cache to do. The cache was running and doing nothing useful.</p>
+
+    <h2>Separating network distance from real server time</h2>
+    <p>The raw numbers were inflated by my own distance from the server, so I reused a single connection across requests to pay the TLS handshake and setup only once and isolate the server's true think time.</p>
+    <figure class="featured">
+      <img src="ttfb.svg?v=1" width="820" height="420" alt="Bar chart of warm-connection TTFB: cache HIT before about 2.5 seconds, HIT after about 0.34 seconds, cold MISS render about 3.1 seconds, static asset about 0.30 seconds.">
+    </figure>
+    <p class="cap">On a warm connection the real server time separates cleanly: a served hit is a fraction of a second; the cold render is the platform floor.</p>
+    <p>On a warm connection a cache HIT came in around 0.34 to 0.70 s while a real cache MISS (an actual PHP render) took 2.1 to 3.4 s. This is why "the site is slow" and "the server is slow" are not the same claim: on a cold connection from a distant location you pay DNS, TCP, TLS and several round trips before the first byte, and that alone adds well over a second. Measuring carefully stopped me from chasing network distance as if it were a server defect.</p>
+
+    <h2>Reading the actual configuration</h2>
+    <p>The site served <code>Server: nginx</code> yet used <code>.htaccess</code>, which only Apache reads. That confirmed the two layers. Reading the live <code>.htaccess</code>, the origin caching rules were generated by WP Rocket and included an HTML5-Boilerplate block with this line:</p>
+    <pre><code>ExpiresByType text/html "access plus 0 seconds"</code></pre>
+    <p>That, combined with WordPress sending its own no-cache headers for dynamic pages, is what forced <code>max-age=0</code> and an immediate <code>Expires</code> on every HTML response, including the static cache files WP Rocket produced. The nginx layer, obeying those headers, revalidated the origin on every hit.</p>
+
+    <h2>The core fix: make anonymous HTML cacheable at the proxy</h2>
+    <p>The goal was to get nginx to serve cached HTML without revalidating the slow origin, while never caching logged-in, admin, cart or private pages. My first attempt targeted files by extension:</p>
+    <pre><code>&lt;FilesMatch "\.(html|htm)$"&gt;
+  Header set Cache-Control "public, max-age=600, s-maxage=3600"
+&lt;/FilesMatch&gt;</code></pre>
+    <p>It did nothing for the pages that mattered, and the reason is instructive: WP Rocket on this setup serves pages through PHP (<code>index.php</code>), not as static <code>.html</code> files, so a match on the <code>.html</code> extension never applied to the homepage or the service pages. I knew the block itself was active because the security headers I set unconditionally <em>did</em> apply. The HTML rule simply never matched the real responses. Since I could not match by extension (PHP) or by content type (mod_headers cannot condition on <code>Content-Type</code>), I tagged the right requests with an environment flag via mod_rewrite, then applied the cache header on that flag:</p>
+    <pre><code>&lt;IfModule mod_rewrite.c&gt;
+  RewriteEngine On
+  RewriteCond %{REQUEST_METHOD} =GET
+  RewriteCond %{QUERY_STRING} =""
+  RewriteCond %{REQUEST_URI} !^/wp-admin [NC]
+  RewriteCond %{REQUEST_URI} !^/wp-login\.php [NC]
+  RewriteCond %{REQUEST_URI} !^/wp-json [NC]
+  RewriteCond %{HTTP_COOKIE} !(wordpress_logged_in|wp-postpass|woocommerce_items_in_cart) [NC]
+  RewriteRule ^ - [E=PROXY_CACHE:1]
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_headers.c&gt;
+  Header set Cache-Control "public, max-age=600, s-maxage=3600" "expr=reqenv('PROXY_CACHE') == '1' || reqenv('REDIRECT_PROXY_CACHE') == '1'"
+  Header unset Expires "expr=reqenv('PROXY_CACHE') == '1' || reqenv('REDIRECT_PROXY_CACHE') == '1'"
+&lt;/IfModule&gt;</code></pre>
+    <p>The mechanism is worth spelling out, because two details are exactly where this pattern silently fails. The rewrite flags only anonymous, non-admin, no-query-string GET requests that carry no login or cart cookie. mod_headers then overrides the origin's <code>max-age=0</code> for just those requests, and because <strong>mod_headers runs after mod_expires</strong> in Apache's order, it reliably wins without editing WP Rocket's own block. The <code>expr</code> checks both the flag and its <code>REDIRECT_</code> prefixed form, because WordPress performs an internal rewrite to <code>index.php</code> and internal redirects rename environment variables with that prefix. Miss that, and the header never applies. One more decision: I placed this <strong>after the <code>#&nbsp;END WP Rocket</code> marker</strong>, not inside it, because WP Rocket regenerates its own block on every cache clear and would erase anything within it.</p>
+    <p>The result: the proxy now serves cached hits from cache, and warm HIT TTFB dropped to about <strong>0.34 s</strong>. Anonymous pages carry <code>public, max-age=600, s-maxage=3600</code>; logged-in and admin requests correctly stay private. The honest limit built into it: it deliberately excludes query-string URLs, so the first request to a cold page and any tracking-tagged visit still reach the origin.</p>
+
+    <h2>Three fixes I made in the same pass</h2>
+    <p>With the cache fixed, I hardened the rest at the same layer. I added a full set of <strong>security headers</strong> (frame options, nosniff, referrer policy, a locked-down permissions policy, a <code>frame-ancestors 'self'</code> CSP and HSTS), and flagged one caution rather than treating it as fire-and-forget: HSTS with <code>includeSubDomains; preload</code> must not be submitted to the preload list until every subdomain is confirmed on HTTPS, or a non-HTTPS subdomain becomes unreachable. While auditing the file tree I also found a <strong><code>phpinfo.php</code> that had been publicly readable for months</strong>, exposing absolute paths, modules and exact versions, ideal reconnaissance for an attacker. I confirmed its contents, took what I needed (OPcache was already correctly enabled), and had it removed immediately.</p>
+
+    <h2>Diagnosing the render floor, and being honest about it</h2>
+    <figure class="featured">
+      <img src="render.svg?v=1" width="820" height="340" alt="Donut chart: cache-miss render total about 3.10 seconds, PHP execution about 2.85 seconds or 92 percent, database about 0.25 seconds or 8 percent.">
+    </figure>
+    <p class="cap">The database was never the problem. The cost is PHP, dominated by the page builder and plugin bootstrap on every uncached request.</p>
+    <p>The remaining question was the cache-miss render itself. I profiled a page with Query Monitor, and the split ruled out the obvious guess: total generation about 3.10 s, of which the database was only 0.25 s (about 8 percent) and PHP execution was about 2.85 s (about 92 percent), dominated by Elementor. So I acted on the evidence rather than the assumption. OPcache was already on and well sized, so I left it. A persistent object cache (Redis) was not offered on this plan, and with database time at only 0.25 s it would have helped little anyway, so I deactivated the object-cache plugin that could not connect rather than leave it erroring. I tuned Elementor (performance experiments, external CSS, element caching, regenerated CSS and data) and confirmed WP Rocket's CSS and JS optimisations were on.</p>
+    <p>The honest outcome: the cache-miss render stayed around 3 s, and <strong>element caching produced no measurable gain</strong>, because that time is mostly framework and plugin bootstrap on every uncached request, and element caching cannot persist between requests without a persistent object cache this host does not provide. That is the practical floor for this plugin stack on this hosting tier. The correct engineering answer is not to keep fighting the render, it is to make sure real traffic rarely hits it, which the caching layer now achieves, and to hand two items to the host: enable HTTP/2 (the site was negotiating HTTP/1.1), and confirm whether Redis or Memcached can be enabled so object and element caching can actually persist.</p>
+
+    <h2>What changed</h2>
+    <table>
+      <thead><tr><th>Metric</th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td>Cache HIT behaviour</td><td class="b4">HIT no faster than MISS (revalidated origin every hit)</td><td class="af">Served from cache</td></tr>
+        <tr><td>Warm cache HIT TTFB</td><td class="b4">~2.5 s equivalent</td><td class="af">~0.34 s</td></tr>
+        <tr><td>HTML cache headers</td><td class="b4">max-age=0, Expires now</td><td class="af">public, max-age=600, s-maxage=3600</td></tr>
+        <tr><td>Security headers</td><td class="b4">none</td><td class="af">full set (frame, nosniff, referrer, permissions, CSP, HSTS)</td></tr>
+        <tr><td>Public server-info exposure</td><td class="b4">phpinfo.php readable for months</td><td class="af">removed</td></tr>
+        <tr><td>Render diagnosis</td><td class="b4">unknown</td><td class="af">isolated to page-builder PHP, 92% PHP vs 8% DB</td></tr>
+      </tbody>
+    </table>
+    <p>Who benefits: anonymous visitors and search-engine crawlers, the large majority of traffic, now get cached, fast responses. Only the first visitor after a cache window expires, and traffic carrying tracking parameters, still reaches the slower origin render.</p>
+
+    <h2>A few hurdles worth knowing</h2>
+    <ul>
+      <li><strong>No DNS or CDN access.</strong> The textbook fix for slow, distant TTFB is a CDN, and every CDN needs a DNS change I could not make. I stopped trying to route around it and solved it at the origin instead.</li>
+      <li><strong>The server banner lied.</strong> It said nginx, so my first instinct was an nginx config. The <code>.htaccess</code> proved Apache was the real origin behind an nginx cache, which changed the whole approach from "edit nginx" to "control the headers the origin sends."</li>
+      <li><strong>The first cache fix did nothing,</strong> and diagnosing <em>why</em> (security headers applied, the cache header did not, so the match was wrong) is what led to the rewrite-flag approach.</li>
+      <li><strong>The cache plugin overwrites its own config,</strong> so the override had to live after WP Rocket's markers and win on Apache's header ordering to survive regeneration.</li>
+      <li><strong>Element caching should have worked and did not.</strong> Rather than call it done, I traced the real limit: without a persistent object cache it cannot survive between requests, and the dominant cost is framework bootstrap. Naming the floor beats pretending the number moved.</li>
+    </ul>
+
+    <h2>What I'd tell another engineer</h2>
+    <p>Measure before you prescribe. The audit's dramatic numbers were partly real and partly distance, and the real defect was hidden in a single header line and in the difference between a cache that <em>stores</em> and a cache that <em>serves</em>. The most valuable move in the whole job was noticing that a HIT was no faster than a MISS, because that one comparison pointed straight at revalidation. After that, the work was about understanding which layer owned which behaviour, and being honest about the floor the platform imposed rather than chasing a number the stack could not reach.</p>
+
+    <h2>Stacks involved</h2>
+    <div class="stack">
+      <span>WordPress</span><span>Elementor Pro</span><span>WP Rocket</span><span>Apache / .htaccess</span><span>nginx reverse-proxy cache</span><span>PHP 8.1 + OPcache</span><span>mod_headers / mod_rewrite / mod_expires</span><span>Query Monitor</span><span>curl</span><span>InMotion cPanel</span>
+    </div>
+
+    <a class="btn backlink" href="/experience/">&larr; more of my work</a>
+  </article>
+</main>
+
+<footer><div class="wrap">
+  <div>&copy; 2026 Kushal Pathak &middot; Technical SEO Strategist</div>
+  <div style="margin-top:8px"><a href="/">home</a> &middot; <a href="/experience/">experience</a> &middot; <a href="/case-study/">case studies</a> &middot; <a href="/#contact">contact</a></div>
+</div></footer>
+
+<script src="/assets/site.js?v=2" defer></script>
+</body>
+</html>

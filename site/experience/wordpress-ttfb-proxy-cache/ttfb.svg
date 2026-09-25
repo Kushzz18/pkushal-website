@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" role="img" aria-label="Warm-connection TTFB before and after: cache HIT before about 2.5 seconds, HIT after about 0.34 seconds, cold MISS render about 3.1 seconds, static asset about 0.30 seconds.">
+  <defs>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.ink{fill:#c7d0d9}
+    </style>
+  </defs>
+  <rect width="820" height="420" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="410" y="36" text-anchor="middle" font-size="20">Warm-connection TTFB, before and after</text>
+  <text class="t m" x="410" y="58" text-anchor="middle" font-size="13">Connection reused so TLS and setup are excluded, isolating true server time</text>
+
+  <line x1="90" y1="340" x2="780" y2="340" stroke="#2d3f4f" stroke-width="1.5"/>
+  <line x1="90" y1="100" x2="90" y2="340" stroke="#2d3f4f" stroke-width="1.5"/>
+  <g class="mo" font-size="11" fill="#8b98a5">
+    <line x1="90" y1="340" x2="780" y2="340" stroke="#18222d"/><text x="80" y="344" text-anchor="end">0s</text>
+    <line x1="90" y1="264" x2="780" y2="264" stroke="#18222d"/><text x="80" y="268" text-anchor="end">1s</text>
+    <line x1="90" y1="188" x2="780" y2="188" stroke="#18222d"/><text x="80" y="192" text-anchor="end">2s</text>
+    <line x1="90" y1="112" x2="780" y2="112" stroke="#18222d"/><text x="80" y="116" text-anchor="end">3s</text>
+  </g>
+
+  <rect x="150" y="150" width="90" height="190" rx="4" fill="#f0662f"/>
+  <text class="mo" x="195" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#f4a07a">~2.5s</text>
+  <text class="t ink" x="195" y="360" text-anchor="middle" font-size="12">HIT before</text>
+  <text class="t m" x="195" y="376" text-anchor="middle" font-size="11">(revalidated)</text>
+
+  <rect x="290" y="314" width="90" height="26" rx="4" fill="#7ee787"/>
+  <text class="mo" x="335" y="306" text-anchor="middle" font-size="13" font-weight="700" fill="#7ee787">~0.34s</text>
+  <text class="t ink" x="335" y="360" text-anchor="middle" font-size="12">HIT after</text>
+  <text class="t m" x="335" y="376" text-anchor="middle" font-size="11">(served)</text>
+
+  <rect x="470" y="104" width="90" height="236" rx="4" fill="#e0a33a"/>
+  <text class="mo" x="515" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="#e0a33a">~3.1s</text>
+  <text class="t ink" x="515" y="360" text-anchor="middle" font-size="12">MISS render</text>
+  <text class="t m" x="515" y="376" text-anchor="middle" font-size="11">(cold / uncached)</text>
+
+  <rect x="610" y="317" width="90" height="23" rx="4" fill="#5cc8ff"/>
+  <text class="mo" x="655" y="309" text-anchor="middle" font-size="13" font-weight="700" fill="#9bd8ff">~0.30s</text>
+  <text class="t ink" x="655" y="360" text-anchor="middle" font-size="12">Static asset</text>
+  <text class="t m" x="655" y="376" text-anchor="middle" font-size="11">(baseline)</text>
+
+  <text class="t m" x="410" y="406" text-anchor="middle" font-size="12">The cache hit went from as slow as a miss to serving in about a third of a second. The cold render remains the platform floor.</text>
+</svg>

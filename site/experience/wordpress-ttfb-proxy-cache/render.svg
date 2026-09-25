@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" role="img" aria-label="Where the cache-miss render time goes: total generation about 3.10 seconds, PHP execution about 2.85 seconds or 92 percent, database about 0.25 seconds or 8 percent.">
+  <defs>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.ink{fill:#c7d0d9}
+    </style>
+  </defs>
+  <rect width="820" height="340" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="410" y="38" text-anchor="middle" font-size="20">Where the cache-miss render time goes</text>
+  <text class="t m" x="410" y="60" text-anchor="middle" font-size="13">Query Monitor on a page: total generation about 3.10s</text>
+
+  <g transform="translate(230,192)">
+    <circle r="90" fill="none" stroke="#e0a33a" stroke-width="46"/>
+    <circle r="90" fill="none" stroke="#5cc8ff" stroke-width="46" stroke-dasharray="45.2 520.3" transform="rotate(-90)"/>
+    <text class="t" x="0" y="-2" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf3">3.10s</text>
+    <text class="t m" x="0" y="18" text-anchor="middle" font-size="11">total</text>
+  </g>
+
+  <g transform="translate(430,138)">
+    <rect x="0" y="0" width="18" height="18" rx="3" fill="#e0a33a"/>
+    <text class="t" x="28" y="14" font-size="15" font-weight="700" fill="#e6edf3">PHP execution</text>
+    <text class="t m" x="28" y="34" font-size="13">about 2.85s, roughly 92 percent</text>
+    <text class="t" x="28" y="52" font-size="12" fill="#6f7d8a">page builder and plugin bootstrap</text>
+
+    <rect x="0" y="82" width="18" height="18" rx="3" fill="#5cc8ff"/>
+    <text class="t" x="28" y="96" font-size="15" font-weight="700" fill="#e6edf3">Database</text>
+    <text class="t m" x="28" y="116" font-size="13">0.25s, roughly 8 percent</text>
+    <text class="t" x="28" y="134" font-size="12" fill="#6f7d8a">470 queries, not the bottleneck</text>
+  </g>
+
+  <text class="t m" x="410" y="322" text-anchor="middle" font-size="12">Because the database was only 8 percent, an object cache was the wrong fix. The cost is PHP, dominated by the page builder.</text>
+</svg>

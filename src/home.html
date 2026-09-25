@@ -686,6 +686,15 @@ en-au | https://example.com.au/</textarea></div>
     </div>
     <p class="sub">Real builds, written from experience, what I did, the hurdles I hit, and how I got past them. No client names; just the engineering.</p>
     <div class="recent">
+      <a class="rcard" href="/experience/wordpress-ttfb-proxy-cache/">
+        <div class="rthumb"><img src="/experience/wordpress-ttfb-proxy-cache/architecture.svg?v=1" alt="Two caching layers: an nginx reverse-proxy cache in front of an Apache and WordPress origin" loading="lazy"></div>
+        <div class="rbody">
+          <span class="rt">Performance &amp; infra</span>
+          <h3>Fixing multi-second TTFB on WordPress behind an nginx proxy cache</h3>
+          <p>A cache HIT was no faster than a MISS. I traced it to header-driven revalidation and fixed it in .htaccess, no CDN, then named the render floor.</p>
+          <div class="rmeta">Sep 2026 · ~10 min read · read →</div>
+        </div>
+      </a>
       <a class="rcard" href="/experience/legacy-domain-redirects-cloudflare-workers/">
         <div class="rthumb"><img src="/experience/legacy-domain-redirects-cloudflare-workers/before-after.svg?v=2" alt="Root-level forwarding to the homepage versus page-to-page 301s via a Cloudflare Worker" loading="lazy"></div>
         <div class="rbody">
@@ -702,15 +711,6 @@ en-au | https://example.com.au/</textarea></div>
           <h3>Getting a restricted store approved on Google, then tracking every sale</h3>
           <p>Suspension and disapprovals to a fully approved catalog, a self-owned feed, value-based tracking through GTM, and the call to hold the launch.</p>
           <div class="rmeta">Sep 2026 · ~10 min read · read →</div>
-        </div>
-      </a>
-      <a class="rcard" href="/experience/leads-from-a-sealed-iframe/">
-        <div class="rthumb"><img src="/experience/leads-from-a-sealed-iframe/iframe.svg?v=1" alt="A cross-origin booking form iframe blocking the submit event from the page's pixel" loading="lazy"></div>
-        <div class="rbody">
-          <span class="rt">Tracking &amp; automation</span>
-          <h3>Recovering form leads from a sealed iframe into Meta</h3>
-          <p>A cross-origin Jobber form the browser couldn't see, so I polled the CRM API and sent hashed Leads to Meta CAPI from one Cloudflare Worker.</p>
-          <div class="rmeta">Sep 2026 · ~8 min read · read →</div>
         </div>
       </a>
     </div>

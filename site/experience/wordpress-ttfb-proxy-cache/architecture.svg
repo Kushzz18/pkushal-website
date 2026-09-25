@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" role="img" aria-label="Request path with two caching layers: a visitor or crawler hits an nginx reverse-proxy cache, which passes to Apache driven by .htaccess, which runs WordPress on PHP and Elementor.">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b98a5"/></marker>
+    <style>
+      .t{font-family:'IBM Plex Sans',sans-serif}.mo{font-family:'IBM Plex Mono',monospace}
+      .ttl{fill:#e6edf3;font-weight:700}.m{fill:#8b98a5}.ink{fill:#c7d0d9}
+      .g{fill:#7ee787}.a{fill:#9bd8ff}.w{fill:#f0a884}
+    </style>
+  </defs>
+  <rect width="820" height="360" rx="14" fill="#0b1017"/>
+  <text class="t ttl" x="410" y="38" text-anchor="middle" font-size="20">Request path: two caching layers</text>
+  <text class="t m" x="410" y="60" text-anchor="middle" font-size="13">The origin headers decide what the nginx layer is allowed to do</text>
+
+  <rect x="24" y="110" width="140" height="90" rx="10" fill="#121a23" stroke="#2d3f4f" stroke-width="1.5"/>
+  <text class="t ink" x="94" y="150" text-anchor="middle" font-size="14" font-weight="700">Visitor /</text>
+  <text class="t ink" x="94" y="170" text-anchor="middle" font-size="14" font-weight="700">Crawler</text>
+
+  <rect x="220" y="95" width="170" height="120" rx="10" fill="#0d1712" stroke="#2f7d52" stroke-width="1.5"/>
+  <text class="t g" x="305" y="130" text-anchor="middle" font-size="15" font-weight="700">nginx</text>
+  <text class="t" x="305" y="150" text-anchor="middle" font-size="13" fill="#8fcaa6">reverse-proxy cache</text>
+  <text class="mo g" x="305" y="180" text-anchor="middle" font-size="11">serves HIT in ~0.34s</text>
+  <text class="mo g" x="305" y="195" text-anchor="middle" font-size="11">after the fix</text>
+
+  <rect x="446" y="95" width="150" height="120" rx="10" fill="#0f2130" stroke="#2a6f96" stroke-width="1.5"/>
+  <text class="t a" x="521" y="135" text-anchor="middle" font-size="15" font-weight="700">Apache</text>
+  <text class="mo" x="521" y="157" text-anchor="middle" font-size="12" fill="#9bd8ff">.htaccess</text>
+  <text class="t" x="521" y="177" text-anchor="middle" font-size="11" fill="#7fb7db">headers + rewrite</text>
+
+  <rect x="652" y="95" width="150" height="120" rx="10" fill="#221512" stroke="#7a3a24" stroke-width="1.5"/>
+  <text class="t w" x="727" y="130" text-anchor="middle" font-size="15" font-weight="700" fill="#f0662f">WordPress</text>
+  <text class="t w" x="727" y="150" text-anchor="middle" font-size="12">PHP + Elementor</text>
+  <text class="mo w" x="727" y="180" text-anchor="middle" font-size="11">MISS render ~3s</text>
+  <text class="mo w" x="727" y="195" text-anchor="middle" font-size="11">92% PHP, 8% DB</text>
+
+  <line x1="164" y1="155" x2="214" y2="155" stroke="#8b98a5" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="390" y1="155" x2="440" y2="155" stroke="#8b98a5" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="596" y1="155" x2="646" y2="155" stroke="#8b98a5" stroke-width="2" marker-end="url(#ar)"/>
+
+  <text class="t ink" x="410" y="270" text-anchor="middle" font-size="13">The defect: the origin sent Cache-Control: max-age=0, so nginx revalidated the slow origin on every hit.</text>
+  <text class="t ink" x="410" y="292" text-anchor="middle" font-size="13">The fix: an .htaccess rule sends public, s-maxage for anonymous pages, so nginx serves from cache.</text>
+  <text class="t m" x="410" y="320" text-anchor="middle" font-size="12">Anonymous visitors and crawlers stop at the nginx layer. Private and admin pages always reach PHP.</text>
+</svg>
