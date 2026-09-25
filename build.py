@@ -29,7 +29,7 @@ i = s.index('<header class="nav">')
 head_part = s[:i]
 body_part = s[i:]
 head_part = head_part.replace('<title>Kushal Pathak</title>',
-    '<title>Kushal Pathak, Technical SEO Strategist</title>', 1)
+    '<title>Kushal Pathak | Technical SEO Strategist</title>', 1)
 
 jsonld = ('{"@context":"https://schema.org","@graph":['
 '{"@type":"Person","@id":"https://pkushal.com.np/#kushal","name":"Kushal Pathak","url":"https://pkushal.com.np/",'
@@ -40,7 +40,7 @@ jsonld = ('{"@context":"https://schema.org","@graph":['
 '"address":{"@type":"PostalAddress","addressCountry":"NP"},'
 '"sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},'
 '{"@type":"WebSite","@id":"https://pkushal.com.np/#website","url":"https://pkushal.com.np/","name":"Kushal Pathak","publisher":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"},'
-'{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak, Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"mainEntity":{"@id":"https://pkushal.com.np/#kushal"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
+'{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak | Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"mainEntity":{"@id":"https://pkushal.com.np/#kushal"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
 
 GTM_HEAD = (
 "<!-- Google Tag Manager -->\n"
@@ -65,15 +65,15 @@ GTM_HEAD +
 '<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
 '<meta property="og:type" content="website">\n'
 '<meta property="og:site_name" content="Kushal Pathak">\n'
-'<meta property="og:title" content="Kushal Pathak, Technical SEO Strategist">\n'
+'<meta property="og:title" content="Kushal Pathak | Technical SEO Strategist">\n'
 '<meta property="og:description" content="Rankings are an engineering problem. I do the engineering, rendering, crawlability, schema and indexation.">\n'
 '<meta property="og:url" content="https://pkushal.com.np/">\n'
 '<meta property="og:image" content="https://pkushal.com.np/assets/og-home.png">\n'
 '<meta property="og:image:width" content="1200">\n'
 '<meta property="og:image:height" content="630">\n'
-'<meta property="og:image:alt" content="Kushal Pathak, Technical SEO Strategist">\n'
+'<meta property="og:image:alt" content="Kushal Pathak | Technical SEO Strategist">\n'
 '<meta name="twitter:card" content="summary_large_image">\n'
-'<meta name="twitter:title" content="Kushal Pathak, Technical SEO Strategist">\n'
+'<meta name="twitter:title" content="Kushal Pathak | Technical SEO Strategist">\n'
 '<meta name="twitter:description" content="Rankings are an engineering problem. I do the engineering.">\n'
 '<meta name="twitter:image" content="https://pkushal.com.np/assets/og-home.png">\n'
 '<style>[hidden]{display:none!important}img{max-width:100%;height:auto}</style>\n'
