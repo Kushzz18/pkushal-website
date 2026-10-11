@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDRG93B8');</script>
+<!-- End Google Tag Manager -->
+<title>Fixing broken lead attribution on a WordPress and HubSpot site | Kushal Pathak</title>
+<meta name="description" content="Every lead was landing in the CRM as Direct traffic. I traced the break across the full capture pipeline, found five faults under one symptom, and rebuilt the attribution path so paid-search leads carry their real source, campaign, and click ID into HubSpot.">
+<link rel="canonical" href="https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0a0f14">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kushal Pathak">
+<meta property="og:title" content="Fixing broken lead attribution on a WordPress and HubSpot site">
+<meta property="og:description" content="Every enquiry arrived in the CRM as Direct. One symptom, five faults: no tracking cookie, fragile UTM capture, a payload missing campaign fields, and notifications on a dev inbox. Here is how I rebuilt the attribution path and proved it end to end.">
+<meta property="og:url" content="https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/">
+<meta property="og:image" content="https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fixing broken lead attribution on a WordPress and HubSpot site">
+<meta name="twitter:description" content="Attribution lives in the first-party cookie and the server token, not the UTM string. Installing the tracking code, persisting UTMs, and passing them into the Forms API closed the loop.">
+<meta name="twitter:image" content="https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="/assets/site.css?v=7">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BlogPosting","@id":"https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/#article","headline":"Fixing broken lead attribution on a WordPress and HubSpot lead-gen site","description":"A first-person account of diagnosing a silent tracking failure, where every lead reached the CRM as Direct, and rebuilding the attribution pipeline so paid-search leads carry their real source, campaign, and click ID into HubSpot, verified end to end through the mail log.","image":["https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/og.png","https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/before-after.svg"],"datePublished":"2026-10-11","dateModified":"2026-10-11","articleSection":"Experience","keywords":"lead attribution, HubSpot Forms API, hubspotutk, UTM persistence, gclid, WordPress REST API, FluentSMTP, Google Tag Manager, GA4, server-side forms","author":{"@type":"Person","name":"Kushal Pathak","url":"https://pkushal.com.np/","sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},"publisher":{"@type":"Person","name":"Kushal Pathak"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pkushal.com.np/"},{"@type":"ListItem","position":2,"name":"Experience","item":"https://pkushal.com.np/experience/"},{"@type":"ListItem","position":3,"name":"Lead attribution on WordPress and HubSpot","item":"https://pkushal.com.np/experience/lead-attribution-hubspot-wordpress/"}]}
+]}</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDRG93B8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="nav"><div class="wrap row">
+  <a class="brand" href="/">~/kushal-pathak <b>$</b></a>
+  <nav class="links" id="navLinks">
+    <a href="/#about">about</a>
+    <a href="/#frameworks">frameworks</a>
+    <a href="/experience/" class="on">experience</a>
+    <a href="/case-study/">case studies</a>
+    <a href="/#skills">skills</a>
+    <a href="/#playground">lab</a>
+    <a href="/#contact">contact</a>
+  </nav>
+  <button class="navtoggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#8801;</button>
+</div></header>
+
+<main class="wrap">
+  <div class="breadcrumb"><a href="/">home</a> / <a href="/experience/">experience</a> / lead attribution on WordPress and HubSpot</div>
+  <div class="phead">
+    <p class="eyebrow">Experience &middot; Tracking &amp; Attribution</p>
+    <h1>Fixing broken lead attribution on a WordPress and HubSpot site</h1>
+    <p class="sub">Every enquiry was arriving in the CRM as Direct traffic, so a business spending real money on paid search had no idea which leads came from ads. One symptom sat on top of five separate faults. Here is how I traced each one from the outside in and rebuilt the attribution path, then proved it end to end before closing the job.</p>
+  </div>
+
+  <article class="article">
+    <p class="mono" style="color:var(--dim);font-size:.8rem">October 2026 &middot; ~9 min read &middot; WordPress, HubSpot Forms API, GTM, FluentSMTP</p>
+
+    <figure class="featured">
+      <img src="before-after.svg?v=1" width="860" height="430" alt="Before: a paid ad click lands on a site with no tracking script, the custom form submits with an empty cookie and dropped UTMs, and the CRM records every lead as Direct. After: the tracking script sets the first-party cookie, UTMs persist across navigation, and the CRM records Paid Search plus campaign via the Forms API.">
+    </figure>
+    <p class="cap">The whole problem in one picture: with no tracking cookie, the server-side form reached the CRM with an empty token and every lead defaulted to Direct.</p>
+
+    <p class="lead">A morning "please fix this asap" came in from a sales team: every enquiry from the website was being recorded in the CRM as Direct traffic, all the campaign data was getting lost, and that made it impossible to judge the ad spend. The headline symptom was simple. The cause was not. It was a custom-coded, server-side form pipeline where five things were quietly broken at once, and two more only surfaced once I started testing. This is how I grounded the diagnosis in evidence instead of guessing, fixed the chain in order, and followed one real submission all the way into the backend to prove it.</p>
+
+    <h2>The goal</h2>
+    <p>The objective was narrow and measurable: every new lead should carry its true traffic source and campaign data into the CRM, and enquiry notifications should reach the correct inbox rather than a leftover development address. The business was paying for paid search but could not attribute a single enquiry to it, so close to <strong>100% of leads were tagged Direct</strong>, which left the marketing team unable to make a budget decision with any confidence. Fixing the attribution was the whole job.</p>
+
+    <h2>Diagnosis before a single change</h2>
+    <p>I started by inspecting the live site rather than taking the brief at face value. Reading the rendered DOM and the network layer showed the real tracking stack, <strong>Google Tag Manager, GA4, Google Ads and Microsoft Ads</strong>, was present and firing, but there was <strong>no HubSpot script anywhere</strong> among the scripts the page loaded. That single fact explained the headline symptom. HubSpot derives a contact's original source from its own first-party cookie (<code>hubspotutk</code>), set by its tracking script and read back on form submission. With no script, that cookie never exists, so every contact reaches the CRM with nothing to tie it to a session and defaults to Direct.</p>
+    <p>The forms were not a standard plugin. They were <strong>custom multi-step quote forms that submitted through the WordPress REST API</strong> and fanned the lead out to several destinations server-to-server, so the fix was always going to live in PHP and in the tracking layer, not in a form-builder UI. I pulled the theme's form handlers and read them directly instead of inferring from the front end. That turned guesses into facts, and corrected my own first pass:</p>
+    <div class="hurdle">
+      <div class="h">What the handlers actually did</div>
+      <p>The forms <em>did</em> integrate with HubSpot: each handler already built a HubSpot Forms API request and even tried to read <code>hubspotutk</code> from the cookie. The pieces were half-built. They had simply never been able to work, because the cookie was missing and the campaign fields were not in the payload. The internal notification, meanwhile, was wired to a <strong>personal developer inbox left in from the build</strong>, not the client's enquiries address.</p>
+    </div>
+
+    <h2>The five faults under one symptom</h2>
+    <ol>
+      <li><strong>No CRM tracking code on the site.</strong> The HubSpot script was not loading on any page, so the first-party cookie attribution depends on was never created.</li>
+      <li><strong>Custom server-side forms.</strong> The forms posted to the CRM server-to-server through the REST API, so none of the usual client-side form tracking applied.</li>
+      <li><strong>Fragile UTM capture.</strong> The forms read UTM parameters from the live page URL at the moment of submit, with no persistence. The moment a visitor clicked through to a second page, the campaign data was gone.</li>
+      <li><strong>Campaign data never reached the CRM.</strong> Even where UTMs were captured, the Forms API payload did not include them. They were only sent to unrelated downstream systems.</li>
+      <li><strong>Notifications going to the wrong place.</strong> The internal alert was routed to a personal inbox, so the enquiries team was not reliably seeing leads at all.</li>
+    </ol>
+
+    <h2>How I fixed them</h2>
+    <p>I ordered the work so the bleeding stopped first: tracking code and routing, then persistence, then the payload. Each change went onto the live server through the host file manager and GTM, not the downloaded copy, with a backup of each file first.</p>
+
+    <h3>1. Installed the CRM tracking code site-wide</h3>
+    <p>Adding the HubSpot loader through the theme means the tracking cookie is created on first visit, which is exactly what the existing form code was already looking for. This one change is the single biggest fix.</p>
+    <pre><code>add_action('wp_head', function () { ?&gt;
+&lt;script type="text/javascript" id="hs-script-loader" async defer
+        src="//js.hs-scripts.com/&lt;portal-id&gt;.js"&gt;&lt;/script&gt;
+&lt;?php }, 20);</code></pre>
+
+    <h3>2. Made UTM capture survive navigation</h3>
+    <p>Instead of reading the URL only at submit time, I captured the campaign parameters and click ID on first landing, stored them in a first-party cookie, and exposed a small helper the forms read from. Campaign data now persists across a multi-page visit instead of evaporating on the first click.</p>
+    <pre><code>add_action('wp_head', function () { ?&gt;
+&lt;script&gt;
+(function(){
+  var KEYS=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid'];
+  var q=new URLSearchParams(location.search), found={}, has=false;
+  KEYS.forEach(function(k){ if(q.get(k)){ found[k]=q.get(k); has=true; } });
+  if(has) document.cookie='attrib='+encodeURIComponent(JSON.stringify(found))
+    +';path=/;max-age='+(60*60*24*90)+';SameSite=Lax';
+  window.getAttrib=function(){
+    if(/utm_|gclid/.test(location.search)) return location.search;
+    var m=document.cookie.match(/(?:^|; )attrib=([^;]+)/);
+    try{ return m ? '?'+new URLSearchParams(JSON.parse(decodeURIComponent(m[1]))).toString() : ''; }
+    catch(e){ return ''; }
+  };
+})();
+&lt;/script&gt;
+&lt;?php }, 5);</code></pre>
+
+    <h3>3. Passed the campaign data into the CRM</h3>
+    <p>I added the UTM and click-ID fields to the HubSpot Forms API payload in each handler, backed by matching contact properties in the CRM, so campaign data lands on the contact record as a durable backstop alongside the cookie-based source.</p>
+    <pre><code>array('name' =&gt; 'utm_source',   'value' =&gt; isset($utm['utm_source'])   ? $utm['utm_source']   : ''),
+array('name' =&gt; 'utm_medium',   'value' =&gt; isset($utm['utm_medium'])   ? $utm['utm_medium']   : ''),
+array('name' =&gt; 'utm_campaign', 'value' =&gt; isset($utm['utm_campaign']) ? $utm['utm_campaign'] : ''),
+array('name' =&gt; 'utm_term',     'value' =&gt; isset($utm['utm_term'])     ? $utm['utm_term']     : ''),
+array('name' =&gt; 'utm_content',  'value' =&gt; isset($utm['utm_content'])  ? $utm['utm_content']  : ''),
+array('name' =&gt; 'gclid',        'value' =&gt; isset($utm['gclid'])        ? $utm['gclid']        : ''),</code></pre>
+
+    <h3>4. Fixed notification routing and cleaned the email</h3>
+    <p>I repointed the internal enquiry notification to the correct inbox and replaced a raw debug dump with a clean, readable lead summary, so the people acting on enquiries get a usable email rather than a page of diagnostics.</p>
+    <pre><code>$lead_body  = "New enquiry from the website\n\n";
+$lead_body .= "Name:       $name\n";
+$lead_body .= "Email:      $email\n";
+$lead_body .= "Phone:      $phone\n";
+$lead_body .= "Collection: {$o['place_name']}\n";
+$lead_body .= "Delivery:   {$d['place_name']}\n";
+$lead_body .= "Date:       $the_date\n";
+$lead_body .= "Load type:  $ltt\n";
+$lead_body .= "Notes:      $notes\n";
+wp_mail('&lt;enquiries-inbox&gt;', 'New Website Enquiry: ' . $name, $lead_body, $headers);</code></pre>
+
+    <h2>Beating the false negative</h2>
+    <p>My first verification pass ran in a browser with heavy tracker blocking, a local security suite plus extensions. The analytics requests were being blocked locally, so the cookie did not set and the Google tags were returning 503, and a perfectly valid lead would have looked like a failure. Rather than trust that reading, I re-ran the submission in a <strong>clean browser with no blockers</strong>, which is how a real ad visitor behaves. There the cookie set correctly and the HubSpot analytics object initialised, which is the reading that actually matters. The lesson I keep from this is blunt: <strong>never validate tracking in your own hardened browser</strong>, because it lies to you in the safe direction.</p>
+
+    <h2>Surfacing the hidden failures</h2>
+    <p>With notifications now readable, the API responses that had been buried in debug output became visible, and they showed two downstream quote APIs returning errors on every submission (one 404, one 500). Those failures were pre-existing and unrelated to the attribution fix, but they were quietly dropping data. I also found the forms were posting to a <strong>development endpoint in production</strong>, and that a DNS check proved the supposed production host did not resolve at all, so changing the URL would have broken a working integration rather than fixing it. I flagged each with its exact status code and the business context needed to decide whether to repair or remove it, rather than leaving them to fail silently.</p>
+
+    <h2>How I verified it</h2>
+    <figure class="featured">
+      <img src="verification.svg?v=1" width="760" height="500" alt="Verification checklist: form submission 200 OK, tracking cookie set, UTMs and click ID captured, CRM Forms API 200 accepted, internal notification sent to the enquiries inbox, customer confirmation sent, and two pre-existing third-party quote APIs failing and flagged.">
+    </figure>
+    <p class="cap">One controlled test both proved the fix and found the next problem.</p>
+    <p>I ran a controlled test enquiry through a clean browser with a fully tagged URL, used a <strong>number from the range reserved for fiction</strong> so it would pass validation but reach no real person, and then followed the submission into the backend through the <strong>FluentSMTP mail log</strong>. The trace confirmed each link in the chain: the submission returned 200, the tracking cookie set, the UTMs and click ID were captured and carried through, the CRM accepted the lead with a 200, the internal notification reached the correct inbox, and the customer confirmation sent. The same trace is what exposed the two failing vendor APIs, so one test did double duty.</p>
+
+    <h2>What it changed</h2>
+    <p>Paid-search leads now arrive in the CRM carrying their <strong>real source and campaign instead of defaulting to Direct</strong>, which is exactly the capability the marketing team needed to judge their ad spend. Enquiry notifications reach the right inbox in a clean, usable format. After the changes went live, the <strong>client team independently confirmed that lead source was reporting correctly</strong> on their side, which closed out the original complaint. The two unrelated downstream integrations were handed back as a scoped, clearly explained follow-up rather than an open mystery.</p>
+
+    <h2>What this did not solve, and what I would carry forward</h2>
+    <p>An honest limit: only the homepage form was live-tested end to end. The other handlers share the same structure and the same edits, but I did not fire a real submission through each, so that remains a verification gap I named rather than papered over. The two failing vendor APIs were genuinely out of scope for an attribution fix and still need the client's side to decide repair or removal. A note I kept for myself: a development endpoint and a debug inbox left live in production are the kind of thing that survive for months precisely because nobody reads the debug output they hide in.</p>
+    <ul>
+      <li><strong>Attribution lives in the cookie and the server token, not the UTM string.</strong> A visible UTM in the URL means nothing if the CRM's own cookie never gets set and passed back on submit.</li>
+      <li><strong>Half-built integrations fail silently.</strong> The form code already reached for the tracking token; it just never received one. Reading the actual handlers beat guessing from the outside.</li>
+      <li><strong>Test tracking in a clean browser.</strong> A privacy-hardened browser will under-report and send you chasing a problem that is not there.</li>
+      <li><strong>Make downstream failures loud.</strong> Burying third-party API responses in a debug blob is how a broken integration survives for months.</li>
+    </ul>
+
+    <h2>Stacks involved</h2>
+    <div class="stack">
+      <span>WordPress</span><span>Elementor child theme</span><span>WordPress REST API</span><span>Custom PHP form handlers</span><span>HubSpot Forms API</span><span>hubspotutk</span><span>Google Tag Manager</span><span>GA4</span><span>Google Ads</span><span>Microsoft Ads</span><span>FluentSMTP</span><span>Office 365</span><span>UTM + gclid</span>
+    </div>
+
+    <a class="btn backlink" href="/experience/">&larr; more of my work</a>
+  </article>
+</main>
+
+<footer><div class="wrap">
+  <div>&copy; 2026 Kushal Pathak &middot; Technical SEO Strategist</div>
+  <div style="margin-top:8px"><a href="/">home</a> &middot; <a href="/experience/">experience</a> &middot; <a href="/#contact">contact</a></div>
+</div></footer>
+
+<script src="/assets/site.js?v=2" defer></script>
+</body>
+</html>

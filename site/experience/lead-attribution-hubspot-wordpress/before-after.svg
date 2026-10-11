@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace">
+  <rect width="860" height="430" fill="#0a0f14"/>
+  <text x="40" y="34" font-size="18" font-weight="600" fill="#e6edf3">Lead attribution pipeline, before and after</text>
+  <text x="40" y="54" font-size="12" fill="#8a97a4">Illustration recreated for documentation. No real data shown.</text>
+
+  <!-- BEFORE -->
+  <text x="40" y="84" font-size="13" font-weight="600" fill="#f4a07a">BEFORE &middot; every lead recorded as Direct</text>
+  <g transform="translate(0,96)">
+    <g transform="translate(40,0)">
+      <rect width="158" height="56" rx="9" fill="#17212c" stroke="#22303d"/>
+      <text x="79" y="24" font-size="12" fill="#e6edf3" text-anchor="middle">Paid ad click</text>
+      <text x="79" y="42" font-size="10.5" fill="#8b98a5" text-anchor="middle">utm + gclid in URL</text>
+    </g>
+    <path d="M202 28 H228" stroke="#2d3f4f" stroke-width="2" marker-end="url(#r)"/>
+    <g transform="translate(232,0)">
+      <rect width="158" height="56" rx="9" fill="#17212c" stroke="#22303d"/>
+      <text x="79" y="24" font-size="12" fill="#e6edf3" text-anchor="middle">Visitor lands</text>
+      <text x="79" y="42" font-size="10.5" fill="#f4a07a" text-anchor="middle">no tracking script</text>
+    </g>
+    <path d="M394 28 H420" stroke="#2d3f4f" stroke-width="2" marker-end="url(#r)"/>
+    <g transform="translate(424,0)">
+      <rect width="158" height="56" rx="9" fill="#17212c" stroke="#22303d"/>
+      <text x="79" y="24" font-size="12" fill="#e6edf3" text-anchor="middle">Form submit</text>
+      <text x="79" y="42" font-size="10.5" fill="#f4a07a" text-anchor="middle">empty cookie, utm lost</text>
+    </g>
+    <path d="M586 28 H612" stroke="#2d3f4f" stroke-width="2" marker-end="url(#r)"/>
+    <g transform="translate(616,0)">
+      <rect width="204" height="56" rx="9" fill="#241c17" stroke="#7a4a35"/>
+      <text x="102" y="24" font-size="12" font-weight="600" fill="#f4a07a" text-anchor="middle">CRM: every lead = Direct</text>
+      <text x="102" y="42" font-size="10.5" fill="#c08a73" text-anchor="middle">campaigns unmeasurable</text>
+    </g>
+  </g>
+  <text x="40" y="180" font-size="11" fill="#8a97a4">Notifications routed to a personal dev inbox &middot; utm read from the live URL only, lost on any page change</text>
+
+  <line x1="40" y1="202" x2="820" y2="202" stroke="#22303d" stroke-width="1"/>
+
+  <!-- AFTER -->
+  <text x="40" y="232" font-size="13" font-weight="600" fill="#7ee787">AFTER &middot; leads carry their true source</text>
+  <g transform="translate(0,244)">
+    <g transform="translate(40,0)">
+      <rect width="158" height="56" rx="9" fill="#121a23" stroke="#22303d"/>
+      <text x="79" y="24" font-size="12" fill="#e6edf3" text-anchor="middle">Paid ad click</text>
+      <text x="79" y="42" font-size="10.5" fill="#8b98a5" text-anchor="middle">utm + gclid in URL</text>
+    </g>
+    <path d="M202 28 H228" stroke="#2f6f96" stroke-width="2" marker-end="url(#g)"/>
+    <g transform="translate(232,0)">
+      <rect width="158" height="56" rx="9" fill="#121a23" stroke="#2a4a3a"/>
+      <text x="79" y="24" font-size="12" fill="#e6edf3" text-anchor="middle">Script loads</text>
+      <text x="79" y="42" font-size="10.5" fill="#7ee787" text-anchor="middle">sets hutk cookie</text>
+    </g>
+    <path d="M394 28 H420" stroke="#2f6f96" stroke-width="2" marker-end="url(#g)"/>
+    <g transform="translate(424,0)">
+      <rect width="158" height="56" rx="9" fill="#121a23" stroke="#2a4a3a"/>
+      <text x="79" y="24" font-size="12" fill="#e6edf3" text-anchor="middle">utm persisted</text>
+      <text x="79" y="42" font-size="10.5" fill="#7ee787" text-anchor="middle">cookie survives nav</text>
+    </g>
+    <path d="M586 28 H612" stroke="#2f6f96" stroke-width="2" marker-end="url(#g)"/>
+    <g transform="translate(616,0)">
+      <rect width="204" height="56" rx="9" fill="#0f2130" stroke="#2f6f96"/>
+      <text x="102" y="24" font-size="12" font-weight="600" fill="#7ee787" text-anchor="middle">CRM: Paid Search + campaign</text>
+      <text x="102" y="42" font-size="10.5" fill="#9fd9b4" text-anchor="middle">via Forms API (hutk + utm)</text>
+    </g>
+  </g>
+  <text x="40" y="328" font-size="11" fill="#8a97a4">Notifications routed to the correct enquiries inbox &middot; campaign data written to CRM contact properties</text>
+
+  <!-- insight -->
+  <g transform="translate(40,348)">
+    <rect width="780" height="66" rx="10" fill="#121a23" stroke="#22303d"/>
+    <text x="18" y="26" font-size="12.5" font-weight="600" fill="#5cc8ff">The core insight</text>
+    <text x="18" y="46" font-size="11.5" fill="#d7dee8">Source attribution is not the utm string. The CRM derives it from a first-party cookie its own script sets, then reads</text>
+    <text x="18" y="60" font-size="11.5" fill="#d7dee8">back on submit. No script, no cookie, so the server-side form arrived with an empty token and defaulted to Direct.</text>
+  </g>
+
+  <defs>
+    <marker id="r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2d3f4f"/></marker>
+    <marker id="g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2f6f96"/></marker>
+  </defs>
+</svg>
