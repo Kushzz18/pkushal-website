@@ -40,6 +40,7 @@ jsonld = ('{"@context":"https://schema.org","@graph":['
 '"address":{"@type":"PostalAddress","addressCountry":"NP"},'
 '"sameAs":["https://www.linkedin.com/in/kushal-pathak-485838196/","https://github.com/Kushzz18"]},'
 '{"@type":"WebSite","@id":"https://pkushal.com.np/#website","url":"https://pkushal.com.np/","name":"Kushal Pathak","publisher":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"},'
+'{"@type":["WebSite","CreativeWork"],"@id":"https://answerradar.net/#website","url":"https://answerradar.net/","name":"AnswerRadar","description":"A data-first directory of AI-visibility and GEO (generative engine optimization) tools.","creator":{"@id":"https://pkushal.com.np/#kushal"},"author":{"@id":"https://pkushal.com.np/#kushal"}},'
 '{"@type":"ProfilePage","@id":"https://pkushal.com.np/#profilepage","url":"https://pkushal.com.np/","name":"Kushal Pathak | Technical SEO Strategist","isPartOf":{"@id":"https://pkushal.com.np/#website"},"mainEntity":{"@id":"https://pkushal.com.np/#kushal"},"about":{"@id":"https://pkushal.com.np/#kushal"},"inLanguage":"en"}]}')
 
 GTM_HEAD = (
